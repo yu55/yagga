@@ -1,1 +1,1 @@
-# gog
+# The GOG project
