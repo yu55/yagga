@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="gog">
 <head>
     <meta charset="UTF-8">
     <title>The GOG project</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.10/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.10/angular-route.min.js"></script>
+    <script>
+        var nameApp = angular.module('gog', []);
+        nameApp.controller('gogCtrl', function ($scope, $http){
+            $http.get('grep').success(function(data) {
+                $scope.greps = data;
+            });
+        });
+    </script>
 </head>
-<body>
-Welcome to The GOG project.
+<body ng-controller="gogCtrl">
+    <h1>Welcome to GOG project</h1>
+    <code>
+        <span ng-repeat="grep in greps">{{grep}}<br></span>
+    </code>
 </body>
 </html>
