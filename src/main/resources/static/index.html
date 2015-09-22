@@ -4,20 +4,30 @@
     <meta charset="UTF-8">
     <title>The GOG project</title>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.10/angular.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.10/angular-route.min.js"></script>
     <script>
         var nameApp = angular.module('gog', []);
-        nameApp.controller('gogCtrl', function ($scope, $http){
-            $http.get('grep').success(function(data) {
-                $scope.greps = data;
-            });
+        nameApp.controller('gogCtrl', function ($scope, $http) {
+
+            $scope.grep = function () {
+                $http.post('grep', $scope.wanted).success(function (data) {
+                    $scope.greps = data;
+                });
+            }
         });
     </script>
 </head>
 <body ng-controller="gogCtrl">
-    <h1>Welcome to GOG project</h1>
-    <code>
-        <span ng-repeat="grep in greps">{{grep}}<br></span>
-    </code>
+<h1>Welcome to GOG project</h1>
+
+<form ng-submit="grep()">
+    <input type="text" ng-model="wanted">
+    <input type="submit" value="go!">
+</form>
+
+<br>
+
+<code>
+    <span ng-repeat="grep in greps">{{grep}}<br></span>
+</code>
 </body>
 </html>
