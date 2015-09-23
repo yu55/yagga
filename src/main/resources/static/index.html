@@ -8,6 +8,10 @@
         var nameApp = angular.module('gog', []);
         nameApp.controller('gogCtrl', function ($scope, $http) {
 
+            $http.get('repositories').success(function (data) {
+                $scope.repositories = data;
+            });
+
             $scope.grep = function () {
                 $http.post('grep', $scope.wanted).success(function (data) {
                     $scope.greps = data;
@@ -19,13 +23,23 @@
 <body ng-controller="gogCtrl">
 <h1>Welcome to GOG project</h1>
 
+Provide text to search for:
+<br>
+
 <form ng-submit="grep()">
     <input type="text" ng-model="wanted">
     <input type="submit" value="go!">
 </form>
 
 <br>
-
+Choose repository:
+<br>
+<select name="repositories" multiple>
+    <option ng-repeat="repository in repositories track by $index" value="{{repository}}" selected>{{repository}}
+    </option>
+</select>
+<br>
+<br>
 <code>
     <span ng-repeat="grep in greps track by $index">{{grep}}<br></span>
 </code>
