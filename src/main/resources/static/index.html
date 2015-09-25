@@ -34,10 +34,12 @@ Provide text to search for:
 <br>
 Choose repository:
 <br>
-<select name="repositories" multiple>
+<select name="repositories" ng-model="multipleSelect" multiple>
     <option ng-repeat="repository in repositories track by $index" value="{{repository}}" selected>{{repository}}
     </option>
 </select>
+<br>
+multipleSelect = {{multipleSelect}}
 <br>
 <br>
 <code>
