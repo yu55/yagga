@@ -28,8 +28,8 @@ public class Controller {
     }
 
     @RequestMapping(value = "/grep", method = RequestMethod.POST)
-    public List<String> grep(@RequestBody String wanted) {
-        return grepService.grep(wanted);
+    public List<String> grep(@RequestBody GrepRequest grepRequest) {
+        return grepService.grep(grepRequest);
     }
 
 }

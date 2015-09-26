@@ -28,23 +28,25 @@ public class GrepService {
         this.repositories = repositories;
     }
 
-    public List<String> grep(String wanted) {
+    public List<String> grep(GrepRequest wanted) {
         List<String> allFindings = new LinkedList<>();
         List<File> directories = repositories.getDirectories();
 
-        CommandLine commandLine = CommandLine.parse(COMMAND + wanted);
+        CommandLine commandLine = CommandLine.parse(COMMAND + wanted.getWanted());
         DefaultExecutor executor = new DefaultExecutor();
         ExecutorStreamHandler executorStreamHandler = new ExecutorStreamHandler();
         executor.setStreamHandler(new PumpStreamHandler(executorStreamHandler));
         for (File directory : directories) {
-            executor.setWorkingDirectory(directory);
-            try {
-                executor.execute(commandLine);
-                allFindings.addAll(executorStreamHandler.getFindings());
-            } catch (IOException e) {
-                logger.warn("Problem while searching '{}' repository: {}", directory.getAbsolutePath(), e.getMessage());
+            if (wanted.getRepositories().contains(directory.getName())) {
+                executor.setWorkingDirectory(directory);
+                try {
+                    executor.execute(commandLine);
+                    allFindings.addAll(executorStreamHandler.getFindings());
+                } catch (IOException e) {
+                    logger.warn("Problem while searching '{}' repository: {}", directory.getAbsolutePath(), e.getMessage());
+                }
+                executorStreamHandler.clearFindings();
             }
-            executorStreamHandler.clearFindings();
         }
 
         return allFindings;

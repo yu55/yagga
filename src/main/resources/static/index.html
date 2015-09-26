@@ -13,7 +13,11 @@
             });
 
             $scope.grep = function () {
-                $http.post('grep', $scope.wanted).success(function (data) {
+                grepRequest = {
+                    'wanted': $scope.wanted,
+                    'repositories': $scope.multipleSelect
+                }
+                $http.post('grep', grepRequest).success(function (data) {
                     $scope.greps = data;
                 });
             }
