@@ -21,6 +21,8 @@ public class GrepService {
 
     private static final String COMMAND = "git grep -n ";
 
+    private static final int SEARCH_LIMIT = 999;
+
     private Repositories repositories;
 
     @Autowired
@@ -39,6 +41,7 @@ public class GrepService {
         for (File directory : directories) {
             if (wanted.getRepositories().contains(directory.getName())) {
                 executor.setWorkingDirectory(directory);
+                executorStreamHandler.setRepositoryName(directory.getName());
                 try {
                     executor.execute(commandLine);
                     allFindings.addAll(executorStreamHandler.getFindings());
@@ -46,7 +49,17 @@ public class GrepService {
                     logger.warn("Problem while searching '{}' repository: {}", directory.getAbsolutePath(), e.getMessage());
                 }
                 executorStreamHandler.clearFindings();
+
+                if (allFindings.size() > SEARCH_LIMIT) {
+                    allFindings = allFindings.subList(0, SEARCH_LIMIT);
+                    allFindings.add(String.format("More results than %d. Aborting...", SEARCH_LIMIT));
+                    break;
+                }
             }
+        }
+
+        if (allFindings.isEmpty()) {
+            allFindings.add("No findings in selected repositories.");
         }
 
         return allFindings;
@@ -55,10 +68,11 @@ public class GrepService {
     private class ExecutorStreamHandler extends LogOutputStream {
 
         private List<String> findings = new LinkedList<>();
+        private String repositoryName = "";
 
         @Override
         protected void processLine(String line, int logLevel) {
-            findings.add(line);
+            findings.add(String.format("[%s] %s", repositoryName, line));
         }
 
         public List<String> getFindings() {
@@ -67,6 +81,10 @@ public class GrepService {
 
         public void clearFindings() {
             findings.clear();
+        }
+
+        public void setRepositoryName(String repositoryName) {
+            this.repositoryName = repositoryName;
         }
     }
 }
