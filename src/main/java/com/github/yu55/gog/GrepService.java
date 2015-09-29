@@ -37,7 +37,7 @@ public class GrepService {
         CommandLine commandLine = CommandLine.parse(COMMAND);
         commandLine.addArgument("grep");
         commandLine.addArgument("-n");
-        commandLine.addArgument(wanted.getWanted(), true);
+        commandLine.addArgument(escapeSearchPhraseArgument(wanted.getWanted()), true);
         DefaultExecutor executor = new DefaultExecutor();
         ExecutorStreamHandler executorStreamHandler = new ExecutorStreamHandler();
         executor.setStreamHandler(new PumpStreamHandler(executorStreamHandler));
@@ -66,6 +66,14 @@ public class GrepService {
         }
 
         return allFindings;
+    }
+
+    private String escapeSearchPhraseArgument(String wanted) {
+        if (wanted.startsWith("-")) {
+            return "\\" + wanted;
+        } else {
+            return wanted;
+        }
     }
 
     private class ExecutorStreamHandler extends LogOutputStream {
