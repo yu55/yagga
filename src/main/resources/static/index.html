@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>The GOG project</title>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.10/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.28/angular.min.js"></script>
     <script>
         var nameApp = angular.module('gog', []);
         nameApp.controller('gogCtrl', function ($scope, $http) {
@@ -13,6 +13,9 @@
             });
 
             $scope.grep = function () {
+                if ($scope.wanted == null || $scope.multipleSelect == null) {
+                    return false;
+                }
                 grepRequest = {
                     'wanted': $scope.wanted,
                     'repositories': $scope.multipleSelect
@@ -32,19 +35,15 @@ Provide text to search for:
 
 <form ng-submit="grep()">
     <input type="text" ng-model="wanted">
-    <input type="submit" value="go!">
+    <br>
+    Choose repository:
+    <br>
+    <select name="repositories" ng-model="multipleSelect" multiple ng-options="repository for repository in repositories | orderBy:'+'"></select>
+    <br>
+    <input type="submit" value="Search">
 </form>
-
 <br>
-Choose repository:
-<br>
-<select name="repositories" ng-model="multipleSelect" multiple>
-    <option ng-repeat="repository in repositories track by $index" value="{{repository}}" selected>{{repository}}
-    </option>
-</select>
-<br>
-multipleSelect = {{multipleSelect}}
-<br>
+Results:
 <br>
 <code>
     <span ng-repeat="grep in greps track by $index">{{grep}}<br></span>
