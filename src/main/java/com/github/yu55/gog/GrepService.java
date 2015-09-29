@@ -19,7 +19,7 @@ public class GrepService {
 
     private static final Logger logger = LoggerFactory.getLogger(GrepService.class);
 
-    private static final String COMMAND = "git grep -n ";
+    private static final String COMMAND = "git";
 
     private static final int SEARCH_LIMIT = 999;
 
@@ -34,7 +34,10 @@ public class GrepService {
         List<String> allFindings = new LinkedList<>();
         List<File> directories = repositories.getDirectories();
 
-        CommandLine commandLine = CommandLine.parse(COMMAND + wanted.getWanted());
+        CommandLine commandLine = CommandLine.parse(COMMAND);
+        commandLine.addArgument("grep");
+        commandLine.addArgument("-n");
+        commandLine.addArgument(wanted.getWanted(), true);
         DefaultExecutor executor = new DefaultExecutor();
         ExecutorStreamHandler executorStreamHandler = new ExecutorStreamHandler();
         executor.setStreamHandler(new PumpStreamHandler(executorStreamHandler));
