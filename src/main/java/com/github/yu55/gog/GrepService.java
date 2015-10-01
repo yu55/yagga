@@ -69,7 +69,7 @@ public class GrepService {
     }
 
     private String escapeSearchPhraseArgument(String wanted) {
-        if (wanted.startsWith("-")) {
+        if (wanted.startsWith("-") || wanted.startsWith(" ")) {
             return "\\" + wanted;
         } else {
             return wanted;
