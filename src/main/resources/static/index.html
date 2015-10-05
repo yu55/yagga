@@ -12,6 +12,16 @@
                 $scope.repositories = data;
             });
 
+            $scope.selectAll = function (selected) {
+                if (selected) {
+                    $scope.multipleSelect = $scope.repositories;
+                }
+            }
+
+            $scope.deselectCheckbox = function () {
+                $scope.selected = false;
+            }
+
             $scope.grep = function () {
                 if ($scope.wanted == null || $scope.multipleSelect == null) {
                     return false;
@@ -31,22 +41,26 @@
 <h1>Welcome to GOG project</h1>
 
 Provide text to search for:
-<br>
+<br/>
 
 <form ng-submit="grep()">
     <input type="text" ng-model="wanted" ng-trim="false">
-    <br>
-    Choose repository:
-    <br>
-    <select name="repositories" ng-model="multipleSelect" multiple ng-options="repository for repository in repositories | orderBy:'+'"></select>
-    <br>
+    <br/>
+    <br/>
+    Choose repositories:
+    <br/>
+    <input type="checkbox" ng-model="selected" ng-change="selectAll(selected)"> <font size="-1">all</font>
+    <br/>
+    <select name="repositories" ng-model="multipleSelect" multiple ng-options="repository for repository in repositories | orderBy:'+'" ng-change="deselectCheckbox()"></select>
+    <br/>
+    <br/>
     <input type="submit" value="Search">
 </form>
-<br>
+<br/>
 Results:
-<br>
+<br/>
 <code>
-    <span style="white-space: nowrap" ng-repeat="grep in greps track by $index">{{grep}}<br></span>
+    <span style="white-space: nowrap" ng-repeat="grep in greps track by $index">{{grep}}<br/></span>
 </code>
 </body>
 </html>
