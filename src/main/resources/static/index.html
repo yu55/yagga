@@ -26,6 +26,9 @@
                 if ($scope.wanted == null || $scope.multipleSelect == null) {
                     return false;
                 }
+
+                $scope.greps = "";
+
                 grepRequest = {
                     'wanted': $scope.wanted,
                     'repositories': $scope.multipleSelect
