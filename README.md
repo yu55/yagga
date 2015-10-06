@@ -1,6 +1,10 @@
 # The Git Online Grep project
 
-This is a simple web application that presents git grep search results from many repositories.
+This is a simple web application that allows you to git grep over many repositories via web interface.
+
+## Requirements
+* Java 8
+* globally recognizable `git` command
 
 ## Installation & running
 * clone this repository to your local machine
