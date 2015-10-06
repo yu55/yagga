@@ -1,5 +1,10 @@
 package com.github.yu55.gog;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.LogOutputStream;
@@ -9,11 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-
 @Component
 public class GrepService {
 
@@ -21,7 +21,7 @@ public class GrepService {
 
     private static final String COMMAND = "git";
 
-    private static final int SEARCH_LIMIT = 999;
+    private static final int SEARCH_LIMIT = 1001;
 
     private Repositories repositories;
 
@@ -35,9 +35,9 @@ public class GrepService {
         List<File> directories = repositories.getDirectories();
 
         CommandLine commandLine = CommandLine.parse(COMMAND);
-        commandLine.addArgument("grep");
-        commandLine.addArgument("-n");
-        commandLine.addArgument(escapeSearchPhraseArgument(wanted.getWanted()), true);
+        commandLine.addArgument("grep", false);
+        commandLine.addArgument("-n", false);
+        commandLine.addArgument(escapeSearchPhraseArgument(wanted.getWanted()), false);
         DefaultExecutor executor = new DefaultExecutor();
         ExecutorStreamHandler executorStreamHandler = new ExecutorStreamHandler();
         executor.setStreamHandler(new PumpStreamHandler(executorStreamHandler));
