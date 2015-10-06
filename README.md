@@ -4,7 +4,7 @@ This is a simple web application that allows you to git grep over many repositor
 
 ## Requirements
 * Java 8
-* globally recognizable `git` command
+* globally recognizable `git` command in operating system (added to $PATH etc.)
 
 ## Installation & running
 * clone this repository to your local machine
