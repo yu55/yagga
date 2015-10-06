@@ -35,6 +35,8 @@
                 }
                 $http.post('grep', grepRequest).success(function (data) {
                     $scope.greps = data;
+                }).error(function () {
+                    $scope.greps = ["Cannot obtain results - something is broken... sorry :("];
                 });
             }
         });
