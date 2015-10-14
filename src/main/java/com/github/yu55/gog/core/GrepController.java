@@ -1,4 +1,8 @@
-package com.github.yu55.gog;
+package com.github.yu55.gog.core;
+
+import static java.util.stream.Collectors.toList;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -6,30 +10,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import com.github.yu55.gog.core.model.GrepRequest;
+import com.github.yu55.gog.core.model.GrepResponseLine;
 
 @RestController()
-public class Controller {
-
-    private Repositories repositories;
+public class GrepController {
 
     private GrepService grepService;
 
     @Autowired
-    public Controller(GrepService grepService, Repositories repositories) {
+    public GrepController(GrepService grepService) {
         this.grepService = grepService;
-        this.repositories = repositories;
     }
 
     @RequestMapping(value = "/repositories")
     public List<String> repositories() {
-        return repositories.getDirectories().stream().map(d -> d.getName()).collect(Collectors.toList());
+        return grepService.getAvailableRepositories();
     }
 
     @RequestMapping(value = "/grep", method = RequestMethod.POST)
     public List<String> grep(@RequestBody GrepRequest grepRequest) {
-        return grepService.grep(grepRequest);
+        return grepService.grep(grepRequest).getResponseLines()
+                .stream()
+                .map(GrepResponseLine::getLine)
+                .collect(toList());
     }
 
 }
