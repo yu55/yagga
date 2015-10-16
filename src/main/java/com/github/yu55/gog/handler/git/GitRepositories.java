@@ -1,4 +1,4 @@
-package com.github.yu55.gog;
+package com.github.yu55.gog.handler.git;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,33 +16,28 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Repositories {
+public class GitRepositories {
 
-    private static final Logger logger = LoggerFactory.getLogger(Repositories.class);
+    private static final Logger logger = LoggerFactory.getLogger(GitRepositories.class);
 
-    private final List<String> pathsToRepositories;
-
-    private final List<File> directories;
+    private final List<GitRepository> repositories;
 
     @Autowired
-    Repositories(@Value("${repositories.paths}") String[] pathsToRepositories) {
-        this.pathsToRepositories = Arrays.asList(pathsToRepositories);
-        directories = new LinkedList<>();
+    GitRepositories(@Value("${repositories.paths}") String[] pathsToRepositories) {
+        repositories = new LinkedList<>();
+        initDirectories(Arrays.asList(pathsToRepositories));
     }
 
-    List<File> getDirectories() {
-        if (directories.isEmpty()) {
-            initDirectories();
-        }
-        return directories;
+    public List<GitRepository> getRepositories() {
+        return repositories;
     }
 
-    private void initDirectories() {
+    private void initDirectories(List<String> pathsToRepositories) {
         for (String ptr : pathsToRepositories) {
             try (DirectoryStream<Path> stream = Files.newDirectoryStream(new File(ptr).toPath())) {
                 for (Path entry : stream) {
                     if (entry.toFile().isDirectory()) {
-                        directories.add(entry.toFile());
+                        repositories.add(new GitRepository(entry.toFile()));
                     }
                 }
             } catch (IOException ex) {
