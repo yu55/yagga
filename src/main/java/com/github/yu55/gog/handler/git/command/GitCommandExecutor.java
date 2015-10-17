@@ -9,14 +9,8 @@ import java.util.List;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.LogOutputStream;
 import org.apache.commons.exec.PumpStreamHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.github.yu55.gog.handler.git.GitGrepHandler;
 
 public class GitCommandExecutor {
-
-    private static final Logger logger = LoggerFactory.getLogger(GitGrepHandler.class);
 
     private final GitCommand command;
 
@@ -33,7 +27,6 @@ public class GitCommandExecutor {
             executor.execute(command.getCommandLine());
             return executorStreamHandler.getFindings();
         } catch (IOException e) {
-            logger.warn("Problem while searching '{}' repository: {}", dir.getAbsolutePath(), e.getMessage());
         }
         return new ArrayList<>();
     }
