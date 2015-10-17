@@ -36,4 +36,25 @@ public class GrepController {
                 .collect(toList());
     }
 
+    @RequestMapping(value = "/blame", method = RequestMethod.POST)
+    public String blame() {//@RequestBody BlameRequest blameRequest) {
+//        return "package com.github.yu55.gog.core.model;\n" +
+//                "\n" +
+//                "public class BlameRequest {\n" +
+//                "\n" +
+//                "    private String file;\n" +
+//                "\n" +
+//                "    private String repository;\n" +
+//                "\n" +
+//                "    public String getFile() {\n" +
+//                "        return file;\n" +
+//                "    }\n" +
+//                "\n" +
+//                "    public String getRepository() {\n" +
+//                "        return repository;\n" +
+//                "    }\n" +
+//                "}";
+        return "public class BlameRequest {}";
+    }
+
 }

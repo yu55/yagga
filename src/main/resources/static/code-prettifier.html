@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="gog">
+<head>
+    <meta charset="UTF-8">
+    <title>The GOG project</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.28/angular.min.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script>
+        var nameApp = angular.module('gog', []);
+        nameApp.controller('gogCtrl', function ($scope, $http) {
+
+            $http.post('blame').success(function (data) {
+                $scope.blame = data;
+            });
+        });
+    </script>
+</head>
+<body ng-controller="gogCtrl">
+<pre class="prettyprint">
+    {{blame}}
+</pre>
+<pre class="prettyprint">
+    public class BlameRequest {}
+</pre>
+<pre class="prettyprint">
+package com.github.yu55.gog.core.model;
+
+public class BlameRequest {
+
+    private String file;
+
+    private String repository;
+
+    public String getFile() {
+        return file;
+    }
+
+    public String getRepository() {
+        return repository;
+    }
+}
+</pre>
+<pre class="prettyprint">
+606a6348 (Marcin P       2015-10-05 23:42:05 +0200  1) # The Git Online Grep project
+606a6348 (Marcin P       2015-10-05 23:42:05 +0200  2)
+d0614de2 (Marcin P       2015-10-06 21:38:49 +0200  3) This is a simple web application that allows you to git grep over many repositories via web interface.
+d0614de2 (Marcin P       2015-10-06 21:38:49 +0200  4)
+d0614de2 (Marcin P       2015-10-06 21:38:49 +0200  5) ## Requirements
+d0614de2 (Marcin P       2015-10-06 21:38:49 +0200  6) * Java 8
+b26e4b2d (Marcin P       2015-10-06 21:40:51 +0200  7) * globally recognizable `git` command in operating system (added to $PATH etc.)
+43931f37 (Marcin P       2015-10-06 21:28:45 +0200  8)
+43931f37 (Marcin P       2015-10-06 21:28:45 +0200  9) ## Installation & running
+43931f37 (Marcin P       2015-10-06 21:28:45 +0200 10) * clone this repository to your local machine
+43931f37 (Marcin P       2015-10-06 21:28:45 +0200 11) * to build execute: `./gradlew clean build` in `gog/` main directory
+43931f37 (Marcin P       2015-10-06 21:28:45 +0200 12) * fill the `gog/gog-config.properties` file with your repositories directories
+43931f37 (Marcin P       2015-10-06 21:28:45 +0200 13) * to run execute `java -Dserver.port=8080 -jar gog-x.y.z-SNAPSHOT.jar --spring.config.location=/home/user/gog/gog-config.properties` in `gog/build/libs/` directory
+88d7338b (Lukasz Sawicki 2015-10-13 13:23:46 +0200 14) * open page `localhost:8080` and start searching your repositories
+88d7338b (Lukasz Sawicki 2015-10-13 13:23:46 +0200 15) * please enjoy!
+</pre>
+<pre class="prettyprint">
+bfc83e2a        (Lukasz Sawicki 2015-10-14 21:32:16 +0200       1)package com.github.yu55.gog.core.model;
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       2)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       3)import java.util.List;
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       4)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       5)public class GrepRequest {
+bfc83e2a        (Lukasz Sawicki 2015-10-14 21:32:16 +0200       6)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       7)    private String wanted;
+bfc83e2a        (Lukasz Sawicki 2015-10-14 21:32:16 +0200       8)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       9)    private List<String> repositories;
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       10)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       11)    public String getWanted() {
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       12)        return wanted;
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       13)    }
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       14)
+bfc83e2a        (Lukasz Sawicki 2015-10-14 21:32:16 +0200       15)    public boolean hasRepository(String name) {
+bfc83e2a        (Lukasz Sawicki 2015-10-14 21:32:16 +0200       16)        return repositories.contains(name);
+bfc83e2a        (Lukasz Sawicki 2015-10-14 21:32:16 +0200       17)    }
+bfc83e2a        (Lukasz Sawicki 2015-10-14 21:32:16 +0200       18)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       19)    public List<String> getRepositories() {
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       20)        return repositories;
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       21)    }
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       22)}
+</pre>
+
+<table>
+    <tr>
+        <td>
+ <pre>
+bfc83e2a        (Lukasz Sawicki 2015-10-14 21:32:16 +0200       1)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       2)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       3)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       4)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       5)
+bfc83e2a        (Lukasz Sawicki 2015-10-14 21:32:16 +0200       6)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       7)
+bfc83e2a        (Lukasz Sawicki 2015-10-14 21:32:16 +0200       8)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       9)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       10)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       11)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       12)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       13)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       14)
+bfc83e2a        (Lukasz Sawicki 2015-10-14 21:32:16 +0200       15)
+bfc83e2a        (Lukasz Sawicki 2015-10-14 21:32:16 +0200       16)
+bfc83e2a        (Lukasz Sawicki 2015-10-14 21:32:16 +0200       17)
+bfc83e2a        (Lukasz Sawicki 2015-10-14 21:32:16 +0200       18)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       19)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       20)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       21)
+80dfaad5        (  Marcin P     2015-09-26 23:36:13 +0200       22)
+</pre>           
+        </td>
+        <td>
+            <pre class="prettyprint">
+package com.github.yu55.gog.core.model;
+
+import java.util.List;
+
+public class GrepRequest {
+
+    private String wanted;
+
+    private List<String> repositories;
+
+    public String getWanted() {
+        return wanted;
+    }
+
+    public boolean hasRepository(String name) {
+        return repositories.contains(name);
+    }
+
+    public List<String> getRepositories() {
+        return repositories;
+    }
+}</pre>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
