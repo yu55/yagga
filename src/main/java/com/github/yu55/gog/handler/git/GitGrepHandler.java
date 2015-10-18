@@ -1,7 +1,5 @@
 package com.github.yu55.gog.handler.git;
 
-import static com.github.yu55.gog.core.model.GrepResponse.RESPONSE_LINES_LIMIT;
-
 import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,20 +31,16 @@ public class GitGrepHandler {
         for (GitRepository repository : repositories.getRepositories()) {
             File directory = repository.getDirectory();
             if (wanted.hasRepository(directory.getName())) {
-                List<String> outputLines = executor.execute(directory);
+                List<String> grepOutputLines = executor.execute(directory);
                 boolean addedAll = response.addAll(
-                        outputLines.stream().map(string -> new GrepResponseLine(string)).collect(
+                        grepOutputLines.stream().map(
+                                outputLine -> GrepResponseLine.fromGrepOutputLine(directory.getName(),
+                                        outputLine)).collect(
                                 Collectors.toList()));
                 if (!addedAll) {
-                    response.add(new GrepResponseLine(
-                            String.format("More results than %d. Aborting...", RESPONSE_LINES_LIMIT)));
                     break;
                 }
             }
-        }
-
-        if (response.isEmpty()) {
-            response.add(new GrepResponseLine("No findings in selected repositories."));
         }
 
         return response;

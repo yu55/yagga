@@ -27,7 +27,8 @@
                     return false;
                 }
 
-                $scope.greps = ["Please wait - search in progress..."];
+                $scope.greps = [];
+                $scope.message = "Please wait - search in progress...";
 
                 grepRequest = {
                     'wanted': $scope.wanted,
@@ -35,8 +36,15 @@
                 }
                 $http.post('grep', grepRequest).success(function (data) {
                     $scope.greps = data;
+                    if (data.length == 0) {
+                        $scope.message = "No findings in selected repositories.";
+                    } else if (data.length >= 1001) {
+                        $scope.message = "More than 1001 results. Aborting...";
+                    } else {
+                        $scope.message = "";
+                    }
                 }).error(function () {
-                    $scope.greps = ["Cannot obtain results - something is broken... sorry :("];
+                    $scope.message = "Cannot obtain results - something has broken... sorry :(";
                 });
             }
         });
@@ -65,7 +73,9 @@ Provide text to search for:
 Results:
 <br/>
 <code>
-    <span style="white-space: nowrap" ng-repeat="grep in greps track by $index">{{grep}}<br/></span>
+    <span style="white-space: nowrap" ng-repeat="grep in greps track by $index">[{{grep.repository}}] {{grep.file}}:{{grep.lineNumber}} {{grep.matchedTextLine}}<br/></span>
+    {{message}}
 </code>
+
 </body>
 </html>

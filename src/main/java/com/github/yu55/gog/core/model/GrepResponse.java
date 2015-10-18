@@ -5,32 +5,32 @@ import java.util.List;
 
 public class GrepResponse {
 
-    public static final int RESPONSE_LINES_LIMIT = 1001;
+    private static final int RESPONSE_LINES_LIMIT = 1001;
 
-    private List<GrepResponseLine> responseLines;
+    private List<GrepResponseLine> grepResponseLines;
 
     public GrepResponse() {
-        this.responseLines = new LinkedList<>();
+        this.grepResponseLines = new LinkedList<>();
     }
 
     public boolean isEmpty() {
-        return responseLines.isEmpty();
+        return grepResponseLines.isEmpty();
     }
 
     public void add(GrepResponseLine grepResponseLine) {
-        responseLines.add(grepResponseLine);
+        grepResponseLines.add(grepResponseLine);
     }
 
     public boolean addAll(List<GrepResponseLine> grepResponseLines) {
-        responseLines.addAll(grepResponseLines);
+        this.grepResponseLines.addAll(grepResponseLines);
         if (grepResponseLines.size() > RESPONSE_LINES_LIMIT) {
-            responseLines = responseLines.subList(0, RESPONSE_LINES_LIMIT);
+            this.grepResponseLines = this.grepResponseLines.subList(0, RESPONSE_LINES_LIMIT);
             return false;
         }
         return true;
     }
 
-    public List<GrepResponseLine> getResponseLines() {
-        return responseLines;
+    public List<GrepResponseLine> getGrepResponseLines() {
+        return grepResponseLines;
     }
 }

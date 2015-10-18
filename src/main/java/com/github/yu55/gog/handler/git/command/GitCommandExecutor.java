@@ -21,7 +21,7 @@ public class GitCommandExecutor {
     public List<String> execute(File dir) {
         DefaultExecutor executor = new DefaultExecutor();
         executor.setWorkingDirectory(dir);
-        ExecutorStreamHandler executorStreamHandler = new ExecutorStreamHandler(dir.getName());
+        ExecutorStreamHandler executorStreamHandler = new ExecutorStreamHandler();
         executor.setStreamHandler(new PumpStreamHandler(executorStreamHandler));
         try {
             executor.execute(command.getCommandLine());
@@ -35,15 +35,9 @@ public class GitCommandExecutor {
 
         private List<String> findings = new LinkedList<>();
 
-        private String repositoryName;
-
-        public ExecutorStreamHandler(String repositoryName) {
-            this.repositoryName = repositoryName;
-        }
-
         @Override
         protected void processLine(String line, int logLevel) {
-            findings.add(String.format("[%s] %s", repositoryName, line));
+            findings.add(line);
         }
 
         public List<String> getFindings() {
