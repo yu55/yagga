@@ -7,31 +7,31 @@ public class GrepResponse {
 
     private final int linesLimit;
 
-    private List<GrepResponseLine> responseLines;
+    private List<GrepResponseLine> grepResponseLines;
 
     public GrepResponse(int linesLimit) {
         this.linesLimit = linesLimit;
-        this.responseLines = new LinkedList<>();
+        this.grepResponseLines = new LinkedList<>();
     }
 
     public boolean isEmpty() {
-        return responseLines.isEmpty();
+        return grepResponseLines.isEmpty();
     }
 
     public void add(GrepResponseLine grepResponseLine) {
-        responseLines.add(grepResponseLine);
+        grepResponseLines.add(grepResponseLine);
     }
 
     public boolean addAll(List<GrepResponseLine> grepResponseLines) {
-        responseLines.addAll(grepResponseLines);
+        this.grepResponseLines.addAll(grepResponseLines);
         if (grepResponseLines.size() > linesLimit) {
-            responseLines = responseLines.subList(0, linesLimit);
+            this.grepResponseLines = this.grepResponseLines.subList(0, RESPONSE_LINES_LIMIT);
             return false;
         }
         return true;
     }
 
-    public List<GrepResponseLine> getResponseLines() {
-        return responseLines;
+    public List<GrepResponseLine> getGrepResponseLines() {
+        return grepResponseLines;
     }
 }
