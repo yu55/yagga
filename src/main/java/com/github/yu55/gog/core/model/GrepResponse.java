@@ -5,11 +5,12 @@ import java.util.List;
 
 public class GrepResponse {
 
-    public static final int RESPONSE_LINES_LIMIT = 1001;
+    private final int linesLimit;
 
     private List<GrepResponseLine> responseLines;
 
-    public GrepResponse() {
+    public GrepResponse(int linesLimit) {
+        this.linesLimit = linesLimit;
         this.responseLines = new LinkedList<>();
     }
 
@@ -23,8 +24,8 @@ public class GrepResponse {
 
     public boolean addAll(List<GrepResponseLine> grepResponseLines) {
         responseLines.addAll(grepResponseLines);
-        if (grepResponseLines.size() > RESPONSE_LINES_LIMIT) {
-            responseLines = responseLines.subList(0, RESPONSE_LINES_LIMIT);
+        if (grepResponseLines.size() > linesLimit) {
+            responseLines = responseLines.subList(0, linesLimit);
             return false;
         }
         return true;
