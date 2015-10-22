@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="gog" ng-controller="gogPreviewCtrl">
+<head>
+    <meta charset="UTF-8">
+    <title>[{{params.repository}}] {{params.file}}</title>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.28/angular.min.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/prettify.js"></script>
+    <script>
+        var App = angular.module('gog', []);
+        App.controller('gogPreviewCtrl', function ($scope, $location, $http) {
+            $scope.params = $location.search();
+
+            $http.post('annotate').success(function (data) {
+                $scope.annotate = data;
+            });
+        });
+
+        App.directive('prettify', ['$compile', '$timeout', function ($compile, $timeout) {
+            return {
+                restrict: 'E',
+                scope: {
+                    target: '='
+                },
+                link: function (scope, element, attrs) {
+                    var template = element.html();
+                    var templateFn = $compile(template);
+                    var update = function () {
+                        $timeout(function () {
+                            var compiled = templateFn(scope).html();
+                            var prettified = prettyPrintOne('<pre>' + compiled + '</pre>');
+                            element.html(prettified);
+                        }, 0);
+                    }
+                    scope.$watch('target', function () {
+                        update();
+                    }, true);
+                    update();
+                }
+            };
+        }]);
+    </script>
+</head>
+<body>
+<table>
+    <tr>
+        <td>
+            <pre>{{annotate.annotations}}</pre>
+        </td>
+        <td>
+            <div>
+                <prettify target="annotate">
+                    <code class="prettyprint">{{target.fileContent}}</code>
+                </prettify>
+            </div>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

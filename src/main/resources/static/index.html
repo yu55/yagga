@@ -47,6 +47,23 @@
                     $scope.message = "Cannot obtain results - something has broken... sorry :(";
                 });
             }
+
+            $scope.showPreview = function (repository, file) {
+                showPreviewRequest = {
+                    'repository': repository,
+                    'file': file
+                }
+                $http.post('annotate', showPreviewRequest).success(function (data) {
+                    var newWindow = window.open();
+                        newWindow.document.write(data);
+                }).error(function () {
+                    alert("Error while opening: " + repository + " / " + file);
+                });
+            }
+
+            $scope.escape = function (toEscape) {
+                return encodeURIComponent(toEscape);
+            }
         });
     </script>
 </head>
@@ -73,7 +90,10 @@ Provide text to search for:
 Results:
 <br/>
 <code>
-    <span style="white-space: nowrap" ng-repeat="grep in greps track by $index">[{{grep.repository}}] {{grep.file}}:{{grep.lineNumber}} {{grep.matchedTextLine}}<br/></span>
+    <span style="white-space: nowrap" ng-repeat="grep in greps track by $index">[{{grep.repository}}] {{grep.file}}:{{grep.lineNumber}} {{grep.matchedTextLine}}
+        <a target="_blank" ng-href="preview.html#?repository={{grep.repository}}&file={{escape(grep.file)}}">[Preview]</a>
+        <br/>
+    </span>
     {{message}}
 </code>
 
