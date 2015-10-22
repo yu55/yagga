@@ -12,9 +12,17 @@
         App.controller('gogPreviewCtrl', function ($scope, $location, $http) {
             $scope.params = $location.search();
 
-            $http.post('annotate').success(function (data) {
+            annotateRequest = {
+                'repository': 'a',
+                'file': 'b'
+            }
+
+            $http.post('annotate', $scope.params).success(function (data) {
                 $scope.annotate = data;
+            }).error(function (status) {
+                alert("error: " + status);
             });
+
         });
 
         App.directive('prettify', ['$compile', '$timeout', function ($compile, $timeout) {
