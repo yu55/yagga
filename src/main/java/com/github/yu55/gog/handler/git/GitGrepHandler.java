@@ -16,6 +16,8 @@ import com.github.yu55.gog.handler.git.command.GitGrepCommand;
 @Component
 public class GitGrepHandler {
 
+    private static final int RESPONSE_LINES_LIMIT = 1001;
+
     private GitRepositories repositories;
 
     @Autowired
@@ -25,7 +27,7 @@ public class GitGrepHandler {
 
     public GrepResponse grep(GrepRequest wanted) {
 
-        GrepResponse response = new GrepResponse();
+        GrepResponse response = new GrepResponse(RESPONSE_LINES_LIMIT);
         GitCommandExecutor executor = new GitCommandExecutor(new GitGrepCommand(wanted.getWanted()));
 
         for (GitRepository repository : repositories.getRepositories()) {
