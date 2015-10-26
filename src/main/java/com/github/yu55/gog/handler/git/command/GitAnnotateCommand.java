@@ -4,8 +4,6 @@ import org.apache.commons.exec.CommandLine;
 
 public class GitAnnotateCommand implements GitCommand {
 
-    private static final String COMMAND = "git";
-
     private String file;
 
     public GitAnnotateCommand(String file) {
