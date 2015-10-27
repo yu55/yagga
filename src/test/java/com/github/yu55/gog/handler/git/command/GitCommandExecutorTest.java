@@ -33,9 +33,7 @@ public class GitCommandExecutorTest {
 
         // then
         assertThat(output.getOutputLines()
-                .stream()
-                .map(GitCommandOutputLine::getLine)
-                .collect(Collectors.toList()))
+                .stream().map(GitCommandOutputLine::getLine).collect(Collectors.toList()))
                 .containsExactly("[/repo] test output line 1", "[/repo] test output line 2");
     }
 
