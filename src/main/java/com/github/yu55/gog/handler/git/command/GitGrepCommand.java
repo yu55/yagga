@@ -4,8 +4,6 @@ import org.apache.commons.exec.CommandLine;
 
 public class GitGrepCommand implements GitCommand {
 
-    String COMMAND = "git";
-
     private final String grepText;
 
     public GitGrepCommand(String grepText) {
@@ -26,7 +24,6 @@ public class GitGrepCommand implements GitCommand {
         commandLine.addArgument("grep", false);
         commandLine.addArgument("-n", false);
         commandLine.addArgument(escapeSearchPhraseArgument(grepText), false);
-
         return commandLine;
     }
 }

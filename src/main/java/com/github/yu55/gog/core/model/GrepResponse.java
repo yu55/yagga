@@ -14,14 +14,6 @@ public class GrepResponse {
         this.grepResponseLines = new LinkedList<>();
     }
 
-    public boolean isEmpty() {
-        return grepResponseLines.isEmpty();
-    }
-
-    public void add(GrepResponseLine grepResponseLine) {
-        grepResponseLines.add(grepResponseLine);
-    }
-
     public boolean addAll(List<GrepResponseLine> grepResponseLines) {
         this.grepResponseLines.addAll(grepResponseLines);
         if (grepResponseLines.size() > grepLinesLimit) {
