@@ -36,13 +36,18 @@ public class GitRepositories {
         for (String ptr : pathsToRepositories) {
             try (DirectoryStream<Path> stream = Files.newDirectoryStream(new File(ptr).toPath())) {
                 for (Path entry : stream) {
-                    if (entry.toFile().isDirectory()) {
-                        repositories.add(new GitRepository(entry.toFile()));
+                    File file = entry.toFile();
+                    if (file.isDirectory() && isGitRepository(file)) {
+                        repositories.add(new GitRepository(file));
                     }
                 }
             } catch (IOException ex) {
                 logger.error("Cannot obtain repositories directories", ex);
             }
         }
+    }
+
+    private boolean isGitRepository(File directory) {
+        return new File(directory, ".git").exists();
     }
 }
