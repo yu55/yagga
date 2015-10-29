@@ -23,7 +23,7 @@ public class GitCommandExecutorTest {
     @Test
     public void shouldExecuteCommand() {
         // given
-        Executor executor = new DummyExecutor(
+        Executor executor = new ExecutorStub(
                 "[/repo] test output line 1\n" +
                         "[/repo] test output line 2");
         GitCommandExecutor gitCommandExecutor = new GitCommandExecutor(Mockito.mock(GitCommand.class), executor);
@@ -37,7 +37,7 @@ public class GitCommandExecutorTest {
                 .containsExactly("[/repo] test output line 1", "[/repo] test output line 2");
     }
 
-    class DummyExecutor implements Executor {
+    class ExecutorStub implements Executor {
 
         private final String executorOutput;
 
@@ -45,7 +45,7 @@ public class GitCommandExecutorTest {
 
         private File dir;
 
-        public DummyExecutor(String executorOutput) {
+        public ExecutorStub(String executorOutput) {
             this.executorOutput = executorOutput;
         }
 
