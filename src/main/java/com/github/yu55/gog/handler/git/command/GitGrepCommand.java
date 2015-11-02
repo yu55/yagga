@@ -24,7 +24,6 @@ public class GitGrepCommand implements GitCommand {
         commandLine.addArgument("grep", false);
         commandLine.addArgument("-n", false);
         commandLine.addArgument(escapeSearchPhraseArgument(grepText), false);
-
         return commandLine;
     }
 }

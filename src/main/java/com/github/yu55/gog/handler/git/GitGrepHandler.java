@@ -11,6 +11,7 @@ import com.github.yu55.gog.core.model.GrepRequest;
 import com.github.yu55.gog.core.model.GrepResponse;
 import com.github.yu55.gog.core.model.GrepResponseLine;
 import com.github.yu55.gog.handler.git.command.GitCommandExecutor;
+import com.github.yu55.gog.handler.git.command.GitCommandOutputLine;
 import com.github.yu55.gog.handler.git.command.GitGrepCommand;
 
 @Component
@@ -33,7 +34,9 @@ public class GitGrepHandler {
         for (GitRepository repository : repositories.getRepositories()) {
             File directory = repository.getDirectory();
             if (wanted.hasRepository(directory.getName())) {
-                List<String> grepOutputLines = executor.execute(directory);
+                List<String> grepOutputLines = executor.execute(directory).getOutputLines().stream()
+                        .map(GitCommandOutputLine::getLine)
+                        .collect(Collectors.toList());
                 boolean addedAll = response.addAll(
                         grepOutputLines.stream().map(
                                 outputLine -> GrepResponseLine.fromGrepOutputLine(directory.getName(),
