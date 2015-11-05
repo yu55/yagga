@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.github.yu55.gog.core.model.GrepResponse;
-import com.github.yu55.gog.core.model.GrepResponseLine;
+import org.yu55.yagga.core.grep.model.GrepResponse;
+import org.yu55.yagga.core.grep.model.GrepResponseLine;
 
 public class GrepResponseTest {
 
@@ -17,7 +17,7 @@ public class GrepResponseTest {
         GrepResponseLine grepResponseLine2 = new GrepResponseLine("/my/repo_2", "my_file_2", 12, "line_2");
 
         // when
-        grepResponse.addAll(Arrays.asList(grepResponseLine1, grepResponseLine2));
+        grepResponse.addAllGrepResponseLines(Arrays.asList(grepResponseLine1, grepResponseLine2));
 
         // then
         assertThat(grepResponse.getGrepResponseLines())
@@ -32,7 +32,7 @@ public class GrepResponseTest {
         GrepResponseLine grepResponseLine2 = new GrepResponseLine("/my/repo_2", "my_file_2", 12, "line_2");
 
         // when
-        grepResponse.addAll(Arrays.asList(grepResponseLine1, grepResponseLine2));
+        grepResponse.addAllGrepResponseLines(Arrays.asList(grepResponseLine1, grepResponseLine2));
 
         // then
         assertThat(grepResponse.getGrepResponseLines())
