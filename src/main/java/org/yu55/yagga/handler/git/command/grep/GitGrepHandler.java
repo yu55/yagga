@@ -5,13 +5,13 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import org.yu55.yagga.core.grep.model.GrepRequest;
 import org.yu55.yagga.core.grep.model.GrepResponse;
 import org.yu55.yagga.core.grep.model.GrepResponseLine;
 import org.yu55.yagga.handler.git.GitRepositories;
 import org.yu55.yagga.handler.git.GitRepository;
 import org.yu55.yagga.handler.git.command.common.GitCommandExecutor;
+import org.yu55.yagga.handler.git.command.common.GitCommandOutput;
 import org.yu55.yagga.handler.git.command.common.GitCommandOutputLine;
 
 @Component
@@ -31,16 +31,19 @@ public class GitGrepHandler {
         GrepResponse response = new GrepResponse(RESPONSE_LINES_LIMIT);
         GitCommandExecutor executor = new GitCommandExecutor(new GitGrepCommand(grepRequest.getWanted()));
 
+        // TODO: this should be implement in more fancy way
         for (GitRepository repository : repositories.getRepositories()) {
             if (grepRequest.hasRepository(repository.getName())) {
-                List<GitCommandOutputLine> grepOutputLines =
-                        executor.execute(repository.getDirectory()).getOutputLines();
-                boolean addedAll = response.addAllGrepResponseLines(
-                        grepOutputLines.stream().map(
-                                outputLine -> GrepResponseLine.fromGrepOutputLine(repository.getName(),
-                                        outputLine.getLine())).collect(Collectors.toList()));
-                if (!addedAll) {
-                    break;
+                GitCommandOutput gitCommandOutput = executor.execute(repository.getDirectory());
+                if (gitCommandOutput.getExitValue() == 0) {
+                    List<GitCommandOutputLine> grepOutputLines = gitCommandOutput.getOutputLines();
+                    boolean addedAll = response.addAllGrepResponseLines(
+                            grepOutputLines.stream().map(
+                                    outputLine -> GrepResponseLine.fromGrepOutputLine(repository.getName(),
+                                            outputLine.getLine())).collect(Collectors.toList()));
+                    if (!addedAll) {
+                        break;
+                    }
                 }
             }
         }

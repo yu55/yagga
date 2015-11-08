@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.exec.DefaultExecutor;
+import org.apache.commons.exec.ExecuteException;
 import org.apache.commons.exec.Executor;
 import org.apache.commons.exec.LogOutputStream;
 import org.apache.commons.exec.PumpStreamHandler;
@@ -28,12 +29,23 @@ public class GitCommandExecutor {
         executor.setWorkingDirectory(dir);
         ExecutorStreamHandler executorStreamHandler = new ExecutorStreamHandler();
         executor.setStreamHandler(new PumpStreamHandler(executorStreamHandler));
+        // TODO: this whole exception handling is just a poor draft
         try {
             executor.execute(command.getCommandLine());
-            return executorStreamHandler.getOutput();
+        } catch (ExecuteException execException) {
+                return createExceptionalGitCommandOutput(executorStreamHandler, execException.getExitValue());
         } catch (IOException e) {
+            return createExceptionalGitCommandOutput(executorStreamHandler, -127);
         }
-        return new GitCommandOutput();
+        return executorStreamHandler.getOutput();
+    }
+
+    private GitCommandOutput createExceptionalGitCommandOutput(
+            ExecutorStreamHandler executorStreamHandler, int exitValue) {
+        GitCommandOutput exceptionGitCommandOutput = new GitCommandOutput(exitValue);
+        exceptionGitCommandOutput.addOutputLine(new GitCommandOutputLine("Command execution failed:"));
+        exceptionGitCommandOutput.mergeWithOutput(executorStreamHandler.getOutput());
+        return exceptionGitCommandOutput;
     }
 
     private class ExecutorStreamHandler extends LogOutputStream {
