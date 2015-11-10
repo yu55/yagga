@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="gog" ng-controller="gogPreviewCtrl">
+<html lang="en" ng-app="yagga" ng-controller="yaggaPreviewCtrl">
 <head>
     <meta charset="UTF-8">
     <title>[{{params.repository}}] {{params.file}}</title>
@@ -8,8 +8,8 @@
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/prettify.js"></script>
     <script>
-        var App = angular.module('gog', []);
-        App.controller('gogPreviewCtrl', function ($scope, $location, $http) {
+        var App = angular.module('yagga', []);
+        App.controller('yaggaPreviewCtrl', function ($scope, $location, $http) {
             $scope.params = $location.search();
 
             annotateRequest = {

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="gog">
+<html lang="en" ng-app="yagga">
 <head>
     <meta charset="UTF-8">
     <title>yagga</title>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.28/angular.min.js"></script>
     <script>
-        var nameApp = angular.module('gog', []);
-        nameApp.controller('gogCtrl', function ($scope, $http) {
+        var nameApp = angular.module('yagga', []);
+        nameApp.controller('yaggaCtrl', function ($scope, $http) {
 
             $http.get('repositories').success(function (data) {
                 $scope.repositories = data;
@@ -67,7 +67,7 @@
         });
     </script>
 </head>
-<body ng-controller="gogCtrl">
+<body ng-controller="yaggaCtrl">
 <h1 style="font-family: monospace">$ YAGGA</h1>
 
 Provide text to search for:
