@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/yu55/yagga.svg?branch=master)](https://travis-ci.org/yu55/yagga)
+
 # Yet Another Git Grep Application (yagga)
 
 This is a simple web application that allows you to git grep over many repositories via web interface.
