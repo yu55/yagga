@@ -18,9 +18,10 @@ public class GitPullScheduler {
         this.gitRepositories = gitRepositories;
     }
 
-    @Scheduled(fixedRateString = "${repositories.refreshRateInMilisecond}")
+    @Scheduled(fixedRateString = "${repositories.refreshRateInMiliseconds}")
     public void pull() {
-        logger.info("Pulling");
+        logger.info("Pulling repositories...");
         gitRepositories.getRepositories().forEach(GitRepository::pull);
+        logger.info("Pulling repositories finished");
     }
 }

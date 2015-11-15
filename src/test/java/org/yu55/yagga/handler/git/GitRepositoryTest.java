@@ -20,7 +20,7 @@ public class GitRepositoryTest {
 
     @Test
     public void testPull() throws Exception {
-        //given
+        // given
         GitCommandExecutor executor = mock(GitCommandExecutor.class);
         GitCommandExecutorFactory commandExecutorFactory = mock(GitCommandExecutorFactory.class);
         File file = mock(File.class);
@@ -28,16 +28,16 @@ public class GitRepositoryTest {
 
         when(commandExecutorFactory.factorizePull()).thenReturn(executor);
 
-        //when
+        // when
         repository.pull();
 
-        //then
+        // then
         verify(executor).execute(file);
     }
 
     @Test
     public void testAnnotate() throws Exception {
-        //given
+        // given
         GitCommandExecutor executor = mock(GitCommandExecutor.class);
         GitCommandExecutorFactory commandExecutorFactory = mock(GitCommandExecutorFactory.class);
         File file = mock(File.class);
@@ -50,10 +50,10 @@ public class GitRepositoryTest {
         gitCommandOutput.addOutputLine(new GitCommandOutputLine(
                 "716ec6a6        (  Marcin P     2015-09-17 21:23:13 +0200       1)buildscript {"));
 
-        //when
+        // when
         AnnotateResponse annotateResponse = repository.annotate(fileToAnnotate);
 
-        //then
+        // then
         verify(executor).execute(file);
         assertThat(annotateResponse.getAnnotations()).contains("Marcin P");
         assertThat(annotateResponse.getFileContent()).contains("buildscript");
@@ -61,7 +61,7 @@ public class GitRepositoryTest {
 
     @Test
     public void testGrep() throws Exception {
-        //given
+        // given
         GitCommandExecutor executor = mock(GitCommandExecutor.class);
         GitCommandExecutorFactory commandExecutorFactory = mock(GitCommandExecutorFactory.class);
         File repositoryDirectory = mock(File.class);
@@ -74,10 +74,10 @@ public class GitRepositoryTest {
         when(repositoryDirectory.getName()).thenReturn("repo");
         gitCommandOutput.addOutputLine(new GitCommandOutputLine(
                 "build.gradle:1:buildscript {"));
-        //when
+        // when
         List<GrepResponseLine> grep = repository.grep(wanted);
 
-        //then
+        // then
         verify(executor).execute(repositoryDirectory);
         assertThat(grep.size()).isEqualTo(1);
         GrepResponseLine grepResponseLine =grep.get(0);

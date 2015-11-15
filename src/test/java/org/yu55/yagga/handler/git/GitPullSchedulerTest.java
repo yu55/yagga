@@ -12,16 +12,16 @@ public class GitPullSchedulerTest {
 
     @Test
     public void testPull() throws Exception {
-        //given
+        // given
         GitRepository repository = mock(GitRepository.class);
         GitRepositories repositories = mock(GitRepositories.class);
         when(repositories.getRepositories()).thenReturn(Arrays.asList(repository));
         GitPullScheduler pullScheduler = new GitPullScheduler(repositories);
 
-        //when
+        // when
         pullScheduler.pull();
 
-        //then
+        // then
         verify(repository).pull();
     }
 }
