@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.yu55.yagga.handler.git.command.common.GitCommandExecutorFactory;
 
 @Component
 public class GitRepositories {
@@ -22,10 +23,15 @@ public class GitRepositories {
 
     private final List<GitRepository> repositories;
 
+    private GitCommandExecutorFactory gitCommandExecutorFactory;
+
     @Autowired
-    GitRepositories(@Value("${repositories.paths}") String[] pathsToRepositories) {
+    GitRepositories(@Value("${repositories.paths}") String[] pathsToRepositories,
+                    GitCommandExecutorFactory gitCommandExecutorFactory) {
+        this.gitCommandExecutorFactory = gitCommandExecutorFactory;
         repositories = new LinkedList<>();
         initDirectories(Arrays.asList(pathsToRepositories));
+
     }
 
     public List<GitRepository> getRepositories() {
@@ -37,7 +43,7 @@ public class GitRepositories {
             try (DirectoryStream<Path> stream = Files.newDirectoryStream(new File(ptr).toPath())) {
                 for (Path entry : stream) {
                     if (isGitRepository(entry)) {
-                        repositories.add(new GitRepository(entry.toFile()));
+                        repositories.add(new GitRepository(entry.toFile(), gitCommandExecutorFactory));
                     }
                 }
             } catch (IOException ex) {
