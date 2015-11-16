@@ -19,7 +19,7 @@ public class GrepResponseLine {
         this.matchedTextLine = matchedTextLine;
     }
 
-    public static GrepResponseLine fromGrepOutputLine(String repository, String grepOutputLine) {
+    public static GrepResponseLine factorizeGrepResponseLine(String repository, String grepOutputLine) {
         StringTokenizer stringTokenizer = new StringTokenizer(grepOutputLine, ":");
         String file = stringTokenizer.nextToken();
         int lineNumber = 0;

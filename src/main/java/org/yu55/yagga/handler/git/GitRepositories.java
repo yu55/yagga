@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,13 @@ public class GitRepositories {
 
     public List<GitRepository> getRepositories() {
         return repositories;
+    }
+
+    public Optional<GitRepository> getRepositoryByDirectoryName(String name) {
+        return repositories
+                .stream()
+                .filter(repo -> repo.isDirectoryNameEqual(name))
+                .findFirst();
     }
 
     private void initDirectories(List<String> pathsToRepositories) {

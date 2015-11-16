@@ -3,7 +3,6 @@ package org.yu55.yagga.handler.git.command.common;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteException;
 import org.apache.commons.exec.Executor;
 import org.apache.commons.exec.LogOutputStream;
@@ -15,11 +14,6 @@ public class GitCommandExecutor {
 
     private final Executor executor;
 
-    public GitCommandExecutor(GitCommand command) {
-        this.command = command;
-        this.executor = new DefaultExecutor();
-    }
-
     public GitCommandExecutor(GitCommand command, Executor executor) {
         this.command = command;
         this.executor = executor;
@@ -27,22 +21,23 @@ public class GitCommandExecutor {
 
     public GitCommandOutput execute(File dir) {
         executor.setWorkingDirectory(dir);
-        ExecutorStreamHandler executorStreamHandler = new ExecutorStreamHandler();
+        ExecutorStreamHandler executorStreamHandler = new ExecutorStreamHandler(dir.getName());
         executor.setStreamHandler(new PumpStreamHandler(executorStreamHandler));
         // TODO: this whole exception handling is just a poor draft
         try {
             executor.execute(command.getCommandLine());
         } catch (ExecuteException execException) {
-                return createExceptionalGitCommandOutput(executorStreamHandler, execException.getExitValue());
+            return createExceptionalGitCommandOutput(dir.getName(), executorStreamHandler,
+                    execException.getExitValue());
         } catch (IOException e) {
-            return createExceptionalGitCommandOutput(executorStreamHandler, -127);
+            return createExceptionalGitCommandOutput(dir.getName(), executorStreamHandler, -127);
         }
         return executorStreamHandler.getOutput();
     }
 
     private GitCommandOutput createExceptionalGitCommandOutput(
-            ExecutorStreamHandler executorStreamHandler, int exitValue) {
-        GitCommandOutput exceptionGitCommandOutput = new GitCommandOutput(exitValue);
+            String repositoryName, ExecutorStreamHandler executorStreamHandler, int exitValue) {
+        GitCommandOutput exceptionGitCommandOutput = new GitCommandOutput(repositoryName, exitValue);
         exceptionGitCommandOutput.addOutputLine(new GitCommandOutputLine("Command execution failed:"));
         exceptionGitCommandOutput.mergeWithOutput(executorStreamHandler.getOutput());
         return exceptionGitCommandOutput;
@@ -50,7 +45,11 @@ public class GitCommandExecutor {
 
     private class ExecutorStreamHandler extends LogOutputStream {
 
-        private GitCommandOutput output = new GitCommandOutput();
+        private GitCommandOutput output;
+
+        ExecutorStreamHandler(String dirName) {
+            output = new GitCommandOutput(dirName);
+        }
 
         @Override
         protected void processLine(String line, int logLevel) {

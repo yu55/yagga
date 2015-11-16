@@ -42,7 +42,7 @@ public class GitRepositoryTest {
         GitCommandExecutorFactory commandExecutorFactory = mock(GitCommandExecutorFactory.class);
         File file = mock(File.class);
         GitRepository repository = new GitRepository(file, commandExecutorFactory);
-        GitCommandOutput gitCommandOutput = new GitCommandOutput();
+        GitCommandOutput gitCommandOutput = new GitCommandOutput(file.getName());
 
         String fileToAnnotate = "build.gradle";
         when(commandExecutorFactory.factorizeAnnotate(fileToAnnotate)).thenReturn(executor);
@@ -66,7 +66,7 @@ public class GitRepositoryTest {
         GitCommandExecutorFactory commandExecutorFactory = mock(GitCommandExecutorFactory.class);
         File repositoryDirectory = mock(File.class);
         GitRepository repository = new GitRepository(repositoryDirectory, commandExecutorFactory);
-        GitCommandOutput gitCommandOutput = new GitCommandOutput();
+        GitCommandOutput gitCommandOutput = new GitCommandOutput(repositoryDirectory.getName());
 
         String wanted = "buildscript";
         when(commandExecutorFactory.factorizeGrep(wanted)).thenReturn(executor);

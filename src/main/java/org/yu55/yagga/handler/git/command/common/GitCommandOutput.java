@@ -9,13 +9,16 @@ public class GitCommandOutput {
 
     private int exitValue;
 
-    public GitCommandOutput() {
+    private String repositoryName;
+
+    public GitCommandOutput(String repositoryName) {
         this.outputLines = new LinkedList<>();
         this.exitValue = 0;
+        this.repositoryName = repositoryName;
     }
 
-    public GitCommandOutput(int exitValue) {
-        this();
+    public GitCommandOutput(String repositoryName, int exitValue) {
+        this(repositoryName);
         this.exitValue = exitValue;
     }
 
@@ -33,5 +36,9 @@ public class GitCommandOutput {
 
     public int getExitValue() {
         return exitValue;
+    }
+
+    public String getRepositoryName() {
+        return repositoryName;
     }
 }

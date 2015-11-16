@@ -27,7 +27,7 @@ public class GitGrepHandler {
 
         // TODO: this should be implement in more fancy way
         for (GitRepository repository : repositories.getRepositories()) {
-            if (grepRequest.hasRepository(repository.getName())) {
+            if (grepRequest.hasRepository(repository.getDirectoryName())) {
                 boolean addedAll = response.addAllGrepResponseLines(repository.grep(grepRequest.getWanted()));
                 if (!addedAll) {
                     break;
