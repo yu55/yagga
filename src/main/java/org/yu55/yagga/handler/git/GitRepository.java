@@ -45,7 +45,7 @@ public class GitRepository {
     }
 
     public void pull() {
-        gitCommandExecutorFactory.factorizePull().execute(directory);
+        gitCommandExecutorFactory.factorizePull(this).execute();
     }
 
     public boolean isDirectoryNameEqual(String repository) {
@@ -53,14 +53,14 @@ public class GitRepository {
     }
 
     public AnnotateResponse annotate(String file) {
-        GitCommandOutput gitCommandOutput = gitCommandExecutorFactory.factorizeAnnotate(file).execute(directory);
+        GitCommandOutput gitCommandOutput = gitCommandExecutorFactory.factorizeAnnotate(this, file).execute();
 
         // perhaps this should be command-dependent
         return factorizeAnnotateResponse(gitCommandOutput);
     }
 
     public List<GrepResponseLine> grep(String wanted) {
-        GitCommandOutput gitCommandOutput = gitCommandExecutorFactory.factorizeGrep(wanted).execute(directory);
+        GitCommandOutput gitCommandOutput = gitCommandExecutorFactory.factorizeGrep(this, wanted).execute();
 
         // perhaps this should be command-dependent
         return factorizeGrepResponseLinesList(gitCommandOutput);
