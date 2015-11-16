@@ -16,6 +16,9 @@ import org.yu55.yagga.handler.git.command.common.GitCommandExecutorFactory;
 import org.yu55.yagga.handler.git.command.common.GitCommandOutput;
 import org.yu55.yagga.handler.git.command.common.GitCommandOutputLine;
 
+/*
+TODO: these tests are too complex. Something is wrong...
+ */
 public class GitRepositoryTest {
 
     @Test
@@ -65,22 +68,21 @@ public class GitRepositoryTest {
         GitCommandExecutor executor = mock(GitCommandExecutor.class);
         GitCommandExecutorFactory commandExecutorFactory = mock(GitCommandExecutorFactory.class);
         File repositoryDirectory = mock(File.class);
+        when(repositoryDirectory.getName()).thenReturn("repo");
         GitRepository repository = new GitRepository(repositoryDirectory, commandExecutorFactory);
         GitCommandOutput gitCommandOutput = new GitCommandOutput(repositoryDirectory.getName());
-
         String wanted = "buildscript";
         when(commandExecutorFactory.factorizeGrep(wanted)).thenReturn(executor);
         when(executor.execute(repositoryDirectory)).thenReturn(gitCommandOutput);
-        when(repositoryDirectory.getName()).thenReturn("repo");
-        gitCommandOutput.addOutputLine(new GitCommandOutputLine(
-                "build.gradle:1:buildscript {"));
+        gitCommandOutput.addOutputLine(new GitCommandOutputLine("build.gradle:1:buildscript {"));
+
         // when
         List<GrepResponseLine> grep = repository.grep(wanted);
 
         // then
         verify(executor).execute(repositoryDirectory);
         assertThat(grep.size()).isEqualTo(1);
-        GrepResponseLine grepResponseLine =grep.get(0);
+        GrepResponseLine grepResponseLine = grep.get(0);
         assertThat(grepResponseLine.getFile()).isEqualTo("build.gradle");
         assertThat(grepResponseLine.getLineNumber()).isEqualTo(1);
         assertThat(grepResponseLine.getMatchedTextLine()).isEqualTo("buildscript {");
