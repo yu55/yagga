@@ -16,6 +16,9 @@ import org.yu55.yagga.handler.git.command.common.GitCommandExecutorFactory;
 import org.yu55.yagga.handler.git.command.common.GitCommandOutput;
 import org.yu55.yagga.handler.git.command.common.GitCommandOutputLine;
 
+/*
+TODO: these tests are too complex. Something is wrong...
+ */
 public class GitRepositoryTest {
 
     @Test
@@ -26,13 +29,13 @@ public class GitRepositoryTest {
         File file = mock(File.class);
         GitRepository repository = new GitRepository(file, commandExecutorFactory);
 
-        when(commandExecutorFactory.factorizePull()).thenReturn(executor);
+        when(commandExecutorFactory.factorizePull(repository)).thenReturn(executor);
 
         // when
         repository.pull();
 
         // then
-        verify(executor).execute(file);
+        verify(executor).execute();
     }
 
     @Test
@@ -42,11 +45,11 @@ public class GitRepositoryTest {
         GitCommandExecutorFactory commandExecutorFactory = mock(GitCommandExecutorFactory.class);
         File file = mock(File.class);
         GitRepository repository = new GitRepository(file, commandExecutorFactory);
-        GitCommandOutput gitCommandOutput = new GitCommandOutput();
+        GitCommandOutput gitCommandOutput = new GitCommandOutput(file.getName());
 
         String fileToAnnotate = "build.gradle";
-        when(commandExecutorFactory.factorizeAnnotate(fileToAnnotate)).thenReturn(executor);
-        when(executor.execute(file)).thenReturn(gitCommandOutput);
+        when(commandExecutorFactory.factorizeAnnotate(repository, fileToAnnotate)).thenReturn(executor);
+        when(executor.execute()).thenReturn(gitCommandOutput);
         gitCommandOutput.addOutputLine(new GitCommandOutputLine(
                 "716ec6a6        (  Marcin P     2015-09-17 21:23:13 +0200       1)buildscript {"));
 
@@ -54,7 +57,7 @@ public class GitRepositoryTest {
         AnnotateResponse annotateResponse = repository.annotate(fileToAnnotate);
 
         // then
-        verify(executor).execute(file);
+        verify(executor).execute();
         assertThat(annotateResponse.getAnnotations()).contains("Marcin P");
         assertThat(annotateResponse.getFileContent()).contains("buildscript");
     }
@@ -65,22 +68,21 @@ public class GitRepositoryTest {
         GitCommandExecutor executor = mock(GitCommandExecutor.class);
         GitCommandExecutorFactory commandExecutorFactory = mock(GitCommandExecutorFactory.class);
         File repositoryDirectory = mock(File.class);
-        GitRepository repository = new GitRepository(repositoryDirectory, commandExecutorFactory);
-        GitCommandOutput gitCommandOutput = new GitCommandOutput();
-
-        String wanted = "buildscript";
-        when(commandExecutorFactory.factorizeGrep(wanted)).thenReturn(executor);
-        when(executor.execute(repositoryDirectory)).thenReturn(gitCommandOutput);
         when(repositoryDirectory.getName()).thenReturn("repo");
-        gitCommandOutput.addOutputLine(new GitCommandOutputLine(
-                "build.gradle:1:buildscript {"));
+        GitRepository repository = new GitRepository(repositoryDirectory, commandExecutorFactory);
+        GitCommandOutput gitCommandOutput = new GitCommandOutput(repositoryDirectory.getName());
+        String wanted = "buildscript";
+        when(commandExecutorFactory.factorizeGrep(repository, wanted)).thenReturn(executor);
+        when(executor.execute()).thenReturn(gitCommandOutput);
+        gitCommandOutput.addOutputLine(new GitCommandOutputLine("build.gradle:1:buildscript {"));
+
         // when
         List<GrepResponseLine> grep = repository.grep(wanted);
 
         // then
-        verify(executor).execute(repositoryDirectory);
+        verify(executor).execute();
         assertThat(grep.size()).isEqualTo(1);
-        GrepResponseLine grepResponseLine =grep.get(0);
+        GrepResponseLine grepResponseLine = grep.get(0);
         assertThat(grepResponseLine.getFile()).isEqualTo("build.gradle");
         assertThat(grepResponseLine.getLineNumber()).isEqualTo(1);
         assertThat(grepResponseLine.getMatchedTextLine()).isEqualTo("buildscript {");

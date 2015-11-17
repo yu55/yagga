@@ -1,7 +1,9 @@
 package org.yu55.yagga.handler.git.command.common;
 
 import org.apache.commons.exec.DefaultExecutor;
+import org.apache.commons.exec.PumpStreamHandler;
 import org.springframework.stereotype.Component;
+import org.yu55.yagga.handler.git.GitRepository;
 import org.yu55.yagga.handler.git.command.annotate.GitAnnotateCommand;
 import org.yu55.yagga.handler.git.command.grep.GitGrepCommand;
 import org.yu55.yagga.handler.git.command.pull.GitPullCommand;
@@ -9,19 +11,24 @@ import org.yu55.yagga.handler.git.command.pull.GitPullCommand;
 @Component
 public class GitCommandExecutorFactory {
 
-    public GitCommandExecutor factorize(GitCommand command) {
-        return new GitCommandExecutor(command, new DefaultExecutor());
+    public GitCommandExecutor factorize(GitRepository gitRepository, GitCommand command) {
+        DefaultExecutor executor = new DefaultExecutor();
+        executor.setWorkingDirectory(gitRepository.getDirectory());
+        GitCommandExecutorStreamHandler executorStreamHandler =
+                new GitCommandExecutorStreamHandler(gitRepository.getDirectoryName());
+        executor.setStreamHandler(new PumpStreamHandler(executorStreamHandler));
+        return new GitCommandExecutor(command, executor, () -> executorStreamHandler.getOutput());
     }
 
-    public GitCommandExecutor factorizePull(){
-        return factorize(new GitPullCommand());
+    public GitCommandExecutor factorizePull(GitRepository repository) {
+        return factorize(repository, new GitPullCommand());
     }
 
-    public GitCommandExecutor factorizeAnnotate(String file) {
-        return factorize(new GitAnnotateCommand(file));
+    public GitCommandExecutor factorizeAnnotate(GitRepository repository, String file) {
+        return factorize(repository, new GitAnnotateCommand(file));
     }
 
-    public GitCommandExecutor factorizeGrep(String wanted) {
-        return factorize(new GitGrepCommand(wanted));
+    public GitCommandExecutor factorizeGrep(GitRepository repository, String wanted) {
+        return factorize(repository, new GitGrepCommand(wanted));
     }
 }

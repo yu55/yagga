@@ -17,11 +17,10 @@ public class GitAnnotateHandler {
     }
 
     public AnnotateResponse annotate(AnnotateRequest annotateRequest) {
-        return repositories.getRepositories().stream()
-                .filter(gitRepository -> gitRepository.isDirectoryNameEqual(annotateRequest.getRepository()))
-                .findFirst()
-                .map(repo -> repo.annotate(annotateRequest.getFile()))
-                .get();
+        return
+                repositories.getRepositoryByDirectoryName(annotateRequest.getRepository())
+                        .map(repo -> repo.annotate(annotateRequest.getFile()))
+                        .get();
     }
 
 }
