@@ -6,15 +6,18 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
 import org.yu55.yagga.core.annotate.model.AnnotateResponse;
+import org.yu55.yagga.core.grep.model.GrepRequest;
 import org.yu55.yagga.core.grep.model.GrepResponseLine;
 import org.yu55.yagga.handler.git.command.common.GitCommandExecutor;
 import org.yu55.yagga.handler.git.command.common.GitCommandExecutorFactory;
 import org.yu55.yagga.handler.git.command.common.GitCommandOutput;
 import org.yu55.yagga.handler.git.command.common.GitCommandOutputLine;
+import org.yu55.yagga.handler.git.command.grep.GitGrepCommandOptions;
 
 /*
 TODO: these tests are too complex. Something is wrong...
@@ -72,12 +75,15 @@ public class GitRepositoryTest {
         GitRepository repository = new GitRepository(repositoryDirectory, commandExecutorFactory);
         GitCommandOutput gitCommandOutput = new GitCommandOutput(repositoryDirectory.getName());
         String wanted = "buildscript";
-        when(commandExecutorFactory.factorizeGrep(repository, wanted)).thenReturn(executor);
+        GrepRequest grepRequest = new GrepRequest(wanted, Arrays.asList(new String[] {"repo"}), false);
+        GitGrepCommandOptions gitGrepCommandOptions = GitGrepCommandOptions
+                .fromGitGrepCommandOptions(grepRequest);
+        when(commandExecutorFactory.factorizeGrep(repository, wanted, gitGrepCommandOptions)).thenReturn(executor);
         when(executor.execute()).thenReturn(gitCommandOutput);
         gitCommandOutput.addOutputLine(new GitCommandOutputLine("build.gradle:1:buildscript {"));
 
         // when
-        List<GrepResponseLine> grep = repository.grep(wanted);
+        List<GrepResponseLine> grep = repository.grep(wanted, gitGrepCommandOptions);
 
         // then
         verify(executor).execute();

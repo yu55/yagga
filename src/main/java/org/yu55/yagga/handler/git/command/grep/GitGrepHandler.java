@@ -24,11 +24,14 @@ public class GitGrepHandler {
 
     public GrepResponse grep(GrepRequest grepRequest) {
         GrepResponse response = new GrepResponse(RESPONSE_LINES_LIMIT);
+        GitGrepCommandOptions gitGrepCommandOptions = GitGrepCommandOptions
+                .fromGitGrepCommandOptions(grepRequest);
 
-        // TODO: this should be implement in more fancy way
+        // TODO: this should be implemented in more fancy way
         for (GitRepository repository : repositories.getRepositories()) {
             if (grepRequest.hasRepository(repository.getDirectoryName())) {
-                boolean addedAll = response.addAllGrepResponseLines(repository.grep(grepRequest.getWanted()));
+                boolean addedAll = response.addAllGrepResponseLines(repository
+                        .grep(grepRequest.getWanted(), gitGrepCommandOptions));
                 if (!addedAll) {
                     break;
                 }

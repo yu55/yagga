@@ -10,6 +10,7 @@ import org.yu55.yagga.core.annotate.model.AnnotateResponse;
 import org.yu55.yagga.core.grep.model.GrepResponseLine;
 import org.yu55.yagga.handler.git.command.common.GitCommandExecutorFactory;
 import org.yu55.yagga.handler.git.command.common.GitCommandOutput;
+import org.yu55.yagga.handler.git.command.grep.GitGrepCommandOptions;
 
 /**
  * This class represents a git repository in a file system.
@@ -59,8 +60,8 @@ public class GitRepository {
         return factorizeAnnotateResponse(gitCommandOutput);
     }
 
-    public List<GrepResponseLine> grep(String wanted) {
-        GitCommandOutput gitCommandOutput = gitCommandExecutorFactory.factorizeGrep(this, wanted).execute();
+    public List<GrepResponseLine> grep(String wanted, GitGrepCommandOptions gitGrepCommandOptions) {
+        GitCommandOutput gitCommandOutput = gitCommandExecutorFactory.factorizeGrep(this, wanted, gitGrepCommandOptions).execute();
 
         // perhaps this should be command-dependent
         return factorizeGrepResponseLinesList(gitCommandOutput);

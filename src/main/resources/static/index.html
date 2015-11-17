@@ -32,7 +32,8 @@
 
                 grepRequest = {
                     'wanted': $scope.wanted,
-                    'repositories': $scope.multipleSelect
+                    'repositories': $scope.multipleSelect,
+                    'ignoreCase': $scope.ignoreCase
                 }
                 $http.post('grep', grepRequest).success(function (data) {
                     $scope.greps = data;
@@ -75,6 +76,8 @@ Provide text to search for:
 
 <form ng-submit="grep()">
     <input type="text" ng-model="wanted" ng-trim="false">
+    <br/>
+    <input type="checkbox" ng-model="ignoreCase"> <font size="-1">Ignore case</font>
     <br/>
     <br/>
     Choose repositories:

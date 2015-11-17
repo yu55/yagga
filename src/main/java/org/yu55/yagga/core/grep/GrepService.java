@@ -19,8 +19,8 @@ public class GrepService {
         this.gitGrepHandler = gitGrepHandler;
     }
 
-    public GrepResponse grep(GrepRequest wanted) {
-        return gitGrepHandler.grep(wanted);
+    public GrepResponse grep(GrepRequest grepRequest) {
+        return gitGrepHandler.grep(grepRequest);
     }
 
     public List<String> getAvailableRepositories() {

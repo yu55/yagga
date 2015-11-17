@@ -5,10 +5,13 @@ import org.yu55.yagga.handler.git.command.common.GitCommand;
 
 public class GitGrepCommand implements GitCommand {
 
-    private final String grepText;
+    private final String wanted;
 
-    public GitGrepCommand(String grepText) {
-        this.grepText = grepText;
+    private final GitGrepCommandOptions gitGrepCommandOptions;
+
+    public GitGrepCommand(String wanted, GitGrepCommandOptions gitGrepCommandOptions) {
+        this.wanted = wanted;
+        this.gitGrepCommandOptions = gitGrepCommandOptions;
     }
 
     private String escapeSearchPhraseArgument(String wanted) {
@@ -24,7 +27,10 @@ public class GitGrepCommand implements GitCommand {
         CommandLine commandLine = CommandLine.parse(COMMAND);
         commandLine.addArgument("grep", false);
         commandLine.addArgument("-n", false);
-        commandLine.addArgument(escapeSearchPhraseArgument(grepText), false);
+        if (gitGrepCommandOptions.isIgnoreCase()) {
+            commandLine.addArgument("-i");
+        }
+        commandLine.addArgument(escapeSearchPhraseArgument(wanted), false);
         return commandLine;
     }
 }

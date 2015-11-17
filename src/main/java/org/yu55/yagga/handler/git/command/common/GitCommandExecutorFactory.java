@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.yu55.yagga.handler.git.GitRepository;
 import org.yu55.yagga.handler.git.command.annotate.GitAnnotateCommand;
 import org.yu55.yagga.handler.git.command.grep.GitGrepCommand;
+import org.yu55.yagga.handler.git.command.grep.GitGrepCommandOptions;
 import org.yu55.yagga.handler.git.command.pull.GitPullCommand;
 
 @Component
@@ -28,7 +29,8 @@ public class GitCommandExecutorFactory {
         return factorize(repository, new GitAnnotateCommand(file));
     }
 
-    public GitCommandExecutor factorizeGrep(GitRepository repository, String wanted) {
-        return factorize(repository, new GitGrepCommand(wanted));
+    public GitCommandExecutor factorizeGrep(GitRepository repository, String wanted,
+                                            GitGrepCommandOptions gitGrepCommandOptions) {
+        return factorize(repository, new GitGrepCommand(wanted, gitGrepCommandOptions));
     }
 }

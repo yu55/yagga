@@ -8,6 +8,18 @@ public class GrepRequest {
 
     private List<String> repositories;
 
+    private boolean ignoreCase;
+
+    public GrepRequest() {
+        // This empty constructor is mandatory for Spring controller
+    }
+
+    public GrepRequest(String wanted, List<String> repositories, boolean ignoreCase) {
+        this.wanted = wanted;
+        this.repositories = repositories;
+        this.ignoreCase = ignoreCase;
+    }
+
     public String getWanted() {
         return wanted;
     }
@@ -18,5 +30,9 @@ public class GrepRequest {
 
     public List<String> getRepositories() {
         return repositories;
+    }
+
+    public boolean isIgnoreCase() {
+        return ignoreCase;
     }
 }
