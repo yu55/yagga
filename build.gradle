@@ -30,6 +30,7 @@ repositories {
 
 configurations {
     compile.exclude module: "spring-boot-starter-tomcat"
+    testGenerated
 }
 
 dependencies {
@@ -39,8 +40,19 @@ dependencies {
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile('org.mockito:mockito-core:1.10.19')
     testCompile("org.assertj:assertj-core:3.2.0")
+    testGenerated("org.assertj:assertj-assertions-generator:2.0.0")
 }
 
+def generatedOutput = file('src-gen/test/java')
+
+sourceSets {
+    test {
+        java {
+            srcDir 'src/test/java'
+            srcDir generatedOutput
+        }
+    }
+}
 
 eclipse {
     classpath {
@@ -52,3 +64,30 @@ eclipse {
 task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
 }
+
+task assertjClean(type: Delete) {
+    delete generatedOutput
+}
+
+task assertjGen(dependsOn: assertjClean, type: JavaExec) {
+    doFirst {
+        if (!generatedOutput.exists()) {
+            logger.info("Creating `$generatedOutput` directory")
+
+            if (!generatedOutput.mkdirs()) {
+                throw new InvalidUserDataException("Unable to create `$generatedOutput` directory")
+            }
+        }
+    }
+
+    main 'org.assertj.assertions.generator.cli.AssertionGeneratorLauncher'
+    classpath = files(configurations.testGenerated, sourceSets.main.runtimeClasspath)
+    workingDir = generatedOutput
+    args = [
+           'org.yu55.yagga.core.grep.model',
+            'org.yu55.yagga.core.annotate.model'
+    ]
+    debug false
+}
+
+compileTestJava.dependsOn(assertjGen)
