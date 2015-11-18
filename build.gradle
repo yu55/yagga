@@ -84,7 +84,8 @@ task assertjGen(dependsOn: assertjClean, type: JavaExec) {
     classpath = files(configurations.testGenerated, sourceSets.main.runtimeClasspath)
     workingDir = generatedOutput
     args = [
-           'org.yu55.yagga.core.grep.model'
+           'org.yu55.yagga.core.grep.model',
+            'org.yu55.yagga.core.annotate.model'
     ]
     debug false
 }
