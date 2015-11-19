@@ -27,7 +27,7 @@ public class GitRepositories {
     private GitCommandExecutorFactory gitCommandExecutorFactory;
 
     @Autowired
-    GitRepositories(@Value("${repositories.paths}") String[] pathsToRepositories,
+    public GitRepositories(@Value("${repositories.paths}") String[] pathsToRepositories,
                     GitCommandExecutorFactory gitCommandExecutorFactory) {
         this.gitCommandExecutorFactory = gitCommandExecutorFactory;
         repositories = new LinkedList<>();
