@@ -27,12 +27,10 @@ public class GitGrepHandler {
         GitGrepCommandOptions gitGrepCommandOptions = GitGrepCommandOptions
                 .fromGitGrepCommandOptions(grepRequest);
 
-        // TODO: this should be implemented in more fancy way
         for (GitRepository repository : repositories.getRepositories()) {
             if (grepRequest.hasRepository(repository.getDirectoryName())) {
-                boolean addedAll = response.addAllGrepResponseLines(repository
-                        .grep(grepRequest.getWanted(), gitGrepCommandOptions));
-                if (!addedAll) {
+                if (!response.addAllGrepResponseLines(
+                        repository.grep(grepRequest.getWanted(), gitGrepCommandOptions))) {
                     break;
                 }
             }
