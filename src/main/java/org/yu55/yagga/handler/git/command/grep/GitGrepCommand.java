@@ -1,9 +1,12 @@
 package org.yu55.yagga.handler.git.command.grep;
 
 import org.apache.commons.exec.CommandLine;
+import org.yu55.yagga.handler.git.command.common.CommandLineBuilder;
 import org.yu55.yagga.handler.git.command.common.GitCommand;
 
 public class GitGrepCommand implements GitCommand {
+
+    public static final String COMMAND_GREP = "grep";
 
     private final String wanted;
 
@@ -24,13 +27,14 @@ public class GitGrepCommand implements GitCommand {
 
     @Override
     public CommandLine getCommandLine() {
-        CommandLine commandLine = CommandLine.parse(COMMAND);
-        commandLine.addArgument("grep", false);
-        commandLine.addArgument("-n", false);
-        if (gitGrepCommandOptions.isIgnoreCase()) {
-            commandLine.addArgument("-i");
-        }
-        commandLine.addArgument(escapeSearchPhraseArgument(wanted), false);
+        CommandLine commandLine = new CommandLineBuilder(COMMAND, gitGrepCommandOptions)
+                .withArgument(COMMAND_GREP)
+                .withArgument("-n")
+                .withArgument("-I")
+                .withArgument(GitGrepCommandOptions::isIgnoreCase, "-i")
+                .withArgument(escapeSearchPhraseArgument(wanted))
+                .build();
+
         return commandLine;
     }
 }
