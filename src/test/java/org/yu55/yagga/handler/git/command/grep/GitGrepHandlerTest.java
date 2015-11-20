@@ -1,14 +1,10 @@
 package org.yu55.yagga.handler.git.command.grep;
 
 import static java.util.Arrays.asList;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.yu55.yagga.core.grep.model.GrepResponseAssert.assertThat;
-import static org.yu55.yagga.handler.git.command.grep.GitGrepHandlerTest.GitRepositoryMockBehavior.should;
-
-import java.util.List;
+import static org.yu55.yagga.util.mockito.GitRepositoryMockBehavior.should;
 
 import org.junit.Test;
 import org.yu55.yagga.core.grep.model.GrepRequest;
@@ -53,36 +49,4 @@ public class GitGrepHandlerTest {
         assertThat(response).hasOnlyGrepResponseLines(matchingResponseLine);
     }
 
-    // This is a proof of concept
-
-    static abstract class MockBehavior<T> {
-
-        protected T mock;
-
-        public T get() {
-            return mock;
-        }
-    }
-
-    static class GitRepositoryMockBehavior extends MockBehavior<GitRepository> {
-
-        private GitRepositoryMockBehavior(GitRepository repository) {
-            this.mock = repository;
-        }
-
-        public static GitRepositoryMockBehavior should(Class<GitRepository> clazzToMock) {
-            return new GitRepositoryMockBehavior(mock(clazzToMock));
-        }
-
-        public GitRepositoryMockBehavior returnDirectoryName(String name) {
-            when(mock.getDirectoryName()).thenReturn(name);
-            return this;
-        }
-
-        public GitRepositoryMockBehavior returnGrepResponse(List<GrepResponseLine> grepResponseLineList) {
-            when(mock.grep(anyString(), any(GitGrepCommandOptions.class)))
-                    .thenReturn(grepResponseLineList);
-            return this;
-        }
-    }
 }
