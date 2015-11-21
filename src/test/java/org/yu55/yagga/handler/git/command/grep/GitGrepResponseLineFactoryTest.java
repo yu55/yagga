@@ -58,7 +58,6 @@ public class GitGrepResponseLineFactoryTest {
                 .hasLineNumber(25)
                 .hasFile("src/main/java/org/yu55/yagga/core/grep/model/GrepResponseLine.java")
                 .hasMatchedTextLine("public class GrepResponseLine {");
-
     }
 
     @Test

@@ -1,14 +1,10 @@
 package org.yu55.yagga.handler.git.command.grep;
 
 import static java.util.Arrays.asList;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.yu55.yagga.core.grep.model.GrepResponseAssert.assertThat;
-import static org.yu55.yagga.handler.git.command.grep.GitGrepHandlerTest.GitRepositoryMockBehavior.should;
-
-import java.util.List;
+import static org.yu55.yagga.util.mockito.GitRepositoryMockBehavior.should;
 
 import org.junit.Test;
 import org.yu55.yagga.core.grep.model.GrepRequest;
@@ -25,18 +21,18 @@ public class GitGrepHandlerTest {
         GrepResponseLine matchingResponseLine =
                 new GrepResponseLine("myRepository", "Hello.java", 5, "public class Hello {");
 
-        GitRepository matchingRepository = mock(GitRepository.class);
-        should(matchingRepository)
+        GitRepository matchingRepository = should(GitRepository.class)
                 .returnDirectoryName("myRepository")
-                .returnGrepResponse(asList(matchingResponseLine));
+                .returnGrepResponse(asList(matchingResponseLine))
+                .get();
 
         GrepResponseLine otherResponseLine =
                 new GrepResponseLine("otherRepository", "Bye.java", 3, "public class Bye {");
 
-        GitRepository otherRepository = mock(GitRepository.class);
-        should(otherRepository)
+        GitRepository otherRepository = should(GitRepository.class)
                 .returnDirectoryName("otherRepository")
-                .returnGrepResponse(asList(otherResponseLine));
+                .returnGrepResponse(asList(otherResponseLine))
+                .get();
 
         GitRepositories repositories = mock(GitRepositories.class);
         when(repositories.getRepositories())
@@ -53,29 +49,4 @@ public class GitGrepHandlerTest {
         assertThat(response).hasOnlyGrepResponseLines(matchingResponseLine);
     }
 
-    // This is a proof of concept
-    static class GitRepositoryMockBehavior {
-
-        private final GitRepository repository;
-
-        public GitRepositoryMockBehavior(GitRepository repository) {
-            this.repository = repository;
-        }
-
-        public static GitRepositoryMockBehavior should(GitRepository repository) {
-
-            return new GitRepositoryMockBehavior(repository);
-        }
-
-        public GitRepositoryMockBehavior returnDirectoryName(String name) {
-            when(repository.getDirectoryName()).thenReturn(name);
-            return this;
-        }
-
-        public GitRepositoryMockBehavior returnGrepResponse(List<GrepResponseLine> grepResponseLineList) {
-            when(repository.grep(anyString(), any(GitGrepCommandOptions.class)))
-                    .thenReturn(grepResponseLineList);
-            return this;
-        }
-    }
 }

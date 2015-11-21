@@ -19,6 +19,4 @@ public class GitGrepCommandOptions {
     public boolean isIgnoreCase() {
         return ignoreCase;
     }
-
-
 }
