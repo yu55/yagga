@@ -1,7 +1,6 @@
 package org.yu55.yagga.handler.api.command.grep;
 
 import org.yu55.yagga.core.grep.model.GrepRequest;
-import org.yu55.yagga.handler.git.command.grep.GitGrepCommandOptions;
 
 public class GrepParameters {
 
