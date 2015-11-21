@@ -1,4 +1,4 @@
-package org.yu55.yagga.handler.git;
+package org.yu55.yagga.handler;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,20 +15,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.yu55.yagga.handler.git.GitRepository;
 import org.yu55.yagga.handler.git.command.common.GitCommandExecutorFactory;
 
 @Component
-public class GitRepositories {
+public class Repositories {
 
-    private static final Logger logger = LoggerFactory.getLogger(GitRepositories.class);
+    private static final Logger logger = LoggerFactory.getLogger(Repositories.class);
 
     private final List<GitRepository> repositories;
 
     private GitCommandExecutorFactory gitCommandExecutorFactory;
 
     @Autowired
-    public GitRepositories(@Value("${repositories.paths}") String[] pathsToRepositories,
-                    GitCommandExecutorFactory gitCommandExecutorFactory) {
+    public Repositories(@Value("${repositories.paths}") String[] pathsToRepositories,
+                        GitCommandExecutorFactory gitCommandExecutorFactory) {
         this.gitCommandExecutorFactory = gitCommandExecutorFactory;
         repositories = new LinkedList<>();
         initDirectories(Arrays.asList(pathsToRepositories));

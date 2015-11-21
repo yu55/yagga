@@ -10,10 +10,11 @@ import org.junit.Test;
 import org.yu55.yagga.core.grep.model.GrepRequest;
 import org.yu55.yagga.core.grep.model.GrepResponse;
 import org.yu55.yagga.core.grep.model.GrepResponseLine;
-import org.yu55.yagga.handler.git.GitRepositories;
+import org.yu55.yagga.handler.Repositories;
+import org.yu55.yagga.handler.api.command.grep.GrepHandler;
 import org.yu55.yagga.handler.git.GitRepository;
 
-public class GitGrepHandlerTest {
+public class GrepHandlerTest {
 
     @Test
     public void shouldReturnGrepResponseLines() {
@@ -34,11 +35,11 @@ public class GitGrepHandlerTest {
                 .returnGrepResponse(asList(otherResponseLine))
                 .get();
 
-        GitRepositories repositories = mock(GitRepositories.class);
+        Repositories repositories = mock(Repositories.class);
         when(repositories.getRepositories())
                 .thenReturn(asList(matchingRepository, otherRepository));
 
-        GitGrepHandler grepHandler = new GitGrepHandler(repositories);
+        GrepHandler grepHandler = new GrepHandler(repositories);
 
         GrepRequest request = new GrepRequest("class", asList("myRepository"), true);
 

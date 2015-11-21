@@ -1,6 +1,7 @@
 package org.yu55.yagga.handler.git.command.grep;
 
 import org.apache.commons.exec.CommandLine;
+import org.yu55.yagga.handler.api.command.grep.GrepParameters;
 import org.yu55.yagga.handler.git.command.common.CommandLineBuilder;
 import org.yu55.yagga.handler.git.command.common.GitCommand;
 
@@ -8,13 +9,10 @@ public class GitGrepCommand implements GitCommand {
 
     public static final String COMMAND_GREP = "grep";
 
-    private final String wanted;
+    private final GrepParameters grepParameters;
 
-    private final GitGrepCommandOptions gitGrepCommandOptions;
-
-    public GitGrepCommand(String wanted, GitGrepCommandOptions gitGrepCommandOptions) {
-        this.wanted = wanted;
-        this.gitGrepCommandOptions = gitGrepCommandOptions;
+    public GitGrepCommand(GrepParameters grepParameters) {
+        this.grepParameters = grepParameters;
     }
 
     private String escapeSearchPhraseArgument(String wanted) {
@@ -27,12 +25,12 @@ public class GitGrepCommand implements GitCommand {
 
     @Override
     public CommandLine getCommandLine() {
-        CommandLine commandLine = new CommandLineBuilder(COMMAND, gitGrepCommandOptions)
+        CommandLine commandLine = new CommandLineBuilder(COMMAND)
                 .withArgument(COMMAND_GREP)
                 .withArgument("-n")
                 .withArgument("-I")
-                .withArgument(GitGrepCommandOptions::isIgnoreCase, "-i")
-                .withArgument(escapeSearchPhraseArgument(wanted))
+                .withArgument(grepParameters, GrepParameters::isIgnoreCase, "-i")
+                .withArgument(escapeSearchPhraseArgument(grepParameters.getWanted()))
                 .build();
 
         return commandLine;

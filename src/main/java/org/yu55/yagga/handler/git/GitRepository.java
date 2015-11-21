@@ -6,16 +6,19 @@ import static org.yu55.yagga.handler.git.command.grep.GitGrepResponseLineFactory
 import java.io.File;
 import java.util.List;
 
+
 import org.yu55.yagga.core.annotate.model.AnnotateResponse;
 import org.yu55.yagga.core.grep.model.GrepResponseLine;
+import org.yu55.yagga.handler.api.DvcsRepository;
+import org.yu55.yagga.handler.api.command.annotate.AnnotateParameters;
+import org.yu55.yagga.handler.api.command.grep.GrepParameters;
 import org.yu55.yagga.handler.git.command.common.GitCommandExecutorFactory;
 import org.yu55.yagga.handler.git.command.common.GitCommandOutput;
-import org.yu55.yagga.handler.git.command.grep.GitGrepCommandOptions;
 
 /**
  * This class represents a git repository in a file system.
  */
-public class GitRepository {
+public class GitRepository implements DvcsRepository {
 
     private final File directory;
 
@@ -45,23 +48,25 @@ public class GitRepository {
         return directory.getName();
     }
 
-    public void pull() {
-        gitCommandExecutorFactory.factorizePull(this).execute();
-    }
-
     public boolean isDirectoryNameEqual(String repository) {
         return getDirectory().getName().equals(repository);
     }
 
-    public AnnotateResponse annotate(String file) {
-        GitCommandOutput gitCommandOutput = gitCommandExecutorFactory.factorizeAnnotate(this, file).execute();
+    public void pull() {
+        gitCommandExecutorFactory.factorizePull(this).execute();
+    }
+
+    @Override
+    public AnnotateResponse annotate(AnnotateParameters annotateParameters) {
+        GitCommandOutput gitCommandOutput = gitCommandExecutorFactory.factorizeAnnotate(this, annotateParameters).execute();
 
         // perhaps this should be command-dependent
         return factorizeAnnotateResponse(gitCommandOutput);
     }
 
-    public List<GrepResponseLine> grep(String wanted, GitGrepCommandOptions gitGrepCommandOptions) {
-        GitCommandOutput gitCommandOutput = gitCommandExecutorFactory.factorizeGrep(this, wanted, gitGrepCommandOptions).execute();
+    @Override
+    public List<GrepResponseLine> grep(GrepParameters grepParameters) {
+        GitCommandOutput gitCommandOutput = gitCommandExecutorFactory.factorizeGrep(this, grepParameters).execute();
 
         // perhaps this should be command-dependent
         return factorizeGrepResponseLinesList(gitCommandOutput);

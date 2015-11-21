@@ -13,6 +13,8 @@ import org.junit.Test;
 import org.yu55.yagga.core.annotate.model.AnnotateResponse;
 import org.yu55.yagga.core.grep.model.GrepRequest;
 import org.yu55.yagga.core.grep.model.GrepResponseLine;
+import org.yu55.yagga.handler.api.command.annotate.AnnotateParameters;
+import org.yu55.yagga.handler.api.command.grep.GrepParameters;
 import org.yu55.yagga.handler.git.command.common.GitCommandExecutor;
 import org.yu55.yagga.handler.git.command.common.GitCommandExecutorFactory;
 import org.yu55.yagga.handler.git.command.common.GitCommandOutput;
@@ -50,14 +52,15 @@ public class GitRepositoryTest {
         GitRepository repository = new GitRepository(file, commandExecutorFactory);
         GitCommandOutput gitCommandOutput = new GitCommandOutput(file.getName());
 
-        String fileToAnnotate = "build.gradle";
-        when(commandExecutorFactory.factorizeAnnotate(repository, fileToAnnotate)).thenReturn(executor);
+        AnnotateParameters annotateParameters = new AnnotateParameters("build.gradle");
+
+        when(commandExecutorFactory.factorizeAnnotate(repository, annotateParameters)).thenReturn(executor);
         when(executor.execute()).thenReturn(gitCommandOutput);
         gitCommandOutput.addOutputLine(new GitCommandOutputLine(
                 "716ec6a6        (  Marcin P     2015-09-17 21:23:13 +0200       1)buildscript {"));
 
         // when
-        AnnotateResponse annotateResponse = repository.annotate(fileToAnnotate);
+        AnnotateResponse annotateResponse = repository.annotate(annotateParameters);
 
         // then
         verify(executor).execute();
@@ -74,16 +77,17 @@ public class GitRepositoryTest {
         when(repositoryDirectory.getName()).thenReturn("repo");
         GitRepository repository = new GitRepository(repositoryDirectory, commandExecutorFactory);
         GitCommandOutput gitCommandOutput = new GitCommandOutput(repositoryDirectory.getName());
+
         String wanted = "buildscript";
-        GrepRequest grepRequest = new GrepRequest(wanted, Arrays.asList(new String[] {"repo"}), false);
-        GitGrepCommandOptions gitGrepCommandOptions = GitGrepCommandOptions
-                .fromGitGrepCommandOptions(grepRequest);
-        when(commandExecutorFactory.factorizeGrep(repository, wanted, gitGrepCommandOptions)).thenReturn(executor);
+        boolean ignoreCase = false;
+        GrepParameters grepParameters = new GrepParameters(wanted, ignoreCase);
+
+        when(commandExecutorFactory.factorizeGrep(repository, grepParameters)).thenReturn(executor);
         when(executor.execute()).thenReturn(gitCommandOutput);
         gitCommandOutput.addOutputLine(new GitCommandOutputLine("build.gradle:1:buildscript {"));
 
         // when
-        List<GrepResponseLine> grep = repository.grep(wanted, gitGrepCommandOptions);
+        List<GrepResponseLine> grep = repository.grep(grepParameters);
 
         // then
         verify(executor).execute();

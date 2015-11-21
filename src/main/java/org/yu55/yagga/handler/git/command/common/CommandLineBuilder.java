@@ -9,11 +9,8 @@ public class CommandLineBuilder {
 
     private final CommandLine commandLine;
 
-    private final GitGrepCommandOptions options;
-
-    public CommandLineBuilder(String command, GitGrepCommandOptions options) {
+    public CommandLineBuilder(String command) {
         this.commandLine = new CommandLine(command);
-        this.options = options;
     }
 
     public CommandLineBuilder withArgument(String argument) {
@@ -21,7 +18,7 @@ public class CommandLineBuilder {
         return this;
     }
 
-    public CommandLineBuilder withArgument(Predicate<GitGrepCommandOptions> predicate, String argument) {
+    public <T> CommandLineBuilder withArgument(T options, Predicate<T> predicate, String argument) {
         if (predicate.test(options)) {
             commandLine.addArgument(argument, false);
         }

@@ -5,15 +5,15 @@ import org.springframework.stereotype.Component;
 
 import org.yu55.yagga.core.annotate.model.AnnotateRequest;
 import org.yu55.yagga.core.annotate.model.AnnotateResponse;
-import org.yu55.yagga.handler.git.command.annotate.GitAnnotateHandler;
+import org.yu55.yagga.handler.api.command.annotate.AnnotateHandler;
 
 @Component
 public class AnnotateService {
 
-    private final GitAnnotateHandler gitAnnotateHandler;
+    private final AnnotateHandler gitAnnotateHandler;
 
     @Autowired
-    public AnnotateService(GitAnnotateHandler gitAnnotateHandler) {
+    public AnnotateService(AnnotateHandler gitAnnotateHandler) {
         this.gitAnnotateHandler = gitAnnotateHandler;
     }
 

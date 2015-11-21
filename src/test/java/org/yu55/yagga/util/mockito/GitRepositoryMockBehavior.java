@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import java.util.List;
 
 import org.yu55.yagga.core.grep.model.GrepResponseLine;
+import org.yu55.yagga.handler.api.command.grep.GrepParameters;
 import org.yu55.yagga.handler.git.GitRepository;
 import org.yu55.yagga.handler.git.command.grep.GitGrepCommandOptions;
 
@@ -27,7 +28,7 @@ public class GitRepositoryMockBehavior extends MockBehavior<GitRepository> {
     }
 
     public GitRepositoryMockBehavior returnGrepResponse(List<GrepResponseLine> grepResponseLineList) {
-        when(mock.grep(anyString(), any(GitGrepCommandOptions.class)))
+        when(mock.grep(any(GrepParameters.class)))
                 .thenReturn(grepResponseLineList);
         return this;
     }
