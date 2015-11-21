@@ -1,9 +1,8 @@
-package org.yu55.yagga.handler.git.command.common;
+package org.yu55.yagga.handler.generic.command;
 
 import java.util.function.Predicate;
 
 import org.apache.commons.exec.CommandLine;
-import org.yu55.yagga.handler.git.command.grep.GitGrepCommandOptions;
 
 public class CommandLineBuilder {
 

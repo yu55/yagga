@@ -7,15 +7,15 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.yu55.yagga.core.grep.model.GrepResponseLine;
-import org.yu55.yagga.handler.git.command.common.GitCommandOutput;
+import org.yu55.yagga.handler.generic.command.CommandOutput;
 
 public class GitGrepResponseLineFactory {
 
-    public static List<GrepResponseLine> factorizeGrepResponseLinesList(GitCommandOutput gitCommandOutput) {
-        if (gitCommandOutput.getExitValue() == 0) {
-            return gitCommandOutput.getOutputLines().stream().map(
+    public static List<GrepResponseLine> factorizeGrepResponseLinesList(CommandOutput commandOutput) {
+        if (commandOutput.getExitValue() == 0) {
+            return commandOutput.getOutputLines().stream().map(
                     outputLine ->
-                            factorizeGrepResponseLine(gitCommandOutput.getRepositoryName(),
+                            factorizeGrepResponseLine(commandOutput.getRepositoryName(),
                                     outputLine.getLine())).collect(toList());
         } else {
             return Collections.emptyList();

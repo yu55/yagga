@@ -12,8 +12,9 @@ import org.yu55.yagga.core.grep.model.GrepResponseLine;
 import org.yu55.yagga.handler.api.DvcsRepository;
 import org.yu55.yagga.handler.api.command.annotate.AnnotateParameters;
 import org.yu55.yagga.handler.api.command.grep.GrepParameters;
+import org.yu55.yagga.handler.generic.command.CommandExecutorFactory;
+import org.yu55.yagga.handler.generic.command.CommandOutput;
 import org.yu55.yagga.handler.git.command.common.GitCommandExecutorFactory;
-import org.yu55.yagga.handler.git.command.common.GitCommandOutput;
 
 /**
  * This class represents a git repository in a file system.
@@ -22,16 +23,16 @@ public class GitRepository implements DvcsRepository {
 
     private final File directory;
 
-    private final GitCommandExecutorFactory gitCommandExecutorFactory;
+    private final GitCommandExecutorFactory commandExecutorFactory;
 
     public GitRepository(File directory,
-                         GitCommandExecutorFactory gitCommandExecutorFactory) {
+                         GitCommandExecutorFactory commandExecutorFactory) {
 
         if (directory == null) {
             throw new IllegalArgumentException("Directory cannot be null.");
         }
         this.directory = directory;
-        this.gitCommandExecutorFactory = gitCommandExecutorFactory;
+        this.commandExecutorFactory = commandExecutorFactory;
     }
 
     /**
@@ -53,22 +54,22 @@ public class GitRepository implements DvcsRepository {
     }
 
     public void pull() {
-        gitCommandExecutorFactory.factorizePull(this).execute();
+        commandExecutorFactory.factorizePull(this).execute();
     }
 
     @Override
     public AnnotateResponse annotate(AnnotateParameters annotateParameters) {
-        GitCommandOutput gitCommandOutput = gitCommandExecutorFactory.factorizeAnnotate(this, annotateParameters).execute();
+        CommandOutput commandOutput = commandExecutorFactory.factorizeAnnotate(this, annotateParameters).execute();
 
         // perhaps this should be command-dependent
-        return factorizeAnnotateResponse(gitCommandOutput);
+        return factorizeAnnotateResponse(commandOutput);
     }
 
     @Override
     public List<GrepResponseLine> grep(GrepParameters grepParameters) {
-        GitCommandOutput gitCommandOutput = gitCommandExecutorFactory.factorizeGrep(this, grepParameters).execute();
+        CommandOutput commandOutput = commandExecutorFactory.factorizeGrep(this, grepParameters).execute();
 
         // perhaps this should be command-dependent
-        return factorizeGrepResponseLinesList(gitCommandOutput);
+        return factorizeGrepResponseLinesList(commandOutput);
     }
 }

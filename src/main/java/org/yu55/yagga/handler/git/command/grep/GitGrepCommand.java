@@ -2,7 +2,7 @@ package org.yu55.yagga.handler.git.command.grep;
 
 import org.apache.commons.exec.CommandLine;
 import org.yu55.yagga.handler.api.command.grep.GrepParameters;
-import org.yu55.yagga.handler.git.command.common.CommandLineBuilder;
+import org.yu55.yagga.handler.generic.command.CommandLineBuilder;
 import org.yu55.yagga.handler.git.command.common.GitCommand;
 
 public class GitGrepCommand implements GitCommand {

@@ -3,18 +3,18 @@ package org.yu55.yagga.handler.git.command.annotate;
 import java.util.List;
 
 import org.yu55.yagga.core.annotate.model.AnnotateResponse;
-import org.yu55.yagga.handler.git.command.common.GitCommandOutput;
-import org.yu55.yagga.handler.git.command.common.GitCommandOutputLine;
+import org.yu55.yagga.handler.generic.command.CommandOutput;
+import org.yu55.yagga.handler.generic.command.CommandOutputLine;
 
 public class GitAnnotateResponseFactory {
 
-    public static AnnotateResponse factorizeAnnotateResponse(GitCommandOutput output) {
-        List<GitCommandOutputLine> outputLines = output.getOutputLines();
+    public static AnnotateResponse factorizeAnnotateResponse(CommandOutput output) {
+        List<CommandOutputLine> outputLines = output.getOutputLines();
 
         StringBuilder annotationsStringBuilder = new StringBuilder();
         StringBuilder fileContentStringBuilder = new StringBuilder();
 
-        for (GitCommandOutputLine outputLine : outputLines) {
+        for (CommandOutputLine outputLine : outputLines) {
             String annotatedLine = outputLine.getLine();
             if (output.getExitValue() == 0) {
                 generateSuccessfulContent(annotationsStringBuilder, fileContentStringBuilder, annotatedLine);

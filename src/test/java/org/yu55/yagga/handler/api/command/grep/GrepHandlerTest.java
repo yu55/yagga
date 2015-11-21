@@ -1,18 +1,17 @@
-package org.yu55.yagga.handler.git.command.grep;
-
-import static java.util.Arrays.asList;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.yu55.yagga.core.grep.model.GrepResponseAssert.assertThat;
-import static org.yu55.yagga.util.mockito.GitRepositoryMockBehavior.should;
+package org.yu55.yagga.handler.api.command.grep;
 
 import org.junit.Test;
 import org.yu55.yagga.core.grep.model.GrepRequest;
 import org.yu55.yagga.core.grep.model.GrepResponse;
 import org.yu55.yagga.core.grep.model.GrepResponseLine;
-import org.yu55.yagga.handler.Repositories;
-import org.yu55.yagga.handler.api.command.grep.GrepHandler;
-import org.yu55.yagga.handler.git.GitRepository;
+import org.yu55.yagga.handler.api.DvcsRepository;
+import org.yu55.yagga.handler.generic.Repositories;
+
+import static java.util.Arrays.asList;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.yu55.yagga.core.grep.model.GrepResponseAssert.assertThat;
+import static org.yu55.yagga.util.mockito.DvcsRepositoryMockBehavior.should;
 
 public class GrepHandlerTest {
 
@@ -22,7 +21,7 @@ public class GrepHandlerTest {
         GrepResponseLine matchingResponseLine =
                 new GrepResponseLine("myRepository", "Hello.java", 5, "public class Hello {");
 
-        GitRepository matchingRepository = should(GitRepository.class)
+        DvcsRepository matchingRepository = should(DvcsRepository.class)
                 .returnDirectoryName("myRepository")
                 .returnGrepResponse(asList(matchingResponseLine))
                 .get();
@@ -30,7 +29,7 @@ public class GrepHandlerTest {
         GrepResponseLine otherResponseLine =
                 new GrepResponseLine("otherRepository", "Bye.java", 3, "public class Bye {");
 
-        GitRepository otherRepository = should(GitRepository.class)
+        DvcsRepository otherRepository = should(DvcsRepository.class)
                 .returnDirectoryName("otherRepository")
                 .returnGrepResponse(asList(otherResponseLine))
                 .get();

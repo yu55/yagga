@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.junit.Test;
 import org.yu55.yagga.core.grep.model.GrepResponseLine;
-import org.yu55.yagga.handler.git.command.common.GitCommandOutput;
-import org.yu55.yagga.handler.git.command.common.GitCommandOutputLine;
+import org.yu55.yagga.handler.generic.command.CommandOutput;
+import org.yu55.yagga.handler.generic.command.CommandOutputLine;
 
 public class GitGrepResponseLineFactoryTest {
 
@@ -34,17 +34,17 @@ public class GitGrepResponseLineFactoryTest {
     public void shouldReturnGrepResponseLinesList() {
         // given
         String repositoryName = "myRepository";
-        GitCommandOutput gitCommandOutput = new GitCommandOutput(repositoryName);
-        gitCommandOutput.addOutputLine(new GitCommandOutputLine(
+        CommandOutput commandOutput = new CommandOutput(repositoryName);
+        commandOutput.addOutputLine(new CommandOutputLine(
                 "src/main/java/org/yu55/yagga/core/grep/model/GrepRequest.java:13:public class GrepRequest {"
         ));
-        gitCommandOutput.addOutputLine(new GitCommandOutputLine(
+        commandOutput.addOutputLine(new CommandOutputLine(
                 "src/main/java/org/yu55/yagga/core/grep/model/GrepResponseLine.java:25:public class GrepResponseLine {"
         ));
 
         // when
         List<GrepResponseLine> grepResponseLines = GitGrepResponseLineFactory
-                .factorizeGrepResponseLinesList(gitCommandOutput);
+                .factorizeGrepResponseLinesList(commandOutput);
 
         // then
         assertThat(grepResponseLines).hasSize(2);
@@ -63,11 +63,11 @@ public class GitGrepResponseLineFactoryTest {
     @Test
     public void shouldReturnEmptyGrepResponseLinesListWhenCommandFailed() {
         // given
-        GitCommandOutput gitCommandOutput = new GitCommandOutput("myRepository", 921);
+        CommandOutput commandOutput = new CommandOutput("myRepository", 921);
 
         // when
         List<GrepResponseLine> grepResponseLines = GitGrepResponseLineFactory
-                .factorizeGrepResponseLinesList(gitCommandOutput);
+                .factorizeGrepResponseLinesList(commandOutput);
 
         // then
         assertThat(grepResponseLines).isEmpty();

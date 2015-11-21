@@ -1,35 +1,27 @@
 package org.yu55.yagga.handler.git;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.Test;
 import org.yu55.yagga.core.annotate.model.AnnotateResponse;
-import org.yu55.yagga.core.grep.model.GrepRequest;
 import org.yu55.yagga.core.grep.model.GrepResponseLine;
 import org.yu55.yagga.handler.api.command.annotate.AnnotateParameters;
 import org.yu55.yagga.handler.api.command.grep.GrepParameters;
-import org.yu55.yagga.handler.git.command.common.GitCommandExecutor;
+import org.yu55.yagga.handler.generic.command.CommandExecutor;
+import org.yu55.yagga.handler.generic.command.CommandOutput;
+import org.yu55.yagga.handler.generic.command.CommandOutputLine;
 import org.yu55.yagga.handler.git.command.common.GitCommandExecutorFactory;
-import org.yu55.yagga.handler.git.command.common.GitCommandOutput;
-import org.yu55.yagga.handler.git.command.common.GitCommandOutputLine;
-import org.yu55.yagga.handler.git.command.grep.GitGrepCommandOptions;
 
-/*
-TODO: these tests are too complex. Something is wrong...
- */
+import java.io.File;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+
 public class GitRepositoryTest {
 
     @Test
     public void testPull() throws Exception {
         // given
-        GitCommandExecutor executor = mock(GitCommandExecutor.class);
+        CommandExecutor executor = mock(CommandExecutor.class);
         GitCommandExecutorFactory commandExecutorFactory = mock(GitCommandExecutorFactory.class);
         File file = mock(File.class);
         GitRepository repository = new GitRepository(file, commandExecutorFactory);
@@ -46,17 +38,17 @@ public class GitRepositoryTest {
     @Test
     public void testAnnotate() throws Exception {
         // given
-        GitCommandExecutor executor = mock(GitCommandExecutor.class);
+        CommandExecutor executor = mock(CommandExecutor.class);
         GitCommandExecutorFactory commandExecutorFactory = mock(GitCommandExecutorFactory.class);
         File file = mock(File.class);
         GitRepository repository = new GitRepository(file, commandExecutorFactory);
-        GitCommandOutput gitCommandOutput = new GitCommandOutput(file.getName());
+        CommandOutput commandOutput = new CommandOutput(file.getName());
 
         AnnotateParameters annotateParameters = new AnnotateParameters("build.gradle");
 
         when(commandExecutorFactory.factorizeAnnotate(repository, annotateParameters)).thenReturn(executor);
-        when(executor.execute()).thenReturn(gitCommandOutput);
-        gitCommandOutput.addOutputLine(new GitCommandOutputLine(
+        when(executor.execute()).thenReturn(commandOutput);
+        commandOutput.addOutputLine(new CommandOutputLine(
                 "716ec6a6        (  Marcin P     2015-09-17 21:23:13 +0200       1)buildscript {"));
 
         // when
@@ -71,20 +63,20 @@ public class GitRepositoryTest {
     @Test
     public void testGrep() throws Exception {
         // given
-        GitCommandExecutor executor = mock(GitCommandExecutor.class);
-        GitCommandExecutorFactory commandExecutorFactory = mock(GitCommandExecutorFactory.class);
+        CommandExecutor executor = mock(CommandExecutor.class);
+        GitCommandExecutorFactory commandExecutorFactory = mock(GitCommandExecutorFactory.class);;
         File repositoryDirectory = mock(File.class);
         when(repositoryDirectory.getName()).thenReturn("repo");
         GitRepository repository = new GitRepository(repositoryDirectory, commandExecutorFactory);
-        GitCommandOutput gitCommandOutput = new GitCommandOutput(repositoryDirectory.getName());
+        CommandOutput commandOutput = new CommandOutput(repositoryDirectory.getName());
 
         String wanted = "buildscript";
         boolean ignoreCase = false;
         GrepParameters grepParameters = new GrepParameters(wanted, ignoreCase);
 
         when(commandExecutorFactory.factorizeGrep(repository, grepParameters)).thenReturn(executor);
-        when(executor.execute()).thenReturn(gitCommandOutput);
-        gitCommandOutput.addOutputLine(new GitCommandOutputLine("build.gradle:1:buildscript {"));
+        when(executor.execute()).thenReturn(commandOutput);
+        commandOutput.addOutputLine(new CommandOutputLine("build.gradle:1:buildscript {"));
 
         // when
         List<GrepResponseLine> grep = repository.grep(grepParameters);

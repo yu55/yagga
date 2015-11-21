@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.yu55.yagga.core.grep.model.GrepRequest;
 import org.yu55.yagga.core.grep.model.GrepResponse;
-import org.yu55.yagga.handler.Repositories;
-import org.yu55.yagga.handler.api.command.grep.GrepParameters;
+import org.yu55.yagga.handler.api.DvcsRepository;
+import org.yu55.yagga.handler.generic.Repositories;
 import org.yu55.yagga.handler.git.GitRepository;
-import org.yu55.yagga.handler.git.command.grep.GitGrepCommandOptions;
 
 @Component
 public class GrepHandler {
@@ -27,7 +26,7 @@ public class GrepHandler {
     public GrepResponse grep(GrepRequest grepRequest) {
         GrepResponse response = new GrepResponse(RESPONSE_LINES_LIMIT);
 
-        for (GitRepository repository : repositories.getRepositories()) {
+        for (DvcsRepository repository : repositories.getRepositories()) {
             if (grepRequest.hasRepository(repository.getDirectoryName())) {
                 if (!response.addAllGrepResponseLines(
                         repository.grep(GrepParameters.fromRequest(grepRequest)))) {
