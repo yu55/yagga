@@ -1,10 +1,9 @@
 package org.yu55.yagga.handler.git.command.common;
 
-import org.apache.commons.exec.CommandLine;
+import org.yu55.yagga.handler.generic.command.Command;
 
-public interface GitCommand {
+public interface GitCommand extends Command {
 
     String COMMAND = "git";
 
-    CommandLine getCommandLine();
 }

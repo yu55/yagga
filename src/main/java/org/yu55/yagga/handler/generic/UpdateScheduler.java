@@ -1,27 +1,29 @@
-package org.yu55.yagga.handler.git;
+package org.yu55.yagga.handler.generic;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.yu55.yagga.handler.api.DvcsRepository;
+import org.yu55.yagga.handler.git.GitRepository;
 
 @Component
-public class GitPullScheduler {
+public class UpdateScheduler {
 
-    private static final Logger logger = LoggerFactory.getLogger(GitPullScheduler.class);
+    private static final Logger logger = LoggerFactory.getLogger(UpdateScheduler.class);
 
-    private GitRepositories gitRepositories;
+    private Repositories repositories;
 
     @Autowired
-    public GitPullScheduler(GitRepositories gitRepositories) {
-        this.gitRepositories = gitRepositories;
+    public UpdateScheduler(Repositories repositories) {
+        this.repositories = repositories;
     }
 
     @Scheduled(fixedRateString = "${repositories.refreshRateInMiliseconds}")
     public void pull() {
         logger.info("Pulling repositories...");
-        gitRepositories.getRepositories().forEach(GitRepository::pull);
+        repositories.getRepositories().forEach(DvcsRepository::pull);
         logger.info("Pulling repositories finished");
     }
 }

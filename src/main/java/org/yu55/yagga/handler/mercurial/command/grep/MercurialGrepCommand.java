@@ -1,19 +1,19 @@
-package org.yu55.yagga.handler.git.command.grep;
+package org.yu55.yagga.handler.mercurial.command.grep;
 
 import org.apache.commons.exec.CommandLine;
 import org.yu55.yagga.handler.api.command.grep.GrepParameters;
 import org.yu55.yagga.handler.generic.command.CommandLineBuilder;
-import org.yu55.yagga.handler.git.command.common.GitCommand;
+import org.yu55.yagga.handler.mercurial.command.common.MercurialCommand;
 
-public class GitGrepCommand implements GitCommand {
-
-    public static final String COMMAND_GREP = "grep";
+public class MercurialGrepCommand implements MercurialCommand {
 
     private final GrepParameters grepParameters;
 
-    public GitGrepCommand(GrepParameters grepParameters) {
+    public MercurialGrepCommand(GrepParameters grepParameters) {
         this.grepParameters = grepParameters;
     }
+
+    public static final String COMMAND_GREP = "grep";
 
     private String escapeSearchPhraseArgument(String wanted) {
         if (wanted.startsWith("-") || wanted.startsWith(" ")) {
@@ -28,7 +28,6 @@ public class GitGrepCommand implements GitCommand {
         CommandLine commandLine = new CommandLineBuilder(COMMAND)
                 .withArgument(COMMAND_GREP)
                 .withArgument("-n")
-                .withArgument("-I")
                 .withArgument(grepParameters, GrepParameters::isIgnoreCase, "-i")
                 .withArgument(escapeSearchPhraseArgument(grepParameters.getWanted()))
                 .build();

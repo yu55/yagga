@@ -1,15 +1,15 @@
-package org.yu55.yagga.handler.git.command.grep;
+package org.yu55.yagga.handler.mercurial.command.grep;
 
-import static java.util.stream.Collectors.toList;
+import org.yu55.yagga.core.grep.model.GrepResponseLine;
+import org.yu55.yagga.handler.generic.command.CommandOutput;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.yu55.yagga.core.grep.model.GrepResponseLine;
-import org.yu55.yagga.handler.generic.command.CommandOutput;
+import static java.util.stream.Collectors.toList;
 
-public class GitGrepResponseLineFactory {
+public class MercurialGrepResponseLineFactory {
 
     public static List<GrepResponseLine> factorizeGrepResponseLinesList(CommandOutput commandOutput) {
         if (commandOutput.getExitValue() == 0) {
@@ -25,6 +25,7 @@ public class GitGrepResponseLineFactory {
     public static GrepResponseLine factorizeGrepResponseLine(String repository, String grepOutputLine) {
         StringTokenizer stringTokenizer = new StringTokenizer(grepOutputLine, ":");
         String file = stringTokenizer.nextToken();
+        String revision = stringTokenizer.nextToken();
         int lineNumber = 0;
         try {
             lineNumber = stringTokenizer.hasMoreElements() ? Integer.parseInt(stringTokenizer.nextToken()) : 0;

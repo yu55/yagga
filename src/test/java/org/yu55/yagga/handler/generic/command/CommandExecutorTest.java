@@ -1,4 +1,4 @@
-package org.yu55.yagga.handler.git.command.common;
+package org.yu55.yagga.handler.generic.command;
 
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,25 +14,25 @@ import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.Executor;
 import org.junit.Test;
 
-public class GitCommandExecutorTest {
+public class CommandExecutorTest {
 
     @Test
     public void shouldExecuteCommand() throws IOException {
         // given
         Executor executor = mock(Executor.class);
         when(executor.getWorkingDirectory()).thenReturn(new File("/my/repo"));
-        GitCommandOutput output = new GitCommandOutput(executor.getWorkingDirectory().getName());
-        output.addOutputLine(new GitCommandOutputLine("First line."));
-        output.addOutputLine(new GitCommandOutputLine("Second line."));
-        GitCommandExecutor gitCommandExecutor = new GitCommandExecutor(mock(GitCommand.class), executor, () -> output);
+        CommandOutput output = new CommandOutput(executor.getWorkingDirectory().getName());
+        output.addOutputLine(new CommandOutputLine("First line."));
+        output.addOutputLine(new CommandOutputLine("Second line."));
+        CommandExecutor commandExecutor = new CommandExecutor(mock(Command.class), executor, () -> output);
 
         // when
-        GitCommandOutput expectedOutput = gitCommandExecutor.execute();
+        CommandOutput expectedOutput = commandExecutor.execute();
 
         // then
         verify(executor).execute(any(CommandLine.class));
         assertThat(expectedOutput.getRepositoryName()).isEqualTo("repo");
-        assertThat(expectedOutput.getOutputLines().stream().map(GitCommandOutputLine::getLine).collect(toList()))
+        assertThat(expectedOutput.getOutputLines().stream().map(CommandOutputLine::getLine).collect(toList()))
                 .containsExactly("First line.", "Second line.");
     }
 

@@ -1,25 +1,25 @@
-package org.yu55.yagga.handler.git.command.annotate;
+package org.yu55.yagga.handler.api.command.annotate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.yu55.yagga.core.annotate.model.AnnotateRequest;
 import org.yu55.yagga.core.annotate.model.AnnotateResponse;
-import org.yu55.yagga.handler.git.GitRepositories;
+import org.yu55.yagga.handler.generic.Repositories;
 
 @Component
-public class GitAnnotateHandler {
+public class AnnotateHandler {
 
-    private GitRepositories repositories;
+    private Repositories repositories;
 
     @Autowired
-    public GitAnnotateHandler(GitRepositories repositories) {
+    public AnnotateHandler(Repositories repositories) {
         this.repositories = repositories;
     }
 
     public AnnotateResponse annotate(AnnotateRequest annotateRequest) {
         return
                 repositories.getRepositoryByDirectoryName(annotateRequest.getRepository())
-                        .map(repo -> repo.annotate(annotateRequest.getFile()))
+                        .map(repo -> repo.annotate(AnnotateParameters.fromRequest(annotateRequest)))
                         .get();
     }
 

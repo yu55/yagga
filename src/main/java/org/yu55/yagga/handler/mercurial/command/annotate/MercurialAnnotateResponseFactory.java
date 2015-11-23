@@ -1,12 +1,13 @@
-package org.yu55.yagga.handler.git.command.annotate;
+package org.yu55.yagga.handler.mercurial.command.annotate;
 
-import java.util.List;
-
+import org.apache.commons.lang3.StringUtils;
 import org.yu55.yagga.core.annotate.model.AnnotateResponse;
 import org.yu55.yagga.handler.generic.command.CommandOutput;
 import org.yu55.yagga.handler.generic.command.CommandOutputLine;
 
-public class GitAnnotateResponseFactory {
+import java.util.List;
+
+public class MercurialAnnotateResponseFactory {
 
     public static AnnotateResponse factorizeAnnotateResponse(CommandOutput output) {
         List<CommandOutputLine> outputLines = output.getOutputLines();
@@ -28,7 +29,7 @@ public class GitAnnotateResponseFactory {
 
     private static void generateSuccessfulContent(StringBuilder annotationsStringBuilder,
                                                   StringBuilder fileContentStringBuilder, String annotatedLine) {
-        int splitIndex = annotatedLine.indexOf(")");
+        int splitIndex = StringUtils.ordinalIndexOf(annotatedLine,":", 4);
         annotationsStringBuilder.append(annotatedLine.substring(0, splitIndex + 1)).append("\n");
         fileContentStringBuilder.append(annotatedLine.substring(splitIndex + 1)).append("\n");
     }

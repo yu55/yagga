@@ -1,33 +1,33 @@
-package org.yu55.yagga.handler.git.command.grep;
-
-import static org.yu55.yagga.util.assertion.CustomAssertions.assertThat;
-
-import java.util.List;
+package org.yu55.yagga.handler.mercurial.command.grep;
 
 import org.junit.Test;
 import org.yu55.yagga.core.grep.model.GrepResponseLine;
 import org.yu55.yagga.handler.generic.command.CommandOutput;
 import org.yu55.yagga.handler.generic.command.CommandOutputLine;
 
-public class GitGrepResponseLineFactoryTest {
+import java.util.List;
+
+import static org.yu55.yagga.util.assertion.CustomAssertions.assertThat;
+
+public class MercurialGrepResponseLineFactoryTest {
 
     @Test
     public void shouldReturnGrepResponseLine() throws Exception {
         // given
         String grepOutputLine =
-                "src/main/java/org/yu55/yagga/core/grep/model/GrepRequest.java:13:public class GrepRequest {";
+                "src/main/java/org/yu55/yagga/Application.java:1:6:@SpringBootApplication";
         String repositoryName = "myRepository";
 
         // when
-        GrepResponseLine expected = GitGrepResponseLineFactory.factorizeGrepResponseLine(repositoryName,
+        GrepResponseLine expected = MercurialGrepResponseLineFactory.factorizeGrepResponseLine(repositoryName,
                 grepOutputLine);
 
         // then
         assertThat(expected)
                 .hasRepository(repositoryName)
-                .hasLineNumber(13)
-                .hasFile("src/main/java/org/yu55/yagga/core/grep/model/GrepRequest.java")
-                .hasMatchedTextLine("public class GrepRequest {");
+                .hasLineNumber(6)
+                .hasFile("src/main/java/org/yu55/yagga/Application.java")
+                .hasMatchedTextLine("@SpringBootApplication");
     }
 
     @Test
@@ -36,37 +36,37 @@ public class GitGrepResponseLineFactoryTest {
         String repositoryName = "myRepository";
         CommandOutput commandOutput = new CommandOutput(repositoryName);
         commandOutput.addOutputLine(new CommandOutputLine(
-                "src/main/java/org/yu55/yagga/core/grep/model/GrepRequest.java:13:public class GrepRequest {"
+                "src/main/java/org/yu55/yagga/Application.java:1:6:@SpringBootApplication"
         ));
         commandOutput.addOutputLine(new CommandOutputLine(
-                "src/main/java/org/yu55/yagga/core/grep/model/GrepResponseLine.java:25:public class GrepResponseLine {"
+                "src/main/java/org/yu55/yagga/ApplicationTest.java:1:8:public class ApplicationTest {"
         ));
 
         // when
-        List<GrepResponseLine> grepResponseLines = GitGrepResponseLineFactory
+        List<GrepResponseLine> grepResponseLines = MercurialGrepResponseLineFactory
                 .factorizeGrepResponseLinesList(commandOutput);
 
         // then
         assertThat(grepResponseLines).hasSize(2);
         assertThat(grepResponseLines.get(0))
                 .hasRepository(repositoryName)
-                .hasLineNumber(13)
-                .hasFile("src/main/java/org/yu55/yagga/core/grep/model/GrepRequest.java")
-                .hasMatchedTextLine("public class GrepRequest {");
+                .hasLineNumber(6)
+                .hasFile("src/main/java/org/yu55/yagga/Application.java")
+                .hasMatchedTextLine("@SpringBootApplication");
         assertThat(grepResponseLines.get(1))
                 .hasRepository(repositoryName)
-                .hasLineNumber(25)
-                .hasFile("src/main/java/org/yu55/yagga/core/grep/model/GrepResponseLine.java")
-                .hasMatchedTextLine("public class GrepResponseLine {");
+                .hasLineNumber(8)
+                .hasFile("src/main/java/org/yu55/yagga/ApplicationTest.java")
+                .hasMatchedTextLine("public class ApplicationTest {");
     }
 
     @Test
     public void shouldReturnEmptyGrepResponseLinesListWhenCommandFailed() {
         // given
-        CommandOutput commandOutput = new CommandOutput("myRepository", 921);
+        CommandOutput commandOutput = new CommandOutput("myRepository", 1);
 
         // when
-        List<GrepResponseLine> grepResponseLines = GitGrepResponseLineFactory
+        List<GrepResponseLine> grepResponseLines = MercurialGrepResponseLineFactory
                 .factorizeGrepResponseLinesList(commandOutput);
 
         // then

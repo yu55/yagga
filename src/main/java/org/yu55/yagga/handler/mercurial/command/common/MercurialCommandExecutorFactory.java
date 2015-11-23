@@ -1,4 +1,4 @@
-package org.yu55.yagga.handler.git.command.common;
+package org.yu55.yagga.handler.mercurial.command.common;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -7,30 +7,31 @@ import org.yu55.yagga.handler.api.command.annotate.AnnotateParameters;
 import org.yu55.yagga.handler.api.command.grep.GrepParameters;
 import org.yu55.yagga.handler.generic.command.CommandExecutor;
 import org.yu55.yagga.handler.generic.command.CommandExecutorFactory;
-import org.yu55.yagga.handler.git.command.annotate.GitAnnotateCommand;
 import org.yu55.yagga.handler.git.command.grep.GitGrepCommand;
-import org.yu55.yagga.handler.git.command.pull.GitPullCommand;
+import org.yu55.yagga.handler.mercurial.command.annotate.MercurialAnnotateCommand;
+import org.yu55.yagga.handler.mercurial.command.grep.MercurialGrepCommand;
+import org.yu55.yagga.handler.mercurial.command.pull.MercurialPullCommand;
 
 @Component
-public class GitCommandExecutorFactory {
+public class MercurialCommandExecutorFactory {
 
     private CommandExecutorFactory commandExecutorFactory;
 
     @Autowired
-    public GitCommandExecutorFactory(CommandExecutorFactory commandExecutorFactory) {
+    public MercurialCommandExecutorFactory(CommandExecutorFactory commandExecutorFactory) {
         this.commandExecutorFactory = commandExecutorFactory;
     }
 
     public CommandExecutor factorizePull(DvcsRepository repository) {
-        return commandExecutorFactory.factorize(repository, new GitPullCommand());
+        return commandExecutorFactory.factorize(repository, new MercurialPullCommand());
     }
 
     public CommandExecutor factorizeAnnotate(DvcsRepository repository, AnnotateParameters annotateParameters) {
-        return commandExecutorFactory.factorize(repository, new GitAnnotateCommand(annotateParameters));
+        return commandExecutorFactory.factorize(repository, new MercurialAnnotateCommand(annotateParameters));
     }
 
     public CommandExecutor factorizeGrep(DvcsRepository repository,
                                          GrepParameters grepParameters) {
-        return commandExecutorFactory.factorize(repository, new GitGrepCommand(grepParameters));
+        return commandExecutorFactory.factorize(repository, new MercurialGrepCommand(grepParameters));
     }
 }

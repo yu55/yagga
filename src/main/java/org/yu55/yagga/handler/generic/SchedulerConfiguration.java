@@ -1,4 +1,4 @@
-package org.yu55.yagga.handler.git;
+package org.yu55.yagga.handler.generic;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
