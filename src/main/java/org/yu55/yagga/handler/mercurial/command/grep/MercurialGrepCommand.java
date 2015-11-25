@@ -16,7 +16,7 @@ public class MercurialGrepCommand implements MercurialCommand {
     public static final String COMMAND_GREP = "grep";
 
     private String escapeSearchPhraseArgument(String wanted) {
-        if (wanted.startsWith("-") || wanted.startsWith(" ")) {
+        if (wanted.startsWith("-") || wanted.startsWith(" ") || wanted.startsWith("*")) {
             return "\\" + wanted;
         } else {
             return wanted;

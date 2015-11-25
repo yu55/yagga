@@ -16,7 +16,7 @@ public class GitGrepCommand implements GitCommand {
     }
 
     private String escapeSearchPhraseArgument(String wanted) {
-        if (wanted.startsWith("-") || wanted.startsWith(" ")) {
+        if (wanted.startsWith("-") || wanted.startsWith(" ") || wanted.startsWith("*")) {
             return "\\" + wanted;
         } else {
             return wanted;
