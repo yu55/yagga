@@ -7,7 +7,7 @@ This is a very simple web application that allows you to git grep over many repo
 ## Requirements
 * Java 8
 * globally recognizable `git` command in operating system (added to $PATH etc.)
-* to mercurial users: same as above for 'hg' command
+* to mercurial users: same as above for `hg` command
 
 ## Installation & running
 * clone this repository to your local machine
