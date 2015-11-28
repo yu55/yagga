@@ -2,11 +2,12 @@
 
 # Yet Another Git Grep Application (yagga)
 
-This is a simple web application that allows you to git grep over many repositories via web interface.
+This is a very simple web application that allows you to git grep over many repositories via web interface. This application also supports grep on mercurial repositories.
 
 ## Requirements
 * Java 8
 * globally recognizable `git` command in operating system (added to $PATH etc.)
+* to mercurial users: same as above for 'hg' command
 
 ## Installation & running
 * clone this repository to your local machine
