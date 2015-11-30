@@ -1,5 +1,8 @@
 package org.yu55.yagga.handler.api;
 
+import static org.yu55.yagga.handler.git.GitRepository.isGitRepository;
+import static org.yu55.yagga.handler.mercurial.MercurialRepository.isMercurialRepository;
+
 import java.io.File;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,10 @@ public class DvcsRepositoryFactory {
     @Autowired
     public DvcsRepositoryFactory(GitCommandExecutorFactory gitCommandExecutorFactory,
                                  MercurialCommandExecutorFactory mercurialCommandExecutorFactory) {
+
+        if (gitCommandExecutorFactory == null || mercurialCommandExecutorFactory == null) {
+            throw new IllegalArgumentException("No command executor factory bean passed can be null");
+        }
         this.gitCommandExecutorFactory = gitCommandExecutorFactory;
         this.mercurialCommandExecutorFactory = mercurialCommandExecutorFactory;
     }
@@ -35,9 +42,13 @@ public class DvcsRepositoryFactory {
      *
      * @param directory the repository directory
      * @return the created instance of repository
+     * @throws IllegalArgumentException         if the directory is null
      * @throws RepositoryInstantiationException if no supported repository can be recognized
      */
     public DvcsRepository factorizeRepository(File directory) throws RepositoryInstantiationException {
+        if (directory == null) {
+            throw new IllegalArgumentException("Directory cannot be null");
+        }
         if (isGitRepository(directory)) {
             return new GitRepository(directory, gitCommandExecutorFactory);
         }
@@ -45,14 +56,6 @@ public class DvcsRepositoryFactory {
             return new MercurialRepository(directory, mercurialCommandExecutorFactory);
         }
         throw new RepositoryInstantiationException(directory);
-    }
-
-    private boolean isGitRepository(File directory) {
-        return directory.isDirectory() && new File(directory, ".git").exists();
-    }
-
-    private boolean isMercurialRepository(File directory) {
-        return directory.isDirectory() && new File(directory, ".hg").exists();
     }
 
     public static class RepositoryInstantiationException extends Exception {
