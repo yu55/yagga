@@ -1,5 +1,19 @@
 package org.yu55.yagga.handler.mercurial;
 
+import static java.nio.file.Files.createDirectory;
+import static java.nio.file.Files.createTempDirectory;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.yu55.yagga.handler.mercurial.MercurialRepository.isMercurialRepository;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
 import org.junit.Test;
 import org.yu55.yagga.core.annotate.model.AnnotateResponse;
 import org.yu55.yagga.core.grep.model.GrepResponseLine;
@@ -8,19 +22,10 @@ import org.yu55.yagga.handler.api.command.grep.GrepParameters;
 import org.yu55.yagga.handler.generic.command.CommandExecutor;
 import org.yu55.yagga.handler.generic.command.CommandOutput;
 import org.yu55.yagga.handler.generic.command.CommandOutputLine;
-import org.yu55.yagga.handler.git.GitRepository;
-import org.yu55.yagga.handler.git.command.common.GitCommandExecutorFactory;
 import org.yu55.yagga.handler.mercurial.command.common.MercurialCommandExecutorFactory;
 
-import java.io.File;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 public class MercurialRepositoryTest {
+
     @Test
     public void testPull() throws Exception {
         // given
@@ -81,7 +86,8 @@ public class MercurialRepositoryTest {
 
         when(commandExecutorFactory.factorizeGrep(repository, grepParameters)).thenReturn(executor);
         when(executor.execute()).thenReturn(commandOutput);
-        commandOutput.addOutputLine(new CommandOutputLine("src/main/java/org/yu55/yagga/Application.java:1:6:@SpringBootApplication"));
+        commandOutput.addOutputLine(
+                new CommandOutputLine("src/main/java/org/yu55/yagga/Application.java:1:6:@SpringBootApplication"));
 
         // when
         List<GrepResponseLine> grep = repository.grep(grepParameters);
@@ -94,5 +100,18 @@ public class MercurialRepositoryTest {
         assertThat(grepResponseLine.getLineNumber()).isEqualTo(6);
         assertThat(grepResponseLine.getMatchedTextLine()).isEqualTo("@SpringBootApplication");
         assertThat(grepResponseLine.getRepository()).isEqualTo("repo");
+    }
+
+    @Test
+    public void shouldRecognizeDirectoryAsMercurialRepository() throws IOException {
+        // given
+        Path repositoryDir = createTempDirectory("my_mercurial_repository");
+        createDirectory(Paths.get(repositoryDir.toString() + "/.hg"));
+
+        // when
+        boolean isMercurial = isMercurialRepository(repositoryDir.toFile());
+
+        // then
+        assertThat(isMercurial).isTrue();
     }
 }

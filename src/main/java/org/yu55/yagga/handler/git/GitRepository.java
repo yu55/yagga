@@ -6,7 +6,6 @@ import static org.yu55.yagga.handler.git.command.grep.GitGrepResponseLineFactory
 import java.io.File;
 import java.util.List;
 
-
 import org.yu55.yagga.core.annotate.model.AnnotateResponse;
 import org.yu55.yagga.core.grep.model.GrepResponseLine;
 import org.yu55.yagga.handler.api.DvcsRepository;
@@ -26,12 +25,18 @@ public class GitRepository implements DvcsRepository {
 
     public GitRepository(File directory,
                          GitCommandExecutorFactory commandExecutorFactory) {
-
-        if (directory == null) {
-            throw new IllegalArgumentException("Directory cannot be null.");
-        }
         this.directory = directory;
         this.commandExecutorFactory = commandExecutorFactory;
+    }
+
+    /**
+     * Checks if a directory is a git repository
+     *
+     * @param directory the directory to be checked
+     * @return <code>true</code> if the directory is a git repository
+     */
+    public static boolean isGitRepository(File directory) {
+        return directory.isDirectory() && new File(directory, ".git").exists();
     }
 
     /**
