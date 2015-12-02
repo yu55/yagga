@@ -3,36 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>yagga</title>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.28/angular.min.js"></script>
-    <script src="yagga.js"type=""></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.28/angular.min.js" type="text/javascript"></script>
+    <script src="js/grep.js" type="text/javascript"></script>
 </head>
-<body ng-controller="yaggaCtrl">
-<h1 style="font-family: monospace">$ YAGGA</h1>
+<body ng-controller="yaggaGrepCtrl">
+<div style="width: 100%; background-color: #333">
+    <h1 style="color: #eee;font-family: monospace">&nbsp;> YAGGA</h1>
+</div>
+<table border="0" width="100%" cellspacing="0" cellpadding="5px">
+    <tr>
+        <td valign="top" width="35px">
+            <img src="images/yagga.png" width="60" alt="Yagga"/>
+        </td>
+        <td valign="top">
+            <form ng-submit="grep()">
+                <div style="float: left; padding-right: 5em; padding-left: 1em">
+                    <span style="font-size: medium;">Repository:</span>
+                    <br/>
+                    <select name="repositories" size="6" ng-model="multipleSelect" multiple
+                            ng-options="repository for repository in repositories | orderBy:'+'"
+                            ng-change="deselectCheckbox()"></select>
+                    <br/>
+                    <input type="checkbox" ng-model="selected" ng-change="selectAll(selected)">
+                    <span style="font-size: smaller; ">Select all</span>
 
-Provide text to search for:
-<br/>
+                </div>
+                <div style="float: left; padding-right: 1em">
+                    <span style="font-size: medium;">Text to search for:</span>
+                    <br/>
+                    <input type="text" ng-model="wanted" ng-trim="false" size="40"/>
+                    <br/>
+                    <input type="checkbox" ng-model="ignoreCase"/> <span style="font-size: smaller; ">Ignore case</span>
+                </div>
+                <div>
+                    <br/><input type="submit" value="Search">
+                </div>
+            </form>
+        </td>
+    </tr>
+</table>
 
-<form ng-submit="grep()">
-    <input type="text" ng-model="wanted" ng-trim="false">
-    <br/>
-    <input type="checkbox" ng-model="ignoreCase"> <font size="-1">Ignore case</font>
-    <br/>
-    <br/>
-    Choose repositories:
-    <br/>
-    <input type="checkbox" ng-model="selected" ng-change="selectAll(selected)"> <font size="-1">all</font>
-    <br/>
-    <select name="repositories" ng-model="multipleSelect" multiple ng-options="repository for repository in repositories | orderBy:'+'" ng-change="deselectCheckbox()"></select>
-    <br/>
-    <br/>
-    <input type="submit" value="Search">
-</form>
-<br/>
-Results:
-<br/>
+<div style="width: 100%; color: #eee; background-color: #555; font-family: monospace; padding: 0.5em">
+    RESULTS
+</div>
 <code>
     <span style="white-space: nowrap" ng-repeat="grep in greps track by $index">[{{grep.repository}}] {{grep.file}}:{{grep.lineNumber}} {{grep.matchedTextLine}}
-        <a target="_blank" ng-href="preview.html#?repository={{grep.repository}}&file={{escape(grep.file)}}">[Preview]</a>
+        <a target="_blank"
+           ng-href="preview.html#?repository={{grep.repository}}&file={{escape(grep.file)}}">[Preview]</a>
         <br/>
     </span>
     {{message}}
