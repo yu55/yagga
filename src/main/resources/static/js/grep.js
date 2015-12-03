@@ -1,5 +1,5 @@
 var nameApp = angular.module('yagga', []);
-nameApp.controller('yaggaCtrl', function ($scope, $http) {
+nameApp.controller('yaggaGrepCtrl', function ($scope, $http) {
 
     $http.get('repositories').success(function (data) {
         $scope.repositories = data;
