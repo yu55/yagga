@@ -57,12 +57,12 @@
         </tr>
     </table>
 </div>
-<div style="width: 100%; color: #eee; background-color: #555; font-family: monospace; padding: 0.5em; margin-top: 1em;">
+<div style="width: 100%; color: #eee; background-color: #555; font-family: monospace; padding: 0.5em; margin-top: 1em; margin-bottom: 1em">
     RESULTS
 </div>
-<span style="margin-left: 2em">{{message}}</span>
-<div style="margin-left: 1em; height: 10em">
+<div style="margin-left: 1em;">
         <div style="white-space: nowrap" ng-repeat="grep in greps track by $index"><code><span class="bg-primary">[{{grep.repository}}]</span> <a target="_blank" ng-href="preview.html#?repository={{grep.repository}}&file={{escape(grep.file)}}">{{grep.file}}</a>:<span style="font-weight: bold">{{grep.lineNumber}}</span> {{grep.matchedTextLine}}</code></div>
 </div>
+<span style="margin-left: 2em">{{message}}</span>
 </body>
 </html>
