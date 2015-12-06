@@ -3,7 +3,7 @@ package org.yu55.yagga.handler.git;
 import static org.yu55.yagga.handler.git.command.annotate.GitAnnotateResponseFactory.factorizeAnnotateResponse;
 import static org.yu55.yagga.handler.git.command.grep.GitGrepResponseLineFactory.factorizeGrepResponseLinesList;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 
 import org.yu55.yagga.core.annotate.model.AnnotateResponse;
@@ -19,42 +19,20 @@ import org.yu55.yagga.handler.git.command.common.GitCommandExecutorFactory;
  */
 public class GitRepository implements DvcsRepository {
 
-    private final File directory;
+    private final Path directory;
 
     private final GitCommandExecutorFactory commandExecutorFactory;
 
-    public GitRepository(File directory,
-                         GitCommandExecutorFactory commandExecutorFactory) {
+    public GitRepository(Path directory, GitCommandExecutorFactory commandExecutorFactory) {
         this.directory = directory;
         this.commandExecutorFactory = commandExecutorFactory;
     }
 
     /**
-     * Checks if a directory is a git repository
-     *
-     * @param directory the directory to be checked
-     * @return <code>true</code> if the directory is a git repository
+     * @return the directory as an instance of {@link Path} for this git repository
      */
-    public static boolean isGitRepository(File directory) {
-        return directory.isDirectory() && new File(directory, ".git").exists();
-    }
-
-    /**
-     * @return the directory as an instance of {@link File} for this git repository
-     */
-    public File getDirectory() {
+    public Path getDirectory() {
         return directory;
-    }
-
-    /**
-     * @return the name of this git repository
-     */
-    public String getDirectoryName() {
-        return directory.getName();
-    }
-
-    public boolean isDirectoryNameEqual(String repository) {
-        return getDirectory().getName().equals(repository);
     }
 
     public void pull() {

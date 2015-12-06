@@ -40,7 +40,7 @@ public class GrepHandler {
 
     public List<String> getRepositories() {
         return repositories.getRepositories().stream()
-                .map(repo -> repo.getDirectory().getName())
+                .map(DvcsRepository::getDirectoryName)
                 .collect(Collectors.toList());
     }
 }
