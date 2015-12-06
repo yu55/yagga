@@ -1,15 +1,10 @@
 package org.yu55.yagga.handler.mercurial;
 
-import static java.nio.file.Files.createDirectory;
-import static java.nio.file.Files.createTempDirectory;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.yu55.yagga.handler.mercurial.MercurialRepository.isMercurialRepository;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -31,8 +26,8 @@ public class MercurialRepositoryTest {
         // given
         CommandExecutor executor = mock(CommandExecutor.class);
         MercurialCommandExecutorFactory commandExecutorFactory = mock(MercurialCommandExecutorFactory.class);
-        File file = mock(File.class);
-        MercurialRepository repository = new MercurialRepository(file, commandExecutorFactory);
+        Path repositoryDirectory = mock(Path.class);
+        MercurialRepository repository = new MercurialRepository(repositoryDirectory, commandExecutorFactory);
 
         when(commandExecutorFactory.factorizePull(repository)).thenReturn(executor);
 
@@ -48,10 +43,10 @@ public class MercurialRepositoryTest {
         // given
         CommandExecutor executor = mock(CommandExecutor.class);
         MercurialCommandExecutorFactory commandExecutorFactory = mock(MercurialCommandExecutorFactory.class);
-        File file = mock(File.class);
-        MercurialRepository repository = new MercurialRepository(file, commandExecutorFactory);
+        Path repositoryDirectory = mock(Path.class);
+        MercurialRepository repository = new MercurialRepository(repositoryDirectory, commandExecutorFactory);
 
-        CommandOutput commandOutput = new CommandOutput(file.getName());
+        CommandOutput commandOutput = new CommandOutput(repositoryDirectory.toString());
 
         AnnotateParameters annotateParameters = new AnnotateParameters("build.gradle");
 
@@ -74,11 +69,10 @@ public class MercurialRepositoryTest {
         // given
         CommandExecutor executor = mock(CommandExecutor.class);
         MercurialCommandExecutorFactory commandExecutorFactory = mock(MercurialCommandExecutorFactory.class);
-        File repositoryDirectory = mock(File.class);
-        when(repositoryDirectory.getName()).thenReturn("repo");
+        Path repositoryDirectory = Paths.get("repo");
         MercurialRepository repository = new MercurialRepository(repositoryDirectory, commandExecutorFactory);
 
-        CommandOutput commandOutput = new CommandOutput(repositoryDirectory.getName());
+        CommandOutput commandOutput = new CommandOutput(repositoryDirectory.toString());
 
         String wanted = "buildscript";
         boolean ignoreCase = false;
@@ -102,16 +96,4 @@ public class MercurialRepositoryTest {
         assertThat(grepResponseLine.getRepository()).isEqualTo("repo");
     }
 
-    @Test
-    public void shouldRecognizeDirectoryAsMercurialRepository() throws IOException {
-        // given
-        Path repositoryDir = createTempDirectory("my_mercurial_repository");
-        createDirectory(Paths.get(repositoryDir.toString() + "/.hg"));
-
-        // when
-        boolean isMercurial = isMercurialRepository(repositoryDir.toFile());
-
-        // then
-        assertThat(isMercurial).isTrue();
-    }
 }

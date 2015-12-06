@@ -10,7 +10,7 @@ public class CommandExecutorFactory {
 
     public CommandExecutor factorize(DvcsRepository repository, Command command) {
         DefaultExecutor executor = new DefaultExecutor();
-        executor.setWorkingDirectory(repository.getDirectory());
+        executor.setWorkingDirectory(repository.getDirectory().toFile());
         CommandExecutorStreamHandler executorStreamHandler =
                 new CommandExecutorStreamHandler(repository.getDirectoryName());
         executor.setStreamHandler(new PumpStreamHandler(executorStreamHandler));

@@ -1,9 +1,11 @@
 package org.yu55.yagga.handler.mercurial;
 
-import static org.yu55.yagga.handler.mercurial.command.annotate.MercurialAnnotateResponseFactory.factorizeAnnotateResponse;
-import static org.yu55.yagga.handler.mercurial.command.grep.MercurialGrepResponseLineFactory.factorizeGrepResponseLinesList;
+import static org.yu55.yagga.handler.mercurial.command.annotate.MercurialAnnotateResponseFactory
+        .factorizeAnnotateResponse;
+import static org.yu55.yagga.handler.mercurial.command.grep.MercurialGrepResponseLineFactory
+        .factorizeGrepResponseLinesList;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 
 import org.yu55.yagga.core.annotate.model.AnnotateResponse;
@@ -16,13 +18,11 @@ import org.yu55.yagga.handler.mercurial.command.common.MercurialCommandExecutorF
 
 public class MercurialRepository implements DvcsRepository {
 
-    private final File directory;
+    private final Path directory;
 
     private final MercurialCommandExecutorFactory commandExecutorFactory;
 
-    public MercurialRepository(File directory,
-                               MercurialCommandExecutorFactory commandExecutorFactory) {
-
+    public MercurialRepository(Path directory, MercurialCommandExecutorFactory commandExecutorFactory) {
         if (directory == null) {
             throw new IllegalArgumentException("Directory cannot be null.");
         }
@@ -31,21 +31,10 @@ public class MercurialRepository implements DvcsRepository {
     }
 
     /**
-     * @return the directory as an instance of {@link File} for this mercurial repository
+     * @return the directory as an instance of {@link Path} for this mercurial repository
      */
-    public File getDirectory() {
+    public Path getDirectory() {
         return directory;
-    }
-
-    /**
-     * @return the name of this mercurial repository
-     */
-    public String getDirectoryName() {
-        return directory.getName();
-    }
-
-    public boolean isDirectoryNameEqual(String repository) {
-        return getDirectory().getName().equals(repository);
     }
 
     public void pull() {
@@ -68,13 +57,4 @@ public class MercurialRepository implements DvcsRepository {
         return factorizeGrepResponseLinesList(commandOutput);
     }
 
-    /**
-     * Checks if a directory is a mercurial repository
-     *
-     * @param directory the directory to be checked
-     * @return <code>true</code> if the directory is a mercurial repository
-     */
-    public static boolean isMercurialRepository(File directory) {
-        return directory.isDirectory() && new File(directory, ".hg").exists();
-    }
 }
