@@ -81,7 +81,7 @@ public class GitRepositoryTest {
 
         String wanted = "buildscript";
         boolean ignoreCase = false;
-        GrepParameters grepParameters = new GrepParameters(wanted, ignoreCase);
+        GrepParameters grepParameters = new GrepParameters(wanted, ignoreCase, null);
 
         when(commandExecutorFactory.factorizeGrep(repository, grepParameters)).thenReturn(executor);
         when(executor.execute()).thenReturn(commandOutput);

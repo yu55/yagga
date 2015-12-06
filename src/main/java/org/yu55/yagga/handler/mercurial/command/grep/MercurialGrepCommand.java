@@ -28,7 +28,7 @@ public class MercurialGrepCommand implements MercurialCommand {
         CommandLine commandLine = new CommandLineBuilder(COMMAND)
                 .withArgument(COMMAND_GREP)
                 .withArgument("-n")
-                .withArgument(grepParameters, GrepParameters::isIgnoreCase, "-i")
+                .withArgument(() -> grepParameters.isIgnoreCase(), "-i")
                 .withArgument(escapeSearchPhraseArgument(grepParameters.getWanted()))
                 .build();
 

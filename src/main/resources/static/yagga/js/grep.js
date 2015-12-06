@@ -26,7 +26,8 @@ nameApp.controller('yaggaGrepCtrl', function ($scope, $http) {
         grepRequest = {
             'wanted': $scope.wanted,
             'repositories': $scope.multipleSelect,
-            'ignoreCase': $scope.ignoreCase
+            'ignoreCase': $scope.ignoreCase,
+            'fileFilter': $scope.fileFilter
         }
         $http.post('grep', grepRequest).success(function (data) {
             $scope.greps = data;
