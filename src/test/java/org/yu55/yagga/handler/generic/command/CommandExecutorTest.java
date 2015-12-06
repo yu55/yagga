@@ -7,8 +7,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.Executor;
@@ -20,7 +20,7 @@ public class CommandExecutorTest {
     public void shouldExecuteCommand() throws IOException {
         // given
         Executor executor = mock(Executor.class);
-        when(executor.getWorkingDirectory()).thenReturn(new File("/my/repo"));
+        when(executor.getWorkingDirectory()).thenReturn(Paths.get("/my/repo").toFile());
         CommandOutput output = new CommandOutput(executor.getWorkingDirectory().getName());
         output.addOutputLine(new CommandOutputLine("First line."));
         output.addOutputLine(new CommandOutputLine("Second line."));

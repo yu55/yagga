@@ -1,6 +1,6 @@
 package org.yu55.yagga.handler.api;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 
 import org.yu55.yagga.core.annotate.model.AnnotateResponse;
@@ -16,10 +16,14 @@ public interface DvcsRepository {
 
     List<GrepResponseLine> grep(GrepParameters grepParameters);
 
-    File getDirectory();
+    Path getDirectory();
 
-    String getDirectoryName();
+    default String getDirectoryName() {
+        return getDirectory().getFileName().toString();
+    }
 
-    boolean isDirectoryNameEqual(String repository);
+    default boolean isDirectoryNameEqual(String repository) {
+        return getDirectoryName().equals(repository);
+    }
 
 }

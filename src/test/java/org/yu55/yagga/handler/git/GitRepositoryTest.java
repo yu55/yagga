@@ -1,15 +1,10 @@
 package org.yu55.yagga.handler.git;
 
-import static java.nio.file.Files.createDirectory;
-import static java.nio.file.Files.createTempDirectory;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.yu55.yagga.handler.git.GitRepository.isGitRepository;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -31,8 +26,8 @@ public class GitRepositoryTest {
         // given
         CommandExecutor executor = mock(CommandExecutor.class);
         GitCommandExecutorFactory commandExecutorFactory = mock(GitCommandExecutorFactory.class);
-        File file = mock(File.class);
-        GitRepository repository = new GitRepository(file, commandExecutorFactory);
+        Path repositoryDirectory = mock(Path.class);
+        GitRepository repository = new GitRepository(repositoryDirectory, commandExecutorFactory);
 
         when(commandExecutorFactory.factorizePull(repository)).thenReturn(executor);
 
@@ -48,9 +43,9 @@ public class GitRepositoryTest {
         // given
         CommandExecutor executor = mock(CommandExecutor.class);
         GitCommandExecutorFactory commandExecutorFactory = mock(GitCommandExecutorFactory.class);
-        File file = mock(File.class);
-        GitRepository repository = new GitRepository(file, commandExecutorFactory);
-        CommandOutput commandOutput = new CommandOutput(file.getName());
+        Path repositoryDirectory = mock(Path.class);
+        GitRepository repository = new GitRepository(repositoryDirectory, commandExecutorFactory);
+        CommandOutput commandOutput = new CommandOutput(repositoryDirectory.toString());
 
         AnnotateParameters annotateParameters = new AnnotateParameters("build.gradle");
 
@@ -73,11 +68,10 @@ public class GitRepositoryTest {
         // given
         CommandExecutor executor = mock(CommandExecutor.class);
         GitCommandExecutorFactory commandExecutorFactory = mock(GitCommandExecutorFactory.class);
-        ;
-        File repositoryDirectory = mock(File.class);
-        when(repositoryDirectory.getName()).thenReturn("repo");
+
+        Path repositoryDirectory = Paths.get("repo");
         GitRepository repository = new GitRepository(repositoryDirectory, commandExecutorFactory);
-        CommandOutput commandOutput = new CommandOutput(repositoryDirectory.getName());
+        CommandOutput commandOutput = new CommandOutput(repositoryDirectory.toString());
 
         String wanted = "buildscript";
         boolean ignoreCase = false;
@@ -100,16 +94,4 @@ public class GitRepositoryTest {
         assertThat(grepResponseLine.getRepository()).isEqualTo("repo");
     }
 
-    @Test
-    public void shouldRecognizeDirectoryAsGitRepository() throws IOException {
-        // given
-        Path repositoryDir = createTempDirectory("my_git_repository");
-        createDirectory(Paths.get(repositoryDir.toString() + "/.git"));
-
-        // when
-        boolean isGit = isGitRepository(repositoryDir.toFile());
-
-        // then
-        assertThat(isGit).isTrue();
-    }
 }

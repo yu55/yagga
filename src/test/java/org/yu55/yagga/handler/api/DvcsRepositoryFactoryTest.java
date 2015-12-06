@@ -1,32 +1,53 @@
 package org.yu55.yagga.handler.api;
 
-import static java.nio.file.Files.createTempDirectory;
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.mock;
+import static org.yu55.yagga.util.mockito.DvcsRepositoryDescriptorMockBehavior.should;
 
-import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Optional;
 
 import org.junit.Test;
-import org.yu55.yagga.handler.api.DvcsRepositoryFactory.RepositoryInstantiationException;
-import org.yu55.yagga.handler.git.command.common.GitCommandExecutorFactory;
-import org.yu55.yagga.handler.mercurial.command.common.MercurialCommandExecutorFactory;
 
 public class DvcsRepositoryFactoryTest {
 
     @Test
-    public void shouldNotFactorizeRepositoryForUnsupportedDirectory() throws IOException,
-            RepositoryInstantiationException {
+    public void shouldNotFactorizeRepositoryForUnsupportedDirectory() {
         // given
-        Path repositoryDir = createTempDirectory("unsupported_repository");
-        DvcsRepositoryFactory factory = new DvcsRepositoryFactory(
-                mock(GitCommandExecutorFactory.class), mock(MercurialCommandExecutorFactory.class));
+        Path unsupportedRepoPath = Paths.get("unsupported_repository");
+
+        DvcsRepositoryDescriptor repositoryDescriptor = should(DvcsRepositoryDescriptor.class)
+                .notRecognizeRepository(unsupportedRepoPath)
+                .get();
+
+        DvcsRepositoryFactory factory = new DvcsRepositoryFactory(singletonList(repositoryDescriptor));
 
         // when
-        Throwable exception = catchThrowable(() -> factory.factorizeRepository(repositoryDir.toFile()));
+        Optional<DvcsRepository> optionalRepository = factory.factorizeRepository(unsupportedRepoPath);
 
         // then
-        assertThat(exception).hasMessage(repositoryDir.toString() + " is not recognized as a repository");
+        assertThat(optionalRepository).isEmpty();
     }
+
+    @Test
+    public void shouldFactorizeKnownRepository() {
+        // given
+        Path repositoryPath = Paths.get("my_repository");
+        DvcsRepository repository = mock(DvcsRepository.class);
+
+        DvcsRepositoryDescriptor repositoryDescriptor = should(DvcsRepositoryDescriptor.class)
+                .recognizeAndCreateRepository(repositoryPath, repository)
+                .get();
+
+        DvcsRepositoryFactory factory = new DvcsRepositoryFactory(singletonList(repositoryDescriptor));
+
+        // when
+        Optional<DvcsRepository> optionalRepository = factory.factorizeRepository(repositoryPath);
+
+        // then
+        assertThat(optionalRepository).contains(repository);
+    }
+
 }
