@@ -44,7 +44,7 @@ public class GitGrepCommandTest {
         CommandLine commandLine = command.getCommandLine();
 
         // then
-        assertThat(commandLine.getArguments()).containsExactly("grep", "-n", "-I", "text", "-- *.java");
+        assertThat(commandLine.getArguments()).containsExactly("grep", "-n", "-I", "text", "*.java");
     }
 
     @Test

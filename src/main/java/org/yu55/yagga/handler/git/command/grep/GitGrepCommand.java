@@ -32,7 +32,7 @@ public class GitGrepCommand implements GitCommand {
                 .withArgument("-n")
                 .withArgument("-I")
                 .withArgument(() -> grepParameters.isIgnoreCase(), "-i")
-                .withArgument("-e " + escapeSearchPhraseArgument(grepParameters.getWanted()))
+                .withArgument(escapeSearchPhraseArgument(grepParameters.getWanted()))
                 .withArgument(() -> isNotBlank(grepParameters.getFileFilter()), grepParameters.getFileFilter())
                 .build();
 
