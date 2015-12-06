@@ -1,5 +1,7 @@
 package org.yu55.yagga.handler.git.command.grep;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 import org.apache.commons.exec.CommandLine;
 import org.yu55.yagga.handler.api.command.grep.GrepParameters;
 import org.yu55.yagga.handler.generic.command.CommandLineBuilder;
@@ -29,8 +31,9 @@ public class GitGrepCommand implements GitCommand {
                 .withArgument(COMMAND_GREP)
                 .withArgument("-n")
                 .withArgument("-I")
-                .withArgument(grepParameters, GrepParameters::isIgnoreCase, "-i")
-                .withArgument(escapeSearchPhraseArgument(grepParameters.getWanted()))
+                .withArgument(() -> grepParameters.isIgnoreCase(), "-i")
+                .withArgument("-e " + escapeSearchPhraseArgument(grepParameters.getWanted()))
+                .withArgument(() -> isNotBlank(grepParameters.getFileFilter()), grepParameters.getFileFilter())
                 .build();
 
         return commandLine;

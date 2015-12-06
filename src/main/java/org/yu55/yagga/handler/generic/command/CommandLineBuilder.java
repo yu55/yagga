@@ -1,6 +1,6 @@
 package org.yu55.yagga.handler.generic.command;
 
-import java.util.function.Predicate;
+import java.util.function.BooleanSupplier;
 
 import org.apache.commons.exec.CommandLine;
 
@@ -17,8 +17,8 @@ public class CommandLineBuilder {
         return this;
     }
 
-    public <T> CommandLineBuilder withArgument(T options, Predicate<T> predicate, String argument) {
-        if (predicate.test(options)) {
+    public <T> CommandLineBuilder withArgument(BooleanSupplier booleanSupplier, String argument) {
+        if (booleanSupplier.getAsBoolean()) {
             commandLine.addArgument(argument, false);
         }
         return this;
