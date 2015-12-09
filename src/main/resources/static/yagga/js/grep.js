@@ -15,6 +15,14 @@ nameApp.controller('yaggaGrepCtrl', function ($scope, $http) {
         $scope.selected = false;
     }
 
+    $scope.clearFileFilter = function () {
+        $scope.fileFilter = "";
+    }
+
+    $scope.clearSearchWanted = function () {
+        $scope.wanted = "";
+    }
+
     $scope.grep = function () {
         if ($scope.wanted == null || $scope.multipleSelect == null) {
             return false;

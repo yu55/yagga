@@ -18,16 +18,17 @@
             <tr>
                 <td>
                     <div style="padding-left: 1em; padding-right: 1em; opacity: 0.7;">
-                        <img src="yagga/images/yagga.png" width="70" alt="Yagga"/>
+                        <img src="yagga/images/yagga.png" width="50" alt="Yagga"/>
                     </div>
                 </td>
                 <td valign="top">
                     <div class="searchSection">
                         <div class="form-group" style="vertical-align: top; padding-left: 0em;">
                             <div class="input-group">
-                                <label>Repository</label>
+                                <label style="font-size: 12px">Repository</label>
                                 <br/>
-                                <select class="form-control" name="repositories" size="6" ng-model="multipleSelect"
+                                <select class="form-control" style="font-size: 10px"
+                                        name="repositories" size="6" ng-model="multipleSelect"
                                         multiple
                                         ng-options="repository for repository in repositories | orderBy:'+'"
                                         ng-change="deselectCheckbox()"></select>
@@ -40,20 +41,19 @@
                             </div>
                         </div>
                         <div class="form-group" style="vertical-align: top; padding-right: 3em; padding-left: 2em">
-                            <label>File filter</label><br/>
+                            <label style="font-size: 12px">File filter</label><br/>
 
                             <div class="input-group input-group-sm">
-                                <input type="text" class="form-control" id="fileFilter" ng-model="fileFilter"
+                                <input type="text" style="font-size: 10px; padding: 3px; height: 20px" class="form-control" id="fileFilter" ng-model="fileFilter"
                                        ng-trim="false" size="30"/>
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button"
-                                            onclick="document.getElementById('fileFilter').value = ''">X
-                                    </button>
+                                    <button class="btn btn-default" style="font-size: 10px; padding: 3px; height: 20px"
+                                            type="button" data-ng-click="clearFileFilter()">&nbsp;X&nbsp;   </button>
                                 </span>
                             </div>
                             <br/>
                             <div class="input-group input-group-sm" style="margin-top: 1em">
-                                <label>Case insensitive search</label>
+                                <label style="font-size: 12px">Case insensitive search</label>
 
                                 <div class="checkbox" style="margin-left: 0.4em">
                                     <input type="checkbox" ng-model="ignoreCase"/>
@@ -72,9 +72,7 @@
         <div class="input-group input-group-sm">
             <input type="text" class="form-control" id="grepText" ng-model="wanted" ng-trim="false" size="60"/>
             <span class="input-group-btn">
-                <button class="btn btn-default" type="button"
-                        onclick="document.getElementById('grepText').value = ''">X
-                </button>
+                <button class="btn btn-default" type="button" data-ng-click="clearSearchWanted()">X</button>
             </span>
         </div>
         <div class="btn-group btn-group-sm">
