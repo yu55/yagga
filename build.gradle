@@ -20,8 +20,8 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 ext {
-    generatedClasses = "${buildDir}/classes-generated"
-    generatedAsserionsSources = file("${generatedClasses}/assertj-assertions")
+    generatedSources = 'src-gen'
+    generatedAsserionsSources = file("${generatedSources}/assertj-assertions")
 }
 
 repositories {
@@ -76,4 +76,9 @@ task generateCustomAssertions(dependsOn: [compileJava], type: JavaExec) {
     debug false
 }
 
+task cleanGeneratedSources(type: Delete) {
+    delete generatedSources
+}
+
+clean.dependsOn cleanGeneratedSources
 compileTestJava.dependsOn generateCustomAssertions
