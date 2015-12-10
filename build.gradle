@@ -1,94 +1,79 @@
 buildscript {
-    ext {
-        springBootVersion = '1.2.5.RELEASE'
-    }
     repositories {
+        mavenLocal()
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("io.spring.gradle:dependency-management-plugin:0.5.2.RELEASE")
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.3.0.RELEASE'
     }
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
 apply plugin: 'spring-boot'
-apply plugin: 'io.spring.dependency-management'
 
 jar {
     baseName = 'yagga'
     version = '0.0.1-SNAPSHOT'
 }
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+ext {
+    generatedClasses = "${buildDir}/classes-generated"
+    generatedAsserionsSources = file("${generatedClasses}/assertj-assertions")
+}
+
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
 configurations {
-    compile.exclude module: "spring-boot-starter-tomcat"
-    testGenerated
+    customAssertionsGenerate
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
-    compile("org.springframework.boot:spring-boot-starter-jetty")
-    compile("org.apache.commons:commons-exec:1.3")
-    compile("org.apache.commons:commons-lang3:3.4")
-    testCompile("org.springframework.boot:spring-boot-starter-test")
-    testCompile('org.mockito:mockito-core:1.10.19')
-    testCompile("org.assertj:assertj-core:3.2.0")
-    testGenerated("org.assertj:assertj-assertions-generator:2.0.0")
+    compile 'org.springframework.boot:spring-boot-starter-web', { exclude module: 'spring-boot-starter-tomcat' }
+    compile 'org.springframework.boot:spring-boot-starter-jetty'
+    compile 'org.apache.commons:commons-exec:1.3'
+    compile 'org.apache.commons:commons-lang3:3.4'
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'org.mockito:mockito-core:1.10.19'
+    testCompile 'org.assertj:assertj-core:3.2.0'
+
+    customAssertionsGenerate 'org.assertj:assertj-assertions-generator:2.0.0'
 }
 
-def generatedOutput = file('src-gen/test/java')
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.9'
+}
 
 sourceSets {
     test {
         java {
-            srcDir 'src/test/java'
-            srcDir generatedOutput
+            srcDir generatedAsserionsSources
         }
     }
 }
 
-eclipse {
-    classpath {
-         containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
-         containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
-    }
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
-}
-
-task assertjClean(type: Delete) {
-    delete generatedOutput
-}
-
-task assertjGen(dependsOn: assertjClean, type: JavaExec) {
+task generateCustomAssertions(dependsOn: [compileJava], type: JavaExec) {
     doFirst {
-        if (!generatedOutput.exists()) {
-            logger.info("Creating `$generatedOutput` directory")
-
-            if (!generatedOutput.mkdirs()) {
-                throw new InvalidUserDataException("Unable to create `$generatedOutput` directory")
-            }
-        }
+        generatedAsserionsSources.delete()
+        generatedAsserionsSources.mkdirs()
     }
 
-    main 'org.assertj.assertions.generator.cli.AssertionGeneratorLauncher'
-    classpath = files(configurations.testGenerated, sourceSets.main.runtimeClasspath)
-    workingDir = generatedOutput
-    args = [
-           'org.yu55.yagga.core.grep.model',
-            'org.yu55.yagga.core.annotate.model'
-    ]
+    inputs.dir sourceSets.main.output.classesDir
+    outputs.dir generatedAsserionsSources
+
+    classpath configurations.customAssertionsGenerate, sourceSets.main.runtimeClasspath
+    workingDir generatedAsserionsSources
+
+    main = 'org.assertj.assertions.generator.cli.AssertionGeneratorLauncher'
+    args = ['org.yu55.yagga.core.grep.model', 'org.yu55.yagga.core.annotate.model']
+
     debug false
 }
 
-compileTestJava.dependsOn(assertjGen)
+compileTestJava.dependsOn generateCustomAssertions
