@@ -73,6 +73,7 @@ task generateCustomAssertions(dependsOn: [compileJava], type: JavaExec) {
     main = 'org.assertj.assertions.generator.cli.AssertionGeneratorLauncher'
     args = ['org.yu55.yagga.core.grep.model', 'org.yu55.yagga.core.annotate.model']
 
+    logging.captureStandardOutput LogLevel.INFO
     debug false
 }
 
