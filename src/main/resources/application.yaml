@@ -1,0 +1,8 @@
+yagga:
+
+#  repositories.paths: <repo_path_1>,<repo_path_2>
+
+  scheduler:
+    updateRepositories:
+      enabled: false
+      intervalInMillis: 60000
