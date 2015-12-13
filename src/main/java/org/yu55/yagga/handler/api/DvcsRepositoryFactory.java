@@ -1,5 +1,7 @@
 package org.yu55.yagga.handler.api;
 
+import static java.util.stream.Collectors.toList;
+
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
@@ -13,11 +15,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class DvcsRepositoryFactory {
 
-    private final List<DvcsRepositoryDescriptor> repositoryDescriptors;
+    private final List<DvcsRepositoryResolver> dvcsRepositoryResolvers;
 
     @Autowired
-    public DvcsRepositoryFactory(List<DvcsRepositoryDescriptor> repositoryDescriptors) {
-        this.repositoryDescriptors = repositoryDescriptors;
+    public DvcsRepositoryFactory(List<DvcsRepositoryResolver> dvcsRepositoryResolvers) {
+        this.dvcsRepositoryResolvers = dvcsRepositoryResolvers.stream()
+                .filter(resolver -> resolver.isDvcsSupported())
+                .collect(toList());
     }
 
     /**
@@ -27,9 +31,9 @@ public class DvcsRepositoryFactory {
      * @return the created optional instance of repository
      */
     public Optional<DvcsRepository> factorizeRepository(Path directory) {
-        return repositoryDescriptors.stream()
-                .filter(descriptor -> descriptor.isRepository(directory))
-                .map(descriptor -> descriptor.createRepository(directory))
+        return dvcsRepositoryResolvers.stream()
+                .filter(resolver -> resolver.isRepository(directory))
+                .map(resolver -> resolver.resolveRepository(directory))
                 .findFirst();
     }
 }

@@ -6,19 +6,24 @@ import java.nio.file.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.yu55.yagga.handler.api.DvcsRepository;
-import org.yu55.yagga.handler.api.DvcsRepositoryDescriptor;
+import org.yu55.yagga.handler.api.DvcsRepositoryResolver;
 import org.yu55.yagga.handler.mercurial.command.common.MercurialCommandExecutorFactory;
 
 @Component
-public class MercurialRepositoryDescriptor implements DvcsRepositoryDescriptor {
+public class MercurialRepositoryResolver implements DvcsRepositoryResolver {
 
     public static final String MERCURIAL_REPOSITORY_DISCRIMINATOR = ".hg";
 
     private MercurialCommandExecutorFactory mercurialCommandExecutorFactory;
 
     @Autowired
-    MercurialRepositoryDescriptor(MercurialCommandExecutorFactory mercurialCommandExecutorFactory) {
+    MercurialRepositoryResolver(MercurialCommandExecutorFactory mercurialCommandExecutorFactory) {
         this.mercurialCommandExecutorFactory = mercurialCommandExecutorFactory;
+    }
+
+    @Override
+    public boolean isDvcsSupported() {
+        return true;
     }
 
     @Override
@@ -27,7 +32,7 @@ public class MercurialRepositoryDescriptor implements DvcsRepositoryDescriptor {
     }
 
     @Override
-    public DvcsRepository createRepository(Path directory) {
+    public DvcsRepository resolveRepository(Path directory) {
         return new MercurialRepository(directory, mercurialCommandExecutorFactory);
     }
 

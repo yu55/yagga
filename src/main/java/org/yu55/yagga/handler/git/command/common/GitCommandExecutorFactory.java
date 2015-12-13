@@ -10,6 +10,7 @@ import org.yu55.yagga.handler.generic.command.CommandExecutorFactory;
 import org.yu55.yagga.handler.git.command.annotate.GitAnnotateCommand;
 import org.yu55.yagga.handler.git.command.grep.GitGrepCommand;
 import org.yu55.yagga.handler.git.command.pull.GitPullCommand;
+import org.yu55.yagga.handler.git.command.version.GitVersionCommand;
 
 @Component
 public class GitCommandExecutorFactory {
@@ -19,6 +20,10 @@ public class GitCommandExecutorFactory {
     @Autowired
     public GitCommandExecutorFactory(CommandExecutorFactory commandExecutorFactory) {
         this.commandExecutorFactory = commandExecutorFactory;
+    }
+
+    public CommandExecutor factorizeVersion() {
+        return commandExecutorFactory.factorize(new GitVersionCommand());
     }
 
     public CommandExecutor factorizePull(DvcsRepository repository) {

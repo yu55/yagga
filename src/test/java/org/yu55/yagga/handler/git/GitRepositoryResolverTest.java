@@ -1,7 +1,7 @@
 package org.yu55.yagga.handler.git;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.yu55.yagga.handler.git.GitRepositoryDescriptor.GIT_REPOSITORY_DISCRIMINATOR;
+import static org.yu55.yagga.handler.git.GitRepositoryResolver.GIT_REPOSITORY_DISCRIMINATOR;
 import static org.yu55.yagga.util.RepositoryFolderStub.stubGitRepository;
 import static org.yu55.yagga.util.RepositoryFolderStub.stubUndefinedRepository;
 
@@ -19,18 +19,18 @@ import org.yu55.yagga.handler.git.command.common.GitCommandExecutorFactory;
 import org.yu55.yagga.util.RepositoryFolderStub;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GitRepositoryDescriptorTest {
+public class GitRepositoryResolverTest {
 
     @Mock
     private GitCommandExecutorFactory gitCommandExecutorFactory;
 
-    private GitRepositoryDescriptor gitRepositoryDescriptor;
+    private GitRepositoryResolver gitRepositoryResolver;
 
     private RepositoryFolderStub repositoryFolderStub;
 
     @Before
     public void setUp() {
-        gitRepositoryDescriptor = new GitRepositoryDescriptor(gitCommandExecutorFactory);
+        gitRepositoryResolver = new GitRepositoryResolver(gitCommandExecutorFactory);
     }
 
     @After
@@ -46,7 +46,7 @@ public class GitRepositoryDescriptorTest {
         repositoryFolderStub = stubGitRepository();
 
         // when
-        boolean isGit = gitRepositoryDescriptor.isRepository(repositoryFolderStub.getPath());
+        boolean isGit = gitRepositoryResolver.isRepository(repositoryFolderStub.getPath());
 
         // then
         assertThat(isGit).isTrue();
@@ -58,7 +58,7 @@ public class GitRepositoryDescriptorTest {
         repositoryFolderStub = stubUndefinedRepository().containingFile(GIT_REPOSITORY_DISCRIMINATOR);
 
         // when
-        boolean isGit = gitRepositoryDescriptor.isRepository(repositoryFolderStub.getPath());
+        boolean isGit = gitRepositoryResolver.isRepository(repositoryFolderStub.getPath());
 
         // then
         assertThat(isGit).isFalse();
@@ -70,7 +70,7 @@ public class GitRepositoryDescriptorTest {
         repositoryFolderStub = stubUndefinedRepository();
 
         // when
-        boolean isGit = gitRepositoryDescriptor.isRepository(repositoryFolderStub.getPath());
+        boolean isGit = gitRepositoryResolver.isRepository(repositoryFolderStub.getPath());
 
         // then
         assertThat(isGit).isFalse();
@@ -82,7 +82,7 @@ public class GitRepositoryDescriptorTest {
         Path repositoryPath = Paths.get("not_existing_path");
 
         // when
-        boolean isGit = gitRepositoryDescriptor.isRepository(repositoryPath);
+        boolean isGit = gitRepositoryResolver.isRepository(repositoryPath);
 
         // then
         assertThat(isGit).isFalse();
@@ -94,7 +94,7 @@ public class GitRepositoryDescriptorTest {
         Path repositoryPath = Paths.get("my_git_repository");
 
         //when
-        DvcsRepository repository = gitRepositoryDescriptor.createRepository(repositoryPath);
+        DvcsRepository repository = gitRepositoryResolver.resolveRepository(repositoryPath);
 
         //then
         assertThat(repository)
