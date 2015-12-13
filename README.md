@@ -1,17 +1,39 @@
 [![Build Status](https://travis-ci.org/yu55/yagga.svg?branch=master)](https://travis-ci.org/yu55/yagga)
 
-# Yet Another Git Grep Application (yagga)
+# Yagga (Yet Another Git Grep Application)
 
-This is a very simple web application that allows you to git grep over many repositories via web interface. This application also supports grep on mercurial repositories.
+This is a very simple web application that allows you to grep over many git repositories via web interface.  
+**Yagga** also supports grep on mercurial repositories.
 
-## Requirements
+
+### Requirements
+---
+
 * Java 8
-* globally recognizable `git` command in operating system (added to $PATH etc.); git not older than version 2.5
+* globally recognizable `git` command in operating system (added to PATH variable etc.); git not older than version 2.5
 * to mercurial users: same as above for `hg` command
 
-## Installation & running
-* clone this repository to your local machine
-* to build execute: `./gradlew clean build` in `yagga/` main directory
-* fill the `yagga/yagga-config.properties` file with your repositories directories
-* to run execute `java -Dserver.port=8080 -jar yagga-x.y.z-SNAPSHOT.jar --spring.config.location=/home/user/yagga/yagga-config.properties` in `yagga/build/libs/` directory
-* open page `localhost:8080` and start searching your repositories
+
+### Installation & running
+---
+
+* clone repository/repositories to your local machine
+* to build simply execute `./gradlew build`
+* to run execute `./gradlew bootRun --yagga.repositories.paths=<comma_separated_paths_to_your_repositories>`
+* open page `http://localhost:8080` and start searching your repositories
+
+##### Tip
+To simplify running **Yagga** application you can take advantage of
+[Spring relaxed binding](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html#boot-features-external-config-relaxed-binding)
+and define system property that specifies repositories locations: `YAGGA_REPOSITORIES_PATHS=<comma_separated_paths_to_your_repositories>` (for example in .bashrc).
+Than you can simply run **Yagga** by executing `./gradlew bootRun` or `java -jar yagga-<version>.jar` (by default **Yagga** jar file is placed at `./build/libs` directory).
+
+
+### Custom configuration
+---
+
+Property                                              | Type    | Default value | Description
+----------------------------------------------------- |:-------:|:-------------:| -----------------------------------------------------------------------------------------------------------------------------
+`yagga.repositories.paths`                            | String  | \<undefined\> | comma-separated list of repositories paths, this is required property
+`yagga.scheduler.updateRepositories.enabled`          | Boolean | false         | flag defining whether repositories defined with `yagga.repositories.paths` should be updated periodically
+`yagga.scheduler.updateRepositories.intervalInMillis` | Long    | 60000         | defines fixed period in milliseconds between the end of the last repositories update invocation and the beginning of the next

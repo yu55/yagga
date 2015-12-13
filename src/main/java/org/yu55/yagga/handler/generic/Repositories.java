@@ -32,7 +32,7 @@ public class Repositories extends SimpleFileVisitor<Path> {
     private List<DvcsRepository> repositories;
 
     @Autowired
-    public Repositories(@Value("${repositories.paths}") String[] pathsToRepositories,
+    public Repositories(@Value("${yagga.repositories.paths}") String[] pathsToRepositories,
                         DvcsRepositoryFactory dvcsRepositoryFactory) {
         this.pathsToRepositories = pathsToRepositories;
         this.dvcsRepositoryFactory = dvcsRepositoryFactory;
