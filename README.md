@@ -19,7 +19,7 @@ This is a very simple web application that allows you to grep over many git repo
 
 * clone repository/repositories to your local machine
 * to build simply execute `./gradlew build`
-* to run execute `./gradlew bootRun --yagga.repositories.paths=<comma_separated_paths_to_your_repositories>`
+* to run execute `./gradlew bootRun -Dyagga.repositories.paths=<comma_separated_paths_to_your_repositories>`
 * open page `http://localhost:8080` and start searching your repositories
 
 ##### Tip
