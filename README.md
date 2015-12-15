@@ -19,14 +19,17 @@ This is a very simple web application that allows you to grep over many git repo
 
 * clone repository/repositories to your local machine
 * to build simply execute `./gradlew build`
-* to run execute `./gradlew bootRun -Dyagga.repositories.paths=<comma_separated_paths_to_your_repositories>`
+* to run execute:
+  * `./gradlew bootRun -Dyagga.repositories.paths=<comma_separated_paths_to_your_repositories>`, or
+  * `java -jar yagga-<version>.jar --yagga.repositories.paths=<comma_separated_paths_to_your_repositories>`
+  (by default **Yagga** jar file is placed at `./build/libs` directory).
 * open page `http://localhost:8080` and start searching your repositories
 
 ##### Tip
 To simplify running **Yagga** application you can take advantage of
 [Spring relaxed binding](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html#boot-features-external-config-relaxed-binding)
 and define system property that specifies repositories locations: `YAGGA_REPOSITORIES_PATHS=<comma_separated_paths_to_your_repositories>` (for example in .bashrc).
-Than you can simply run **Yagga** by executing `./gradlew bootRun` or `java -jar yagga-<version>.jar` (by default **Yagga** jar file is placed at `./build/libs` directory).
+Than you can simply run **Yagga** by executing `./gradlew bootRun` or `java -jar yagga-<version>.jar`.
 
 
 ### Custom configuration
