@@ -58,6 +58,10 @@ sourceSets {
     }
 }
 
+bootRun {
+    systemProperties = System.properties
+}
+
 task generateCustomAssertions(dependsOn: [compileJava], type: JavaExec) {
     doFirst {
         generatedAsserionsSources.delete()
