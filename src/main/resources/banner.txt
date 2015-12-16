@@ -1,0 +1,43 @@
+
+
+${Ansi.GREEN}
+            :c:.
+           o:..:o:.
+           :.   :88o.
+                 :@@@c.
+                 .@@@@o.
+                 :@@@@@C.
+                 :@@@@@@8:
+                 :@@@@@@@8:
+               .:O@@@@@@@@@c. ..:
+             .....c8@@@@@@@Oc:...
+                  :O@@@@@@8.
+                 :@@@@@@@@:
+                  :CC8@@O:        .::        ${Ansi.BRIGHT_GREEN}  ▓██   ██▓ ▄▄▄        ▄████   ▄████  ▄▄▄        ${Ansi.GREEN}
+                 :oCC@@@occ:.   .cOc.        ${Ansi.BRIGHT_GREEN}   ▒██  ██▒▒████▄     ██▒ ▀█▒ ██▒ ▀█▒▒████▄      ${Ansi.GREEN}
+                :@@@@@@@@@@@C. .Oo.          ${Ansi.BRIGHT_GREEN}    ▒██ ██░▒██  ▀█▄  ▒██░▄▄▄░▒██░▄▄▄░▒██  ▀█▄    ${Ansi.GREEN}
+               .8@8@@@@@@@@@@: o8.           ${Ansi.BRIGHT_GREEN}    ░ ▐██▓░░██▄▄▄▄██ ░▓█  ██▓░▓█  ██▓░██▄▄▄▄██   ${Ansi.GREEN}
+               c@8:8@@@@@@@8@o:@o            ${Ansi.BRIGHT_GREEN}    ░ ██▒▓░ ▓█   ▓██▒░▒▓███▀▒░▒▓███▀▒ ▓█   ▓██▒  ${Ansi.GREEN}
+              :@@: :@@@@@@::8@@@:            ${Ansi.BRIGHT_GREEN}     ██▒▒▒  ▒▒   ▓▒█░ ░▒   ▒  ░▒   ▒  ▒▒   ▓▒█░  ${Ansi.GREEN}
+              C@o  .8@@@@O. :8@c             ${Ansi.BRIGHT_GREEN}   ▓██ ░▒░   ▒   ▒▒ ░  ░   ░   ░   ░   ▒   ▒▒ ░  ${Ansi.GREEN}
+             :@@:  :@@@@@@8: ..              ${Ansi.BRIGHT_GREEN}   ▒ ▒ ░░    ░   ▒   ░ ░   ░ ░ ░   ░   ░   ▒     ${Ansi.GREEN}
+             o@:  :@@@@@@@@8:                ${Ansi.BRIGHT_GREEN}   ░ ░           ░  ░      ░       ░       ░  ░  ${Ansi.GREEN}
+            .8c   :@@@@88@@@8.               ${Ansi.BRIGHT_GREEN}   ░ ░                                           ${Ansi.GREEN}
+           :O8:  .8@@@8.c@@@@:
+          :O::   c@@@@o o@@@@:
+                .8@@@8. c@@@@:
+                :@@@@:  :@@@@.
+                c@@@o   .@@@O
+               .C@@o.    O@@:
+               :@@O.     o@@:
+              .8@@:      c@@:
+              C@@O.      O@@c
+             :@@8:       O@@:
+            .O@C.        o@O
+            :@o          :@o
+           .8@:          :@o
+           C@@c          o@C
+          :@O.           .@@:
+          ...             :o:
+${Ansi.DEFAULT}
+
