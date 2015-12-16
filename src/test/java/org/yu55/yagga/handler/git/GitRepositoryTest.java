@@ -45,14 +45,14 @@ public class GitRepositoryTest {
         GitCommandExecutorFactory commandExecutorFactory = mock(GitCommandExecutorFactory.class);
         Path repositoryDirectory = mock(Path.class);
         GitRepository repository = new GitRepository(repositoryDirectory, commandExecutorFactory);
-        CommandOutput commandOutput = new CommandOutput(repositoryDirectory.toString());
+        CommandOutput commandOutput = new CommandOutput(repositoryDirectory.toString())
+                .addOutputLine(new CommandOutputLine(
+                        "716ec6a6        (  Marcin P     2015-09-17 21:23:13 +0200       1)buildscript {"));
 
         AnnotateParameters annotateParameters = new AnnotateParameters("build.gradle");
 
         when(commandExecutorFactory.factorizeAnnotate(repository, annotateParameters)).thenReturn(executor);
         when(executor.execute()).thenReturn(commandOutput);
-        commandOutput.addOutputLine(new CommandOutputLine(
-                "716ec6a6        (  Marcin P     2015-09-17 21:23:13 +0200       1)buildscript {"));
 
         // when
         AnnotateResponse annotateResponse = repository.annotate(annotateParameters);
@@ -71,7 +71,8 @@ public class GitRepositoryTest {
 
         Path repositoryDirectory = Paths.get("repo");
         GitRepository repository = new GitRepository(repositoryDirectory, commandExecutorFactory);
-        CommandOutput commandOutput = new CommandOutput(repositoryDirectory.toString());
+        CommandOutput commandOutput = new CommandOutput(repositoryDirectory.toString())
+                .addOutputLine(new CommandOutputLine("build.gradle:1:buildscript {"));
 
         String wanted = "buildscript";
         boolean ignoreCase = false;
@@ -79,7 +80,6 @@ public class GitRepositoryTest {
 
         when(commandExecutorFactory.factorizeGrep(repository, grepParameters)).thenReturn(executor);
         when(executor.execute()).thenReturn(commandOutput);
-        commandOutput.addOutputLine(new CommandOutputLine("build.gradle:1:buildscript {"));
 
         // when
         List<GrepResponseLine> grep = repository.grep(grepParameters);

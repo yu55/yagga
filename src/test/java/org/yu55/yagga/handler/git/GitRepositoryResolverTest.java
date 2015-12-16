@@ -1,6 +1,8 @@
 package org.yu55.yagga.handler.git;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.yu55.yagga.handler.git.GitRepositoryResolver.GIT_REPOSITORY_DISCRIMINATOR;
 import static org.yu55.yagga.util.RepositoryFolderStub.stubGitRepository;
 import static org.yu55.yagga.util.RepositoryFolderStub.stubUndefinedRepository;
@@ -15,6 +17,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.yu55.yagga.handler.api.DvcsRepository;
+import org.yu55.yagga.handler.generic.command.CommandExecutor;
+import org.yu55.yagga.handler.generic.command.CommandOutput;
+import org.yu55.yagga.handler.generic.command.CommandOutputLine;
 import org.yu55.yagga.handler.git.command.common.GitCommandExecutorFactory;
 import org.yu55.yagga.util.RepositoryFolderStub;
 
@@ -38,6 +43,34 @@ public class GitRepositoryResolverTest {
         if (repositoryFolderStub != null) {
             repositoryFolderStub.destroyRepository();
         }
+    }
+
+    @Test
+    public void shouldDetermineThatGitDvcsIsSupported() {
+        // given
+        CommandExecutor commandExecutor = commandExecutorReturningGitVersionOutput("git version 2.5.0");
+        when(gitCommandExecutorFactory.factorizeVersion()).thenReturn(commandExecutor);
+
+        // when
+        gitRepositoryResolver.checkDvcsAvailable();
+        boolean dvcsSupported = gitRepositoryResolver.isDvcsSupported();
+
+        // then
+        assertThat(dvcsSupported).isTrue();
+    }
+
+    @Test
+    public void shouldDetermineThatGitDvcsIsNotSupported() {
+        // given
+        CommandExecutor commandExecutor = commandExecutorReturningGitVersionOutput("git version 2.2.0");
+        when(gitCommandExecutorFactory.factorizeVersion()).thenReturn(commandExecutor);
+
+        // when
+        gitRepositoryResolver.checkDvcsAvailable();
+        boolean dvcsSupported = gitRepositoryResolver.isDvcsSupported();
+
+        // then
+        assertThat(dvcsSupported).isFalse();
     }
 
     @Test
@@ -100,6 +133,14 @@ public class GitRepositoryResolverTest {
         assertThat(repository)
                 .isExactlyInstanceOf(GitRepository.class)
                 .matches(dvcsRepository -> dvcsRepository.isDirectoryNameEqual(repositoryPath.toString()));
+    }
+
+    private CommandExecutor commandExecutorReturningGitVersionOutput(String line) {
+        CommandOutput commandOutput = new CommandOutput()
+                .addOutputLine(new CommandOutputLine(line));
+        CommandExecutor commandExecutor = mock(CommandExecutor.class);
+        when(commandExecutor.execute()).thenReturn(commandOutput);
+        return commandExecutor;
     }
 
 }

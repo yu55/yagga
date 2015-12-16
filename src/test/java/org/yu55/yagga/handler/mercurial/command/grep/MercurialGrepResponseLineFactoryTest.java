@@ -1,13 +1,13 @@
 package org.yu55.yagga.handler.mercurial.command.grep;
 
+import static org.yu55.yagga.util.assertion.CustomAssertions.assertThat;
+
+import java.util.List;
+
 import org.junit.Test;
 import org.yu55.yagga.core.grep.model.GrepResponseLine;
 import org.yu55.yagga.handler.generic.command.CommandOutput;
 import org.yu55.yagga.handler.generic.command.CommandOutputLine;
-
-import java.util.List;
-
-import static org.yu55.yagga.util.assertion.CustomAssertions.assertThat;
 
 public class MercurialGrepResponseLineFactoryTest {
 
@@ -34,13 +34,13 @@ public class MercurialGrepResponseLineFactoryTest {
     public void shouldReturnGrepResponseLinesList() {
         // given
         String repositoryName = "myRepository";
-        CommandOutput commandOutput = new CommandOutput(repositoryName);
-        commandOutput.addOutputLine(new CommandOutputLine(
-                "src/main/java/org/yu55/yagga/Application.java:1:6:@SpringBootApplication"
-        ));
-        commandOutput.addOutputLine(new CommandOutputLine(
-                "src/main/java/org/yu55/yagga/ApplicationTest.java:1:8:public class ApplicationTest {"
-        ));
+        CommandOutput commandOutput = new CommandOutput(repositoryName)
+                .addOutputLine(new CommandOutputLine(
+                        "src/main/java/org/yu55/yagga/Application.java:1:6:@SpringBootApplication"
+                ))
+                .addOutputLine(new CommandOutputLine(
+                        "src/main/java/org/yu55/yagga/ApplicationTest.java:1:8:public class ApplicationTest {"
+                ));
 
         // when
         List<GrepResponseLine> grepResponseLines = MercurialGrepResponseLineFactory

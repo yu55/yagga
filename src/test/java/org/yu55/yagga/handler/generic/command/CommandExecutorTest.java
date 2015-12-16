@@ -21,9 +21,9 @@ public class CommandExecutorTest {
         // given
         Executor executor = mock(Executor.class);
         when(executor.getWorkingDirectory()).thenReturn(Paths.get("/my/repo").toFile());
-        CommandOutput output = new CommandOutput(executor.getWorkingDirectory().getName());
-        output.addOutputLine(new CommandOutputLine("First line."));
-        output.addOutputLine(new CommandOutputLine("Second line."));
+        CommandOutput output = new CommandOutput(executor.getWorkingDirectory().getName())
+                .addOutputLine(new CommandOutputLine("First line."))
+                .addOutputLine(new CommandOutputLine("Second line."));
         CommandExecutor commandExecutor = new CommandExecutor(mock(Command.class), executor, () -> output);
 
         // when

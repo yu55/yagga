@@ -1,5 +1,7 @@
 package org.yu55.yagga.handler.git;
 
+import static org.yu55.yagga.handler.git.command.version.GitVersionValueFactory.factorizeGitVersionValue;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import javax.annotation.PostConstruct;
@@ -12,7 +14,6 @@ import org.yu55.yagga.handler.api.DvcsRepository;
 import org.yu55.yagga.handler.api.DvcsRepositoryResolver;
 import org.yu55.yagga.handler.generic.command.CommandOutput;
 import org.yu55.yagga.handler.git.command.common.GitCommandExecutorFactory;
-import org.yu55.yagga.handler.git.command.version.GitVersionValueFactory;
 
 @Component
 public class GitRepositoryResolver implements DvcsRepositoryResolver {
@@ -21,23 +22,25 @@ public class GitRepositoryResolver implements DvcsRepositoryResolver {
 
     private static final Logger logger = LoggerFactory.getLogger(GitRepositoryResolver.class);
 
+    public static final int GIT_MIN_VERSION_SUPPORTED = 250;
+
     private GitCommandExecutorFactory gitCommandExecutorFactory;
 
-    private boolean dvcsAvailable;
+    private boolean dvcsSupported;
 
     @Autowired
     public GitRepositoryResolver(GitCommandExecutorFactory gitCommandExecutorFactory) {
         this.gitCommandExecutorFactory = gitCommandExecutorFactory;
-        this.dvcsAvailable = false;
+        this.dvcsSupported = false;
     }
 
     @PostConstruct
-    private void setDvcsAvailable() {
+    void checkDvcsAvailable() {
         CommandOutput output = gitCommandExecutorFactory.factorizeVersion().execute();
         if (output.getExitValue() == 0) {
-            int version = GitVersionValueFactory.factorizeGitVersionValue(output);
-            dvcsAvailable = (version >= 250);
-            if (!dvcsAvailable) {
+            int version = factorizeGitVersionValue(output);
+            dvcsSupported = (version >= GIT_MIN_VERSION_SUPPORTED);
+            if (!dvcsSupported) {
                 logger.warn("Git not supported (requires version >= 2.5.0)");
             }
         }
@@ -45,7 +48,7 @@ public class GitRepositoryResolver implements DvcsRepositoryResolver {
 
     @Override
     public boolean isDvcsSupported() {
-        return dvcsAvailable;
+        return dvcsSupported;
     }
 
     @Override

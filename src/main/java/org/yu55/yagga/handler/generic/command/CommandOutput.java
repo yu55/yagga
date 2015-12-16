@@ -12,8 +12,7 @@ public class CommandOutput {
     private String repositoryName;
 
     public CommandOutput(String repositoryName) {
-        this.outputLines = new LinkedList<>();
-        this.exitValue = 0;
+        this();
         this.repositoryName = repositoryName;
     }
 
@@ -22,16 +21,23 @@ public class CommandOutput {
         this.exitValue = exitValue;
     }
 
-    public void addOutputLine(CommandOutputLine line) {
+    public CommandOutput() {
+        this.outputLines = new LinkedList<>();
+        this.exitValue = 0;
+    }
+
+    public CommandOutput addOutputLine(CommandOutputLine line) {
         outputLines.add(line);
+        return this;
     }
 
     public List<CommandOutputLine> getOutputLines() {
         return outputLines;
     }
 
-    public void mergeWithOutput(CommandOutput output) {
+    public CommandOutput mergeWithOutput(CommandOutput output) {
         outputLines.addAll(output.getOutputLines());
+        return this;
     }
 
     public int getExitValue() {

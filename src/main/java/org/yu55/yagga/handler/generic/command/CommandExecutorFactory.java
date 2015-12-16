@@ -19,8 +19,7 @@ public class CommandExecutorFactory {
 
     public CommandExecutor factorize(Command command) {
         DefaultExecutor executor = new DefaultExecutor();
-        CommandExecutorStreamHandler executorStreamHandler =
-                new CommandExecutorStreamHandler(executor.getWorkingDirectory().getPath());
+        CommandExecutorStreamHandler executorStreamHandler = new CommandExecutorStreamHandler();
         executor.setStreamHandler(new PumpStreamHandler(executorStreamHandler));
         return new CommandExecutor(command, executor, executorStreamHandler::getOutput);
     }
