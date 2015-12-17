@@ -46,14 +46,14 @@ public class MercurialRepositoryTest {
         Path repositoryDirectory = mock(Path.class);
         MercurialRepository repository = new MercurialRepository(repositoryDirectory, commandExecutorFactory);
 
-        CommandOutput commandOutput = new CommandOutput(repositoryDirectory.toString());
+        CommandOutput commandOutput = new CommandOutput(repositoryDirectory.toString())
+                .addOutputLine(new CommandOutputLine(
+                        "user 1 Sat Nov 21 21:55:58 2015 +0100: 7: public class Application {"));
 
         AnnotateParameters annotateParameters = new AnnotateParameters("build.gradle");
 
         when(commandExecutorFactory.factorizeAnnotate(repository, annotateParameters)).thenReturn(executor);
         when(executor.execute()).thenReturn(commandOutput);
-        commandOutput.addOutputLine(new CommandOutputLine(
-                "user 1 Sat Nov 21 21:55:58 2015 +0100: 7: public class Application {"));
 
         // when
         AnnotateResponse annotateResponse = repository.annotate(annotateParameters);
@@ -72,7 +72,10 @@ public class MercurialRepositoryTest {
         Path repositoryDirectory = Paths.get("repo");
         MercurialRepository repository = new MercurialRepository(repositoryDirectory, commandExecutorFactory);
 
-        CommandOutput commandOutput = new CommandOutput(repositoryDirectory.toString());
+        CommandOutput commandOutput = new CommandOutput(repositoryDirectory.toString())
+                .addOutputLine(
+                        new CommandOutputLine(
+                                "src/main/java/org/yu55/yagga/Application.java:1:6:@SpringBootApplication"));
 
         String wanted = "buildscript";
         boolean ignoreCase = false;
@@ -80,8 +83,6 @@ public class MercurialRepositoryTest {
 
         when(commandExecutorFactory.factorizeGrep(repository, grepParameters)).thenReturn(executor);
         when(executor.execute()).thenReturn(commandOutput);
-        commandOutput.addOutputLine(
-                new CommandOutputLine("src/main/java/org/yu55/yagga/Application.java:1:6:@SpringBootApplication"));
 
         // when
         List<GrepResponseLine> grep = repository.grep(grepParameters);

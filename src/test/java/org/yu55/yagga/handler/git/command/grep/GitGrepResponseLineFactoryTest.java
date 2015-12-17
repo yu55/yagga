@@ -34,13 +34,14 @@ public class GitGrepResponseLineFactoryTest {
     public void shouldReturnGrepResponseLinesList() {
         // given
         String repositoryName = "myRepository";
-        CommandOutput commandOutput = new CommandOutput(repositoryName);
-        commandOutput.addOutputLine(new CommandOutputLine(
-                "src/main/java/org/yu55/yagga/core/grep/model/GrepRequest.java:13:public class GrepRequest {"
-        ));
-        commandOutput.addOutputLine(new CommandOutputLine(
-                "src/main/java/org/yu55/yagga/core/grep/model/GrepResponseLine.java:25:public class GrepResponseLine {"
-        ));
+        CommandOutput commandOutput = new CommandOutput(repositoryName)
+                .addOutputLine(new CommandOutputLine(
+                        "src/main/java/org/yu55/yagga/core/grep/model/GrepRequest.java:13:public class GrepRequest {"
+                ))
+                .addOutputLine(new CommandOutputLine(
+                        "src/main/java/org/yu55/yagga/core/grep/model/GrepResponseLine.java:25:public class " +
+                                "GrepResponseLine {"
+                ));
 
         // when
         List<GrepResponseLine> grepResponseLines = GitGrepResponseLineFactory

@@ -13,6 +13,10 @@ public class CommandExecutorStreamHandler extends LogOutputStream {
         output = new CommandOutput(dirName);
     }
 
+    public CommandExecutorStreamHandler() {
+        output = new CommandOutput();
+    }
+
     @Override
     protected void processLine(String line, int logLevel) {
         output.addOutputLine(new CommandOutputLine(line));

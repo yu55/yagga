@@ -36,9 +36,9 @@ public class CommandExecutor {
 
     private CommandOutput createExceptionalCommandOutput(
             String repositoryName, CommandOutput output, int exitValue) {
-        CommandOutput exceptionCommandOutput = new CommandOutput(repositoryName, exitValue);
-        exceptionCommandOutput.addOutputLine(new CommandOutputLine("Command execution failed:"));
-        exceptionCommandOutput.mergeWithOutput(output);
+        CommandOutput exceptionCommandOutput = new CommandOutput(repositoryName, exitValue)
+                .addOutputLine(new CommandOutputLine("Command execution failed:"))
+                .mergeWithOutput(output);
         return exceptionCommandOutput;
     }
 

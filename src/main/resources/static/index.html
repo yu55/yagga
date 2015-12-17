@@ -13,16 +13,16 @@
     <h1>&nbsp;> YAGGA</h1>
 </div>
 <form ng-submit="grep()" class="form-inline">
-    <div>
+    <div class="searchSection">
         <table border="0" cellspacing="0" cellpadding="5px">
             <tr>
-                <td>
-                    <div style="padding-left: 1em; padding-right: 1em; opacity: 0.7;">
+                <td style="padding-left: 2em; padding-right: 2em">
+                    <div style="opacity: 0.7;">
                         <img src="yagga/images/yagga.png" width="50" alt="Yagga"/>
                     </div>
                 </td>
                 <td valign="top">
-                    <div class="searchSection">
+                    <div class="">
                         <div class="form-group" style="vertical-align: top; padding-left: 0em;">
                             <div class="input-group">
                                 <label style="font-size: 12px">Repository</label>
@@ -66,7 +66,7 @@
         </table>
     </div>
     <div class="form-group"
-         style="padding-left: 1em; width: 100%; color: #eee; background-color: #555; padding-top: 0.3em; padding-bottom: 0.3em; margin-top: 1em">
+         style="padding-left: 1em; width: 100%; color: #eee; background-color: #555; padding-top: 0.3em; padding-bottom: 0.3em; margin-bottom: 0.5em">
         <label>SEARCH: &nbsp;</label>
 
         <div class="input-group input-group-sm">
@@ -80,17 +80,10 @@
         </div>
     </div>
 </form>
+<div style="white-space: nowrap" ng-repeat="grep in greps track by $index"><code><span class="bg-primary">[{{grep.repository}}]</span>
+    <a target="_blank" ng-href="preview.html#?repository={{grep.repository}}&file={{escape(grep.file)}}">{{grep.file}}</a>:<span
+            style="font-weight: bold">{{grep.lineNumber}}</span> {{grep.matchedTextLine}}</code></div>
+<span style="margin-left: 2em">{{message}}</span>
 
-<div class="panel panel-default" style="margin: 1em">
-    <div class="panel-heading" style="padding: 0.5em; vertical-align: middle">
-        <label class="panel-title" style="font-size: 14px;">Results</label> &nbsp; <span class="label label-info text-left">{{greps.length || 0}}</span>
-    </div>
-    <div class="panel-body">
-        <div style="white-space: nowrap" ng-repeat="grep in greps track by $index"><code><span class="bg-primary">[{{grep.repository}}]</span>
-            <a target="_blank" ng-href="preview.html#?repository={{grep.repository}}&file={{escape(grep.file)}}">{{grep.file}}</a>:<span
-                    style="font-weight: bold">{{grep.lineNumber}}</span> {{grep.matchedTextLine}}</code></div>
-        <span style="margin-left: 2em">{{message}}</span>
-    </div>
-</div>
 </body>
 </html>
