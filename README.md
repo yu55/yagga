@@ -5,8 +5,8 @@
 This is a very simple web application that allows you to grep over many git repositories via web interface.  
 **Yagga** also supports grep on mercurial repositories.
 
-![yagga-main.png](/../screenshots/screenshots/yagga-main.png?raw=true "Yagga main view")
-![yagga-detail.png](/../screenshots/screenshots/yagga-detail.png?raw=true "Yagga detailed view")
+![yagga-main.png](/docs/screenshots/yagga-main.png?raw=true "Yagga main view")
+![yagga-detail.png](/docs/screenshots/yagga-detail.png?raw=true "Yagga detailed view")
 
 ### Requirements
 ---
