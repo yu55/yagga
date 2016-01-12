@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.3.0.RELEASE'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.3.1.RELEASE'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.11.3'
     }
 }
@@ -44,7 +44,7 @@ dependencies {
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.mockito:mockito-core:1.10.19'
-    testCompile 'org.assertj:assertj-core:3.2.0'
+    testCompile 'org.assertj:assertj-core:3.3.0'
 
     customAssertionsGenerate 'org.assertj:assertj-assertions-generator:2.0.0'
 }
