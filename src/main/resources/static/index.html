@@ -53,10 +53,18 @@
                             </div>
                             <br/>
                             <div class="input-group input-group-sm" style="margin-top: 1em">
-                                <label style="font-size: 12px">Case insensitive search</label>
+                                <label style="font-size: 12px">Case insensitive</label>
 
                                 <div class="checkbox" style="margin-left: 0.4em">
                                     <input type="checkbox" ng-model="ignoreCase"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="input-group input-group-sm" style="margin-top: 1em">
+                                <label style="font-size: 12px">Only filename</label>
+
+                                <div class="checkbox" style="margin-left: 0.4em">
+                                    <input type="checkbox" ng-model="onlyFilename"/>
                                 </div>
                             </div>
                         </div>
@@ -80,9 +88,12 @@
         </div>
     </div>
 </form>
-<div style="white-space: nowrap" ng-repeat="grep in greps track by $index"><code><span class="bg-primary">[{{grep.repository}}]</span>
-    <a target="_blank" ng-href="preview.html#?repository={{grep.repository}}&file={{escape(grep.file)}}">{{grep.file}}</a>:<span
-            style="font-weight: bold">{{grep.lineNumber}}</span> {{grep.matchedTextLine}}</code></div>
+<div style="white-space: nowrap" ng-repeat="grep in greps track by $index">
+    <code>
+        <span class="bg-primary">[{{grep.repository}}]</span>
+        <a target="_blank" ng-href="preview.html#?repository={{grep.repository}}&file={{escape(grep.file)}}">{{grep.file}}</a><span ng-if="grep.lineNumber">:<span style="font-weight: bold">{{grep.lineNumber}}</span> {{grep.matchedTextLine}}</span>
+    </code>
+</div>
 <span style="margin-left: 2em">{{message}}</span>
 
 </body>

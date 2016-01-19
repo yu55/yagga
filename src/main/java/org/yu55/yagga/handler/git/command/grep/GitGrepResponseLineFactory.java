@@ -25,9 +25,9 @@ public class GitGrepResponseLineFactory {
     public static GrepResponseLine factorizeGrepResponseLine(String repository, String grepOutputLine) {
         StringTokenizer stringTokenizer = new StringTokenizer(grepOutputLine, ":");
         String file = stringTokenizer.nextToken();
-        int lineNumber = 0;
+        Integer lineNumber = null;
         try {
-            lineNumber = stringTokenizer.hasMoreElements() ? Integer.parseInt(stringTokenizer.nextToken()) : 0;
+            lineNumber = stringTokenizer.hasMoreElements() ? Integer.parseInt(stringTokenizer.nextToken()) : null;
         } catch (NumberFormatException e) {
         }
         String line = stringTokenizer.hasMoreTokens() ? stringTokenizer.nextToken() : "";

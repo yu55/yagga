@@ -6,11 +6,11 @@ public class GrepResponseLine {
 
     private String file;
 
-    private int lineNumber;
+    private Integer lineNumber;
 
     private String matchedTextLine;
 
-    public GrepResponseLine(String repository, String file, int lineNumber, String matchedTextLine) {
+    public GrepResponseLine(String repository, String file, Integer lineNumber, String matchedTextLine) {
         this.repository = repository;
         this.file = file;
         this.lineNumber = lineNumber;
@@ -25,7 +25,7 @@ public class GrepResponseLine {
         return file;
     }
 
-    public int getLineNumber() {
+    public Integer getLineNumber() {
         return lineNumber;
     }
 

@@ -1,17 +1,17 @@
 package org.yu55.yagga.handler.api.command.grep;
 
+import static java.util.Arrays.asList;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.yu55.yagga.core.grep.model.GrepResponseAssert.assertThat;
+import static org.yu55.yagga.util.mockito.DvcsRepositoryMockBehavior.should;
+
 import org.junit.Test;
 import org.yu55.yagga.core.grep.model.GrepRequest;
 import org.yu55.yagga.core.grep.model.GrepResponse;
 import org.yu55.yagga.core.grep.model.GrepResponseLine;
 import org.yu55.yagga.handler.api.DvcsRepository;
 import org.yu55.yagga.handler.generic.Repositories;
-
-import static java.util.Arrays.asList;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.yu55.yagga.core.grep.model.GrepResponseAssert.assertThat;
-import static org.yu55.yagga.util.mockito.DvcsRepositoryMockBehavior.should;
 
 public class GrepHandlerTest {
 
@@ -40,7 +40,7 @@ public class GrepHandlerTest {
 
         GrepHandler grepHandler = new GrepHandler(repositories);
 
-        GrepRequest request = new GrepRequest("class", asList("myRepository"), true);
+        GrepRequest request = new GrepRequest.Builder("class", asList("myRepository")).ignoreCase(true).build();
 
         // when
         GrepResponse response = grepHandler.grep(request);
