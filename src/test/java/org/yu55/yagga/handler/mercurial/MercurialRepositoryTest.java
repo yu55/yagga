@@ -77,9 +77,7 @@ public class MercurialRepositoryTest {
                         new CommandOutputLine(
                                 "src/main/java/org/yu55/yagga/Application.java:1:6:@SpringBootApplication"));
 
-        String wanted = "buildscript";
-        boolean ignoreCase = false;
-        GrepParameters grepParameters = new GrepParameters(wanted, ignoreCase, null);
+        GrepParameters grepParameters = new GrepParameters.Builder("buildscript").build();
 
         when(commandExecutorFactory.factorizeGrep(repository, grepParameters)).thenReturn(executor);
         when(executor.execute()).thenReturn(commandOutput);

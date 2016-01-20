@@ -10,21 +10,18 @@ public class GrepRequest {
 
     private boolean ignoreCase;
 
+    private boolean onlyFilename;
+
     private String fileFilter;
 
     public GrepRequest() {
         // This empty constructor is mandatory for Spring controller
     }
 
-    public GrepRequest(String wanted, List<String> repositories, boolean ignoreCase, String fileFilter) {
-        this(wanted, repositories, ignoreCase);
-        this.fileFilter = fileFilter;
-    }
-
-    public GrepRequest(String wanted, List<String> repositories, boolean ignoreCase) {
+    GrepRequest(String wanted, List<String> repositories) {
         this.wanted = wanted;
         this.repositories = repositories;
-        this.ignoreCase = ignoreCase;
+        this.ignoreCase = false;
     }
 
     public String getWanted() {
@@ -45,5 +42,32 @@ public class GrepRequest {
 
     public String getFileFilter() {
         return fileFilter;
+    }
+
+    public boolean isOnlyFilename() {
+        return onlyFilename;
+    }
+
+    public static class Builder {
+
+        private final GrepRequest grepRequest;
+
+        public Builder(String wanted, List<String> repositories) {
+            grepRequest = new GrepRequest(wanted, repositories);
+        }
+
+        public Builder ignoreCase(boolean ignoreCase) {
+            grepRequest.ignoreCase = ignoreCase;
+            return this;
+        }
+
+        public Builder onlyFilename(boolean onlyFilename) {
+            grepRequest.onlyFilename = onlyFilename;
+            return this;
+        }
+
+        public GrepRequest build() {
+            return grepRequest;
+        }
     }
 }

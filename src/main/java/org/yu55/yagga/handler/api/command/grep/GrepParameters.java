@@ -1,23 +1,19 @@
 package org.yu55.yagga.handler.api.command.grep;
 
-import org.yu55.yagga.core.grep.model.GrepRequest;
-
 public class GrepParameters {
 
     private String wanted;
 
     private boolean ignoreCase;
 
+    private boolean onlyFilename;
+
     private String fileFilter;
 
-    public GrepParameters(String wanted, boolean ignoreCase, String fileFilter) {
+    GrepParameters(String wanted) {
         this.wanted = wanted;
-        this.ignoreCase = ignoreCase;
-        this.fileFilter = fileFilter;
-    }
-
-    public static GrepParameters fromRequest(GrepRequest grepRequest) {
-        return new GrepParameters(grepRequest.getWanted(), grepRequest.isIgnoreCase(), grepRequest.getFileFilter());
+        this.ignoreCase = false;
+        this.onlyFilename = false;
     }
 
     public String getWanted() {
@@ -30,5 +26,37 @@ public class GrepParameters {
 
     public String getFileFilter() {
         return fileFilter;
+    }
+
+    public boolean isOnlyFilename() {
+        return onlyFilename;
+    }
+
+    public static class Builder {
+
+        private final GrepParameters grepParameters;
+
+        public Builder(String wanted) {
+            this.grepParameters = new GrepParameters(wanted);
+        }
+
+        public Builder ignoreCase(boolean ignoreCase) {
+            grepParameters.ignoreCase = ignoreCase;
+            return this;
+        }
+
+        public Builder fileFilter(String fileFilter) {
+            grepParameters.fileFilter = fileFilter;
+            return this;
+        }
+
+        public Builder onlyFilename(boolean onlyFilename) {
+            grepParameters.onlyFilename = onlyFilename;
+            return this;
+        }
+
+        public GrepParameters build() {
+            return grepParameters;
+        }
     }
 }

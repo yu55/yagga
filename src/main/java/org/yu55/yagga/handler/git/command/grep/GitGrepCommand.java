@@ -17,14 +17,6 @@ public class GitGrepCommand implements GitCommand {
         this.grepParameters = grepParameters;
     }
 
-    private String escapeSearchPhraseArgument(String wanted) {
-        if (wanted.startsWith("-") || wanted.startsWith(" ") || wanted.startsWith("*")) {
-            return "\\" + wanted;
-        } else {
-            return wanted;
-        }
-    }
-
     @Override
     public CommandLine getCommandLine() {
         CommandLine commandLine = new CommandLineBuilder(COMMAND)
@@ -32,10 +24,19 @@ public class GitGrepCommand implements GitCommand {
                 .withArgument("-n")
                 .withArgument("-I")
                 .withArgument(() -> grepParameters.isIgnoreCase(), "-i")
+                .withArgument(() -> grepParameters.isOnlyFilename(), "-l")
                 .withArgument(escapeSearchPhraseArgument(grepParameters.getWanted()))
                 .withArgument(() -> isNotBlank(grepParameters.getFileFilter()), grepParameters.getFileFilter())
                 .build();
 
         return commandLine;
+    }
+
+    private String escapeSearchPhraseArgument(String wanted) {
+        if (wanted.startsWith("-") || wanted.startsWith(" ") || wanted.startsWith("*")) {
+            return "\\" + wanted;
+        } else {
+            return wanted;
+        }
     }
 }

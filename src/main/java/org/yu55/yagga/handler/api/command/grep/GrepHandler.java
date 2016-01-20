@@ -9,7 +9,6 @@ import org.yu55.yagga.core.grep.model.GrepRequest;
 import org.yu55.yagga.core.grep.model.GrepResponse;
 import org.yu55.yagga.handler.api.DvcsRepository;
 import org.yu55.yagga.handler.generic.Repositories;
-import org.yu55.yagga.handler.git.GitRepository;
 
 @Component
 public class GrepHandler {
@@ -29,7 +28,7 @@ public class GrepHandler {
         for (DvcsRepository repository : repositories.getRepositories()) {
             if (grepRequest.hasRepository(repository.getDirectoryName())) {
                 if (!response.addAllGrepResponseLines(
-                        repository.grep(GrepParameters.fromRequest(grepRequest)))) {
+                        repository.grep(GrepParametersFactory.factorizeGrepParameters(grepRequest)))) {
                     break;
                 }
             }

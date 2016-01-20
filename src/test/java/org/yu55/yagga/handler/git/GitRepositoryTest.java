@@ -74,9 +74,7 @@ public class GitRepositoryTest {
         CommandOutput commandOutput = new CommandOutput(repositoryDirectory.toString())
                 .addOutputLine(new CommandOutputLine("build.gradle:1:buildscript {"));
 
-        String wanted = "buildscript";
-        boolean ignoreCase = false;
-        GrepParameters grepParameters = new GrepParameters(wanted, ignoreCase, null);
+        GrepParameters grepParameters = new GrepParameters.Builder("buildscript").build();
 
         when(commandExecutorFactory.factorizeGrep(repository, grepParameters)).thenReturn(executor);
         when(executor.execute()).thenReturn(commandOutput);
