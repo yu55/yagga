@@ -91,7 +91,7 @@
 <div style="white-space: nowrap" ng-repeat="grep in greps track by $index">
     <code>
         <span class="bg-primary">[{{grep.repository}}]</span>
-        <a target="_blank" ng-href="preview.html#?repository={{grep.repository}}&file={{escape(grep.file)}}">{{grep.file}}</a><span ng-if="grep.lineNumber">:<span style="font-weight: bold">{{grep.lineNumber}}</span> {{grep.matchedTextLine}}</span>
+        <a target="_blank" ng-href="preview.html#?repository={{grep.repository}}&file={{escape(grep.file)}}">{{grep.file}}</a><span ng-if="grep.matchedTextLine">:<span style="font-weight: bold">{{grep.lineNumber}}</span> {{grep.matchedTextLine}}</span>
     </code>
 </div>
 <span style="margin-left: 2em">{{message}}</span>
