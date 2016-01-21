@@ -2,8 +2,10 @@
 
 # Yagga (Yet Another Git Grep Application)
 
-This is a very simple web application that allows you to grep over many git repositories via web interface.  
-**Yagga** also supports grep on mercurial repositories.
+This is a simple standalone web application that allows you to grep over many git repositories via web interface.
+To start working you just need to set a path to your repositories and run the application. Enjoy in a minute!
+
+Note: **Yagga** also supports grep on mercurial repositories (not all functions available yet).
 
 ![yagga-main.png](/docs/screenshots/yagga-main.png?raw=true "Yagga main view")
 ![yagga-detail.png](/docs/screenshots/yagga-detail.png?raw=true "Yagga detailed view")

@@ -29,6 +29,7 @@ public class MercurialGrepCommand implements MercurialCommand {
                 .withArgument(COMMAND_GREP)
                 .withArgument("-n")
                 .withArgument(() -> grepParameters.isIgnoreCase(), "-i")
+                .withArgument(() -> grepParameters.isOnlyFilename(), "-l")
                 .withArgument(escapeSearchPhraseArgument(grepParameters.getWanted()))
                 .build();
 
