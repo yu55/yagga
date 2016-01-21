@@ -13,7 +13,24 @@
     <h1>&nbsp;> YAGGA</h1>
 </div>
 <form ng-submit="grep()" class="form-inline">
-    <div class="searchSection">
+    <div class="form-group"
+         style="padding-left: 1em; width: 100%; color: #eee; background-color: #555; padding-top: 0.3em; padding-bottom: 0.3em; margin-bottom: 0.0em">
+        <label>SEARCH: &nbsp;</label>
+
+        <div class="input-group input-group-sm">
+            <input type="text" class="form-control" id="grepText" ng-model="wanted" ng-trim="false" size="60"/>
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" data-ng-click="clearSearchWanted()">X</button>
+            </span>
+        </div>
+        <div class="btn-group btn-group-sm">
+            <input type="submit" class="btn btn-default" style="width: 9em" value="Search"/>
+        </div>
+        <div class="input-group input-group-sm" style="margin-left: 1em">
+            <span id="show_options" ng-click="switchOptions()" style="font-style: italic; color: white; margin: 0px; padding: 0px; cursor: pointer">{{optionsLabel[options]}}</span>
+        </div>
+    </div>
+    <div class="searchSection" ng-show="options == 0">
         <table border="0" cellspacing="0" cellpadding="5px">
             <tr>
                 <td style="padding-left: 2em; padding-right: 2em">
@@ -35,15 +52,15 @@
                                 <br/>
 
                                 <div class="checkbox">
-                                    <input type="checkbox" ng-model="selected" ng-change="selectAll(selected)">
-                                    <span style="font-size: smaller; ">Select all</span>
+                                    <input id="selectAll" type="checkbox" ng-model="selected" ng-change="selectAll()">
+                                    <label style="font-size: smaller;" for="selectAll">Select all</label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group" style="vertical-align: top; padding-right: 3em; padding-left: 2em">
                             <label style="font-size: 12px">File filter</label><br/>
 
-                            <div class="input-group input-group-sm">
+                            <div class="input-group">
                                 <input type="text" style="font-size: 10px; padding: 3px; height: 20px" class="form-control" id="fileFilter" ng-model="fileFilter"
                                        ng-trim="false" size="30"/>
                                 <span class="input-group-btn">
@@ -52,19 +69,19 @@
                                 </span>
                             </div>
                             <br/>
-                            <div class="input-group input-group-sm" style="margin-top: 1em">
-                                <label style="font-size: 12px">Case insensitive</label>
+                            <div class="input-group" style="margin-top: 1em">
+                                <label for="ignoreCase" style="font-size: 12px">Case insensitive</label>
 
                                 <div class="checkbox" style="margin-left: 0.4em">
-                                    <input type="checkbox" ng-model="ignoreCase"/>
+                                    <input id="ignoreCase" type="checkbox" ng-model="ignoreCase"/>
                                 </div>
                             </div>
                             <br/>
-                            <div class="input-group input-group-sm" style="margin-top: 1em">
-                                <label style="font-size: 12px">Only filename</label>
+                            <div class="input-group" style="margin-top: 1em">
+                                <label for="onlyFilename" style="font-size: 12px">Only filename</label>
 
                                 <div class="checkbox" style="margin-left: 0.4em">
-                                    <input type="checkbox" ng-model="onlyFilename"/>
+                                    <input id="onlyFilename" type="checkbox" ng-model="onlyFilename"/>
                                 </div>
                             </div>
                         </div>
@@ -73,26 +90,14 @@
             </tr>
         </table>
     </div>
-    <div class="form-group"
-         style="padding-left: 1em; width: 100%; color: #eee; background-color: #555; padding-top: 0.3em; padding-bottom: 0.3em; margin-bottom: 0.5em">
-        <label>SEARCH: &nbsp;</label>
-
-        <div class="input-group input-group-sm">
-            <input type="text" class="form-control" id="grepText" ng-model="wanted" ng-trim="false" size="60"/>
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button" data-ng-click="clearSearchWanted()">X</button>
-            </span>
-        </div>
-        <div class="btn-group btn-group-sm">
-            <input type="submit" class="btn btn-default" style="width: 9em" value="Search"/>
-        </div>
-    </div>
 </form>
-<div style="white-space: nowrap" ng-repeat="grep in greps track by $index">
-    <code>
-        <span class="bg-primary">[{{grep.repository}}]</span>
-        <a target="_blank" ng-href="preview.html#?repository={{grep.repository}}&file={{escape(grep.file)}}">{{grep.file}}</a><span ng-if="grep.matchedTextLine">:<span style="font-weight: bold">{{grep.lineNumber}}</span> {{grep.matchedTextLine}}</span>
-    </code>
+<div style="margin-top: 5px">
+    <div style="white-space: nowrap" ng-repeat="grep in greps track by $index">
+        <code>
+            <span class="bg-primary">[{{grep.repository}}]</span>
+            <a target="_blank" ng-href="preview.html#?repository={{grep.repository}}&file={{escape(grep.file)}}">{{grep.file}}</a><span ng-if="grep.matchedTextLine">:<span style="font-weight: bold">{{grep.lineNumber}}</span> {{grep.matchedTextLine}}</span>
+        </code>
+    </div>
 </div>
 <span style="margin-left: 2em">{{message}}</span>
 

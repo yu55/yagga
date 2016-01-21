@@ -1,13 +1,12 @@
 var nameApp = angular.module('yagga', []);
 nameApp.controller('yaggaGrepCtrl', function ($scope, $http) {
+    $scope.selected = true;
 
-    $http.get('repositories').success(function (data) {
-        $scope.repositories = data;
-    });
-
-    $scope.selectAll = function (selected) {
-        if (selected) {
+    $scope.selectAll = function () {
+        if ($scope.selected) {
             $scope.multipleSelect = $scope.repositories;
+        } else {
+            $scope.multipleSelect = [];
         }
     }
 
@@ -21,6 +20,13 @@ nameApp.controller('yaggaGrepCtrl', function ($scope, $http) {
 
     $scope.clearSearchWanted = function () {
         $scope.wanted = "";
+    }
+
+    $scope.options = 1;
+    $scope.optionsLabel = ['Hide options', 'Show options'];
+
+    $scope.switchOptions = function() {
+        $scope.options = ($scope.options + 1) % 2;
     }
 
     $scope.grep = function () {
@@ -68,5 +74,10 @@ nameApp.controller('yaggaGrepCtrl', function ($scope, $http) {
     $scope.escape = function (toEscape) {
         return encodeURIComponent(toEscape);
     }
+
+    $http.get('repositories').success(function (data) {
+        $scope.repositories = data;
+        $scope.selectAll();
+    });
 });
 
