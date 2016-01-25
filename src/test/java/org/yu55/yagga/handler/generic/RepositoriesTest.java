@@ -31,7 +31,7 @@ public class RepositoriesTest {
         // when
         List<DvcsRepository> result = repositories.getRepositories();
 
-        // flush
+        // then
         verify(repositoriesFileVisitor).getRepositories();
         assertThat(result).contains(existingRepository);
         assertThat(result).doesNotContain(newlyCreatedRepository);
@@ -56,7 +56,7 @@ public class RepositoriesTest {
         repositories.update();
         List<DvcsRepository> result = repositories.getRepositories();
 
-        // flush
+        // then
         verify(repositoriesFileVisitor, times(2)).getRepositories();
         assertThat(result).contains(newlyCreatedRepository);
     }
@@ -79,7 +79,7 @@ public class RepositoriesTest {
         repositories.update();
         List<DvcsRepository> result = repositories.getRepositories();
 
-        // flush
+        // then
         verify(repositoriesFileVisitor, times(2)).getRepositories();
         assertThat(result).doesNotContain(removedRepository);
     }
