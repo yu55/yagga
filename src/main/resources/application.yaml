@@ -6,3 +6,6 @@ yagga:
     updateRepositories:
       enabled: false
       intervalInMillis: 60000
+    detectDirectoriesChange:
+      enabled: false
+      intervalInMillis: 60000
