@@ -30,7 +30,7 @@ public class RepositoriesUpdateScheduler {
         logger.info("Updating repositories...");
         stopWatch.start();
 
-        repositories.getRepositories().forEach(DvcsRepository::pull);
+        repositories.getRepositories().forEach(DvcsRepository::refresh);
 
         stopWatch.stop();
         logger.info("Updated {} repositories in {} seconds", repositories.getRepositories().size(),

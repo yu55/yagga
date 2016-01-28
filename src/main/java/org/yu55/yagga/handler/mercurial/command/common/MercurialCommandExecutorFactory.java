@@ -7,10 +7,9 @@ import org.yu55.yagga.handler.api.command.annotate.AnnotateParameters;
 import org.yu55.yagga.handler.api.command.grep.GrepParameters;
 import org.yu55.yagga.handler.generic.command.CommandExecutor;
 import org.yu55.yagga.handler.generic.command.CommandExecutorFactory;
-import org.yu55.yagga.handler.git.command.grep.GitGrepCommand;
 import org.yu55.yagga.handler.mercurial.command.annotate.MercurialAnnotateCommand;
 import org.yu55.yagga.handler.mercurial.command.grep.MercurialGrepCommand;
-import org.yu55.yagga.handler.mercurial.command.pull.MercurialPullCommand;
+import org.yu55.yagga.handler.mercurial.command.refresh.MercurialRefreshCommand;
 
 @Component
 public class MercurialCommandExecutorFactory {
@@ -22,8 +21,8 @@ public class MercurialCommandExecutorFactory {
         this.commandExecutorFactory = commandExecutorFactory;
     }
 
-    public CommandExecutor factorizePull(DvcsRepository repository) {
-        return commandExecutorFactory.factorize(repository, new MercurialPullCommand());
+    public CommandExecutor factorizeRefresh(DvcsRepository repository) {
+        return commandExecutorFactory.factorize(repository, new MercurialRefreshCommand());
     }
 
     public CommandExecutor factorizeAnnotate(DvcsRepository repository, AnnotateParameters annotateParameters) {
