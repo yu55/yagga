@@ -35,8 +35,9 @@ public class GitRepository implements DvcsRepository {
         return directory;
     }
 
-    public void pull() {
-        commandExecutorFactory.factorizePull(this).execute();
+    public void refresh() {
+        commandExecutorFactory.factorizeFetch(this).execute();
+        commandExecutorFactory.factorizeReset(this).execute();
     }
 
     @Override

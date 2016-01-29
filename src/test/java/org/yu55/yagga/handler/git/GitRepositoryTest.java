@@ -22,20 +22,23 @@ import org.yu55.yagga.handler.git.command.common.GitCommandExecutorFactory;
 public class GitRepositoryTest {
 
     @Test
-    public void testPull() throws Exception {
+    public void testRefresh() throws Exception {
         // given
-        CommandExecutor executor = mock(CommandExecutor.class);
+        CommandExecutor fetchExecutor = mock(CommandExecutor.class);
+        CommandExecutor resetExecutor = mock(CommandExecutor.class);
         GitCommandExecutorFactory commandExecutorFactory = mock(GitCommandExecutorFactory.class);
         Path repositoryDirectory = mock(Path.class);
         GitRepository repository = new GitRepository(repositoryDirectory, commandExecutorFactory);
 
-        when(commandExecutorFactory.factorizePull(repository)).thenReturn(executor);
+        when(commandExecutorFactory.factorizeFetch(repository)).thenReturn(fetchExecutor);
+        when(commandExecutorFactory.factorizeReset(repository)).thenReturn(resetExecutor);
 
         // when
-        repository.pull();
+        repository.refresh();
 
         // then
-        verify(executor).execute();
+        verify(fetchExecutor).execute();
+        verify(resetExecutor).execute();
     }
 
     @Test

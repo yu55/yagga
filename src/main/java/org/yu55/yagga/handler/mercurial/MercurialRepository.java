@@ -37,8 +37,8 @@ public class MercurialRepository implements DvcsRepository {
         return directory;
     }
 
-    public void pull() {
-        commandExecutorFactory.factorizePull(this).execute();
+    public void refresh() {
+        commandExecutorFactory.factorizeRefresh(this).execute();
     }
 
     @Override

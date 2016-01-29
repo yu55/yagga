@@ -22,17 +22,17 @@ import org.yu55.yagga.handler.mercurial.command.common.MercurialCommandExecutorF
 public class MercurialRepositoryTest {
 
     @Test
-    public void testPull() throws Exception {
+    public void testRefresh() throws Exception {
         // given
         CommandExecutor executor = mock(CommandExecutor.class);
         MercurialCommandExecutorFactory commandExecutorFactory = mock(MercurialCommandExecutorFactory.class);
         Path repositoryDirectory = mock(Path.class);
         MercurialRepository repository = new MercurialRepository(repositoryDirectory, commandExecutorFactory);
 
-        when(commandExecutorFactory.factorizePull(repository)).thenReturn(executor);
+        when(commandExecutorFactory.factorizeRefresh(repository)).thenReturn(executor);
 
         // when
-        repository.pull();
+        repository.refresh();
 
         // then
         verify(executor).execute();

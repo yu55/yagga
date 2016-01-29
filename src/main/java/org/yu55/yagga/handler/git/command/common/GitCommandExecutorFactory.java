@@ -9,7 +9,8 @@ import org.yu55.yagga.handler.generic.command.CommandExecutor;
 import org.yu55.yagga.handler.generic.command.CommandExecutorFactory;
 import org.yu55.yagga.handler.git.command.annotate.GitAnnotateCommand;
 import org.yu55.yagga.handler.git.command.grep.GitGrepCommand;
-import org.yu55.yagga.handler.git.command.pull.GitPullCommand;
+import org.yu55.yagga.handler.git.command.refresh.GitFetchCommand;
+import org.yu55.yagga.handler.git.command.refresh.GitResetCommand;
 import org.yu55.yagga.handler.git.command.version.GitVersionCommand;
 
 @Component
@@ -26,8 +27,12 @@ public class GitCommandExecutorFactory {
         return commandExecutorFactory.factorize(new GitVersionCommand());
     }
 
-    public CommandExecutor factorizePull(DvcsRepository repository) {
-        return commandExecutorFactory.factorize(repository, new GitPullCommand());
+    public CommandExecutor factorizeFetch(DvcsRepository repository) {
+        return commandExecutorFactory.factorize(repository, new GitFetchCommand());
+    }
+
+    public CommandExecutor factorizeReset(DvcsRepository repository) {
+        return commandExecutorFactory.factorize(repository, new GitResetCommand());
     }
 
     public CommandExecutor factorizeAnnotate(DvcsRepository repository, AnnotateParameters annotateParameters) {
