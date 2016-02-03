@@ -10,7 +10,7 @@ import org.yu55.yagga.handler.api.command.grep.GrepParameters;
 
 public interface DvcsRepository {
 
-    void pull();
+    void refresh();
 
     AnnotateResponse annotate(AnnotateParameters annotateParameters);
 
