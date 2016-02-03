@@ -2,8 +2,8 @@ package org.yu55.yagga.handler.mercurial;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.yu55.yagga.handler.mercurial.MercurialRepositoryResolver.MERCURIAL_REPOSITORY_DISCRIMINATOR;
-import static org.yu55.yagga.util.RepositoryFolderStub.stubMercurialRepository;
-import static org.yu55.yagga.util.RepositoryFolderStub.stubUndefinedRepository;
+import static org.yu55.yagga.testutils.RepositoryFolderStub.stubMercurialRepository;
+import static org.yu55.yagga.testutils.RepositoryFolderStub.stubUndefinedRepository;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,7 +16,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.yu55.yagga.handler.api.DvcsRepository;
 import org.yu55.yagga.handler.mercurial.command.common.MercurialCommandExecutorFactory;
-import org.yu55.yagga.util.RepositoryFolderStub;
+import org.yu55.yagga.testutils.RepositoryFolderStub;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MercurialRepositoryResolverTest {

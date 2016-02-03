@@ -3,7 +3,7 @@ package org.yu55.yagga.handler.api;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.yu55.yagga.util.mockito.DvcsRepositoryResolverMockBehavior.should;
+import static org.yu55.yagga.testutils.mockito.DvcsRepositoryResolverMockBehavior.should;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
