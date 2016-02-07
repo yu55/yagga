@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.yu55.yagga.core.annotate.model.AnnotateResponse;
+import org.yu55.yagga.core.annotate.model.AnnotateResponseLineAssert;
 import org.yu55.yagga.core.grep.model.GrepResponseLine;
 import org.yu55.yagga.handler.api.command.annotate.AnnotateParameters;
 import org.yu55.yagga.handler.api.command.grep.GrepParameters;
@@ -48,9 +49,9 @@ public class MercurialRepositoryTest {
 
         CommandOutput commandOutput = new CommandOutput(repositoryDirectory.toString())
                 .addOutputLine(new CommandOutputLine(
-                        "user 1 Sat Nov 21 21:55:58 2015 +0100: 7: public class Application {"));
+                        "sawickil 699243681ab8 Wed Jan 20 21:58:42 2016 +0100:1: Hello world!"));
 
-        AnnotateParameters annotateParameters = new AnnotateParameters("build.gradle");
+        AnnotateParameters annotateParameters = new AnnotateParameters("readme.txt");
 
         when(commandExecutorFactory.factorizeAnnotate(repository, annotateParameters)).thenReturn(executor);
         when(executor.execute()).thenReturn(commandOutput);
@@ -60,8 +61,12 @@ public class MercurialRepositoryTest {
 
         // then
         verify(executor).execute();
-        assertThat(annotateResponse.getAnnotations()).contains("user");
-        assertThat(annotateResponse.getFileContent()).contains("public class Application {");
+        AnnotateResponseLineAssert.assertThat(annotateResponse.getAnnotationResponseLines().get(0))
+                .hasCommitId("699243681ab8")
+                .hasAuthor("sawickil")
+                .hasCommitDate("Wed Jan 20 21:58:42 2016 +0100")
+                .hasLineNumber(1)
+                .hasLine("Hello world!");
     }
 
     @Test

@@ -1,15 +1,11 @@
 package org.yu55.yagga.handler.generic;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.yu55.yagga.handler.api.DvcsRepository;
-
 import java.util.List;
 import java.util.Optional;
 
-public class Repositories {
+import org.yu55.yagga.handler.api.DvcsRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(Repositories.class);
+public class Repositories {
 
     private List<DvcsRepository> repositories;
 

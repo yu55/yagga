@@ -10,15 +10,6 @@ public class AnnotateResponse {
 
     private List<AnnotateResponseLine> annotationResponseLines;
 
-    private String annotations;
-
-    private String fileContent;
-
-    public AnnotateResponse(String annotations, String fileContent) {
-        this.annotations = annotations;
-        this.fileContent = fileContent;
-    }
-
     public AnnotateResponse(List<AnnotateResponseLine> annotateResponseLines) {
         this.annotationResponseLines = annotateResponseLines;
     }
@@ -33,13 +24,5 @@ public class AnnotateResponse {
 
     public List<AnnotateResponseLine> getAnnotationResponseLines() {
         return annotationResponseLines;
-    }
-
-    public String getAnnotations() {
-        return annotations;
-    }
-
-    public String getFileContent() {
-        return fileContent;
     }
 }

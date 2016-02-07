@@ -1,8 +1,7 @@
 package org.yu55.yagga.core.annotate.model;
 
 /**
- * This class represents a single line of the code displayed on the view page. Each line consists of a few parts like
- * commit id, author, date, line number and line.
+ * This class represents a single line of code displayed on the view page.
  */
 public class AnnotateResponseLine {
 

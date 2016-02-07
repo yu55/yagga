@@ -1,6 +1,6 @@
 package org.yu55.yagga.handler.mercurial.command.grep;
 
-import static org.yu55.yagga.testutils.assertion.CustomAssertions.assertThat;
+import static org.yu55.yagga.utils.assertion.CustomAssertions.assertThat;
 
 import java.util.List;
 

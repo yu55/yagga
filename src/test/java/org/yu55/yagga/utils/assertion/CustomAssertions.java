@@ -1,4 +1,4 @@
-package org.yu55.yagga.testutils.assertion;
+package org.yu55.yagga.utils.assertion;
 
 import org.yu55.yagga.core.grep.model.GrepResponseLine;
 import org.yu55.yagga.core.grep.model.GrepResponseLineAssert;

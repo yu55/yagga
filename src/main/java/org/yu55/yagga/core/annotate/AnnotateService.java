@@ -10,15 +10,15 @@ import org.yu55.yagga.handler.api.command.annotate.AnnotateHandler;
 @Component
 public class AnnotateService {
 
-    private final AnnotateHandler gitAnnotateHandler;
+    private final AnnotateHandler annotateHandler;
 
     @Autowired
-    public AnnotateService(AnnotateHandler gitAnnotateHandler) {
-        this.gitAnnotateHandler = gitAnnotateHandler;
+    public AnnotateService(AnnotateHandler annotateHandler) {
+        this.annotateHandler = annotateHandler;
     }
 
     public AnnotateResponse annotate(AnnotateRequest annotateRequest) {
-        return gitAnnotateHandler.annotate(annotateRequest);
+        return annotateHandler.annotate(annotateRequest);
     }
 
 }

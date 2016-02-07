@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.yu55.yagga.handler.git.GitRepositoryResolver.GIT_REPOSITORY_DISCRIMINATOR;
-import static org.yu55.yagga.testutils.RepositoryFolderStub.stubGitRepository;
-import static org.yu55.yagga.testutils.RepositoryFolderStub.stubUndefinedRepository;
+import static org.yu55.yagga.utils.RepositoryFolderStub.stubGitRepository;
+import static org.yu55.yagga.utils.RepositoryFolderStub.stubUndefinedRepository;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,7 +21,7 @@ import org.yu55.yagga.handler.generic.command.CommandExecutor;
 import org.yu55.yagga.handler.generic.command.CommandOutput;
 import org.yu55.yagga.handler.generic.command.CommandOutputLine;
 import org.yu55.yagga.handler.git.command.common.GitCommandExecutorFactory;
-import org.yu55.yagga.testutils.RepositoryFolderStub;
+import org.yu55.yagga.utils.RepositoryFolderStub;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GitRepositoryResolverTest {

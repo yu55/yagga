@@ -1,4 +1,4 @@
-package org.yu55.yagga.testutils.mockito;
+package org.yu55.yagga.utils.mockito;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
