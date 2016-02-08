@@ -1,21 +1,28 @@
 package org.yu55.yagga.core.annotate.model;
 
+import java.util.LinkedList;
+import java.util.List;
+
+/**
+ * Main class containing a content of selected file to view.
+ */
 public class AnnotateResponse {
 
-    private String annotations;
+    private List<AnnotateResponseLine> annotationResponseLines;
 
-    private String fileContent;
-
-    public AnnotateResponse(String annotations, String fileContent) {
-        this.annotations = annotations;
-        this.fileContent = fileContent;
+    public AnnotateResponse(List<AnnotateResponseLine> annotateResponseLines) {
+        this.annotationResponseLines = annotateResponseLines;
     }
 
-    public String getAnnotations() {
-        return annotations;
+    public AnnotateResponse() {
+        this.annotationResponseLines = new LinkedList<>();
     }
 
-    public String getFileContent() {
-        return fileContent;
+    public void addAnnotationResponseLine(AnnotateResponseLine line) {
+        annotationResponseLines.add(line);
+    }
+
+    public List<AnnotateResponseLine> getAnnotationResponseLines() {
+        return annotationResponseLines;
     }
 }

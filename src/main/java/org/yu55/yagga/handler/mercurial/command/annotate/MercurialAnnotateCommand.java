@@ -2,7 +2,6 @@ package org.yu55.yagga.handler.mercurial.command.annotate;
 
 import org.apache.commons.exec.CommandLine;
 import org.yu55.yagga.handler.api.command.annotate.AnnotateParameters;
-import org.yu55.yagga.handler.generic.command.Command;
 import org.yu55.yagga.handler.mercurial.command.common.MercurialCommand;
 
 public class MercurialAnnotateCommand implements MercurialCommand {
@@ -18,7 +17,7 @@ public class MercurialAnnotateCommand implements MercurialCommand {
         CommandLine commandLine = CommandLine.parse(COMMAND);
         commandLine.addArgument("annotate", false);
         commandLine.addArgument("-u", false);
-        commandLine.addArgument("-n", false);
+        commandLine.addArgument("-c", false);
         commandLine.addArgument("-l", false);
         commandLine.addArgument("-d", false);
         commandLine.addArgument(annotateParameters.getFile(), false);

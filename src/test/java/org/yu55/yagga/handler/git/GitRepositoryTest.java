@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.yu55.yagga.core.annotate.model.AnnotateResponse;
+import org.yu55.yagga.core.annotate.model.AnnotateResponseLine;
 import org.yu55.yagga.core.grep.model.GrepResponseLine;
 import org.yu55.yagga.handler.api.command.annotate.AnnotateParameters;
 import org.yu55.yagga.handler.api.command.grep.GrepParameters;
@@ -62,8 +63,12 @@ public class GitRepositoryTest {
 
         // then
         verify(executor).execute();
-        assertThat(annotateResponse.getAnnotations()).contains("Marcin P");
-        assertThat(annotateResponse.getFileContent()).contains("buildscript");
+        AnnotateResponseLine annotateLine = annotateResponse.getAnnotationResponseLines().get(0);
+        assertThat(annotateLine.getCommitId()).isEqualTo("716ec6a6");
+        assertThat(annotateLine.getAuthor()).isEqualTo("Marcin P");
+        assertThat(annotateLine.getCommitDate()).isEqualTo("2015-09-17 21:23:13 +0200");
+        assertThat(annotateLine.getLineNumber()).isEqualTo(1);
+        assertThat(annotateLine.getLine()).isEqualTo("buildscript {");
     }
 
     @Test

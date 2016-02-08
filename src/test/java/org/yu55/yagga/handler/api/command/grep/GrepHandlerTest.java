@@ -4,7 +4,7 @@ import static java.util.Arrays.asList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.yu55.yagga.core.grep.model.GrepResponseAssert.assertThat;
-import static org.yu55.yagga.util.mockito.DvcsRepositoryMockBehavior.should;
+import static org.yu55.yagga.utils.mockito.DvcsRepositoryMockBehavior.should;
 
 import org.junit.Test;
 import org.yu55.yagga.core.grep.model.GrepRequest;

@@ -27,7 +27,7 @@ App.directive('prettify', ['$compile', '$timeout', function ($compile, $timeout)
             var update = function () {
                 $timeout(function () {
                     var compiled = templateFn(scope).html();
-                    var prettified = prettyPrintOne('<pre>' + compiled + '</pre>');
+                    var prettified = prettyPrintOne('<pre style="margin:0px">' + compiled + '</pre>');
                     element.html(prettified);
                 }, 0);
             }
