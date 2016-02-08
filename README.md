@@ -39,8 +39,10 @@ Than you can simply run **Yagga** by executing `./gradlew bootRun` or `java -jar
 ### Custom configuration
 ---
 
-Property                                              | Type    | Default value | Description
------------------------------------------------------ |:-------:|:-------------:| -----------------------------------------------------------------------------------------------------------------------------
-`yagga.repositories.paths`                            | String  | \<undefined\> | comma-separated list of repositories paths, this is required property
-`yagga.scheduler.updateRepositories.enabled`          | Boolean | false         | flag defining whether repositories defined with `yagga.repositories.paths` should be updated periodically
-`yagga.scheduler.updateRepositories.intervalInMillis` | Long    | 60000         | defines fixed period in milliseconds between the end of the last repositories update invocation and the beginning of the next
+Property                                                   | Type    | Default value | Description
+---------------------------------------------------------- |:-------:|:-------------:| -----------------------------------------------------------------------------------------------------------------------------
+`yagga.repositories.paths`                                 | String  | \<undefined\> | comma-separated list of repositories paths, this is required property
+`yagga.scheduler.updateRepositories.enabled`               | Boolean | false         | flag defining whether repositories defined with `yagga.repositories.paths` should be updated periodically
+`yagga.scheduler.updateRepositories.intervalInMillis`      | Long    | 60000         | defines fixed period in milliseconds between the end of the last repositories update invocation and the beginning of the next
+`yagga.scheduler.detectDirectoriesChange.enabled`          | Boolean | false         | flag defining if periodical check for repositories added or deleted from `yagga.repositories.paths` should take place
+`yagga.scheduler.detectDirectoriesChange.intervalInMillis` | Long    | 60000         | defines fixed period in milliseconds between the end of the last directories check invocation and the beginning of the next
