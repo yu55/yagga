@@ -18,7 +18,7 @@ public class CommandExecutorFactory {
         return factorize(repository.getDirectory().toFile(), repository.getDirectoryName(), command);
     }
 
-    private CommandExecutor factorize(File dir, String name, Command command) {
+    public CommandExecutor factorize(File dir, String name, Command command) {
         DefaultExecutor executor = new DefaultExecutor();
         executor.setWorkingDirectory(dir);
         CommandExecutorStreamHandler executorStreamHandler = new CommandExecutorStreamHandler(name);

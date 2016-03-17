@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.yu55.yagga.handler.api.DvcsRepository;
+import org.yu55.yagga.handler.git.StashSync;
 
 public class RepositoriesUpdateSchedulerTest {
 
@@ -15,8 +16,9 @@ public class RepositoriesUpdateSchedulerTest {
         // given
         DvcsRepository repository = mock(DvcsRepository.class);
         Repositories repositories = mock(Repositories.class);
+        StashSync stashSync = mock(StashSync.class);
         when(repositories.getRepositories()).thenReturn(singletonList(repository));
-        RepositoriesUpdateScheduler repositoriesUpdateScheduler = new RepositoriesUpdateScheduler(repositories);
+        RepositoriesUpdateScheduler repositoriesUpdateScheduler = new RepositoriesUpdateScheduler(repositories, stashSync);
 
         // when
         repositoriesUpdateScheduler.refreshRepositories();

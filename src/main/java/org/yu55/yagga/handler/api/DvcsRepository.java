@@ -26,4 +26,7 @@ public interface DvcsRepository {
         return getDirectoryName().equals(repository);
     }
 
+    default boolean isPathEndingWith(Path endingPath) {
+        return getDirectory().endsWith(endingPath);
+    }
 }

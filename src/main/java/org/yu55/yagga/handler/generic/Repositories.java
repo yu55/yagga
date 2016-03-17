@@ -1,5 +1,6 @@
 package org.yu55.yagga.handler.generic;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,4 +32,10 @@ public class Repositories {
                 .findFirst();
     }
 
+    public Optional<DvcsRepository> getRepositoryEndedWith(Path endingPath) {
+        return repositories
+                .stream()
+                .filter(repo -> repo.isPathEndingWith(endingPath))
+                .findFirst();
+    }
 }
