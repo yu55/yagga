@@ -1,6 +1,6 @@
 package org.yu55.yagga.handler.generic;
 
-import java.net.MalformedURLException;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +22,10 @@ public class RepositoriesUpdateScheduler {
 
     private StopWatch stopWatch;
 
-    private StashSync stashSync;
+    private Optional<StashSync> stashSync;
 
     @Autowired
-    public RepositoriesUpdateScheduler(Repositories repositories, StashSync stashSync) {
+    public RepositoriesUpdateScheduler(Repositories repositories, Optional<StashSync> stashSync) {
         this.repositories = repositories;
         this.stopWatch = new StopWatch();
         this.stashSync = stashSync;
@@ -34,7 +34,7 @@ public class RepositoriesUpdateScheduler {
     @Scheduled(fixedRateString = "${yagga.scheduler.updateRepositories.intervalInMillis}")
     public void refreshRepositories() {
 
-        stashSync.synchronizeWithStash();
+        stashSync.ifPresent(StashSync::synchronizeWithStash);
 
         logger.info("Updating repositories...");
         stopWatch.start();
@@ -45,6 +45,5 @@ public class RepositoriesUpdateScheduler {
         logger.info("Updated {} repositories in {} seconds", repositories.getRepositories().size(),
                 stopWatch.getLastTaskTimeMillis() / 1000.0);
     }
-
 
 }
