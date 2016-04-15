@@ -27,27 +27,29 @@ public class GitCommandExecutorFactory {
     }
 
     public CommandExecutor factorizeVersion() {
-        return commandExecutorFactory.factorize(new GitVersionCommand());
+        return commandExecutorFactory.factorizeGlobalCommandExecutor(new GitVersionCommand());
     }
 
     public CommandExecutor factorizeFetch(DvcsRepository repository) {
-        return commandExecutorFactory.factorize(repository, new GitFetchCommand());
+        return commandExecutorFactory.factorizeRepositoryCommandExecutor(repository, new GitFetchCommand());
     }
 
     public CommandExecutor factorizeReset(DvcsRepository repository) {
-        return commandExecutorFactory.factorize(repository, new GitResetCommand());
+        return commandExecutorFactory.factorizeRepositoryCommandExecutor(repository, new GitResetCommand());
     }
 
     public CommandExecutor factorizeAnnotate(DvcsRepository repository, AnnotateParameters annotateParameters) {
-        return commandExecutorFactory.factorize(repository, new GitAnnotateCommand(annotateParameters));
+        return commandExecutorFactory.factorizeRepositoryCommandExecutor(repository,
+                new GitAnnotateCommand(annotateParameters));
     }
 
     public CommandExecutor factorizeGrep(DvcsRepository repository,
                                          GrepParameters grepParameters) {
-        return commandExecutorFactory.factorize(repository, new GitGrepCommand(grepParameters));
+        return commandExecutorFactory.factorizeRepositoryCommandExecutor(repository, new GitGrepCommand(grepParameters));
     }
 
     public CommandExecutor factorizeClone(File workingDirectory, String repositoryUrl) {
-        return commandExecutorFactory.factorize(workingDirectory, null, new GitCloneCommand(repositoryUrl));
+        return commandExecutorFactory.factorizeDirectoryCommandExecutor(workingDirectory,
+                new GitCloneCommand(repositoryUrl));
     }
 }
