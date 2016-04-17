@@ -10,7 +10,15 @@ public class AnnotateRequest {
         return repository;
     }
 
+    public void setRepository(String repository) {
+        this.repository = repository;
+    }
+
     public String getFile() {
         return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
     }
 }

@@ -22,15 +22,17 @@ public class MercurialCommandExecutorFactory {
     }
 
     public CommandExecutor factorizeRefresh(DvcsRepository repository) {
-        return commandExecutorFactory.factorize(repository, new MercurialRefreshCommand());
+        return commandExecutorFactory.factorizeRepositoryCommandExecutor(repository, new MercurialRefreshCommand());
     }
 
     public CommandExecutor factorizeAnnotate(DvcsRepository repository, AnnotateParameters annotateParameters) {
-        return commandExecutorFactory.factorize(repository, new MercurialAnnotateCommand(annotateParameters));
+        return commandExecutorFactory.factorizeRepositoryCommandExecutor(repository,
+                new MercurialAnnotateCommand(annotateParameters));
     }
 
     public CommandExecutor factorizeGrep(DvcsRepository repository,
                                          GrepParameters grepParameters) {
-        return commandExecutorFactory.factorize(repository, new MercurialGrepCommand(grepParameters));
+        return commandExecutorFactory.factorizeRepositoryCommandExecutor(repository,
+                new MercurialGrepCommand(grepParameters));
     }
 }

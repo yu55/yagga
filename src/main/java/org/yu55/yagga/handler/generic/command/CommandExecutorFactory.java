@@ -10,15 +10,19 @@ import org.yu55.yagga.handler.api.DvcsRepository;
 @Component
 public class CommandExecutorFactory {
 
-    public CommandExecutor factorize(Command command) {
+    public CommandExecutor factorizeGlobalCommandExecutor(Command command) {
         return factorize(new File("."), null, command);
     }
 
-    public CommandExecutor factorize(DvcsRepository repository, Command command) {
+    public CommandExecutor factorizeRepositoryCommandExecutor(DvcsRepository repository, Command command) {
         return factorize(repository.getDirectory().toFile(), repository.getDirectoryName(), command);
     }
 
-    public CommandExecutor factorize(File dir, String name, Command command) {
+    public CommandExecutor factorizeDirectoryCommandExecutor(File dir, Command command) {
+        return factorize(dir, null, command);
+    }
+
+    private CommandExecutor factorize(File dir, String name, Command command) {
         DefaultExecutor executor = new DefaultExecutor();
         executor.setWorkingDirectory(dir);
         CommandExecutorStreamHandler executorStreamHandler = new CommandExecutorStreamHandler(name);

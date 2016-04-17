@@ -1,5 +1,7 @@
 package org.yu55.yagga.handler.api.command.annotate;
 
+import static java.text.MessageFormat.format;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.yu55.yagga.core.annotate.model.AnnotateRequest;
@@ -20,7 +22,8 @@ public class AnnotateHandler {
         return
                 repositories.getRepositoryByDirectoryName(annotateRequest.getRepository())
                         .map(repo -> repo.annotate(AnnotateParameters.fromRequest(annotateRequest)))
-                        .get();
+                        .orElseThrow(() -> new IllegalArgumentException(
+                                format("Repository {0} not found", annotateRequest.getRepository())));
     }
 
 }
