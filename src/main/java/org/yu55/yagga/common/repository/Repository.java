@@ -3,10 +3,8 @@ package org.yu55.yagga.common.repository;
 import java.nio.file.Path;
 import java.util.List;
 
-import org.yu55.yagga.api.annotate.model.AnnotateResponse;
-import org.yu55.yagga.api.grep.model.GrepResponseLine;
-import org.yu55.yagga.common.parameters.AnnotateParameters;
-import org.yu55.yagga.common.parameters.GrepParameters;
+import org.yu55.yagga.common.model.annotate.AnnotateResponse;
+import org.yu55.yagga.common.model.grep.GrepResponseLine;
 
 public interface Repository {
 

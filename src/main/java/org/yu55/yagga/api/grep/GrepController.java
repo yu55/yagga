@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.yu55.yagga.api.grep.model.GrepRequest;
-import org.yu55.yagga.api.grep.model.GrepResponseLine;
+import org.yu55.yagga.common.model.grep.GrepRequest;
+import org.yu55.yagga.common.model.grep.GrepResponseLine;
 
 @RestController()
 public class GrepController {

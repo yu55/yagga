@@ -1,4 +1,4 @@
-package org.yu55.yagga.api.grep.model;
+package org.yu55.yagga.common.model.grep;
 
 public class GrepResponseLine {
 

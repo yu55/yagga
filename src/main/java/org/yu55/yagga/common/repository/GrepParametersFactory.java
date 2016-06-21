@@ -1,6 +1,6 @@
-package org.yu55.yagga.common.parameters;
+package org.yu55.yagga.common.repository;
 
-import org.yu55.yagga.api.grep.model.GrepRequest;
+import org.yu55.yagga.common.model.grep.GrepRequest;
 
 public class GrepParametersFactory {
 

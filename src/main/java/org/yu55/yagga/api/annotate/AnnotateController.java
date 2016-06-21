@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.yu55.yagga.api.annotate.model.AnnotateRequest;
-import org.yu55.yagga.api.annotate.model.AnnotateResponse;
+import org.yu55.yagga.common.model.annotate.AnnotateRequest;
+import org.yu55.yagga.common.model.annotate.AnnotateResponse;
 
 @RestController()
 public class AnnotateController {

@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.yu55.yagga.api.annotate.model.AnnotateResponse;
-import org.yu55.yagga.api.annotate.model.AnnotateResponseLine;
+import org.yu55.yagga.common.model.annotate.AnnotateResponse;
+import org.yu55.yagga.common.model.annotate.AnnotateResponseLine;
 import org.yu55.yagga.common.command.CommandOutput;
 import org.yu55.yagga.common.command.CommandOutputLine;
 

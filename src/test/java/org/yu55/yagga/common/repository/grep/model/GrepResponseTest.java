@@ -1,10 +1,12 @@
-package org.yu55.yagga.api.grep.model;
+package org.yu55.yagga.common.repository.grep.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
 
 import org.junit.Test;
+import org.yu55.yagga.common.model.grep.GrepResponse;
+import org.yu55.yagga.common.model.grep.GrepResponseLine;
 
 public class GrepResponseTest {
 

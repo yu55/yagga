@@ -40,6 +40,7 @@ public class GitRepositoryResolverTest {
 
     @After
     public void tearDown() {
+        Object x = mock(Object.class);
         if (repositoryFolderStub != null) {
             repositoryFolderStub.destroyRepository();
         }

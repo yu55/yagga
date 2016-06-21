@@ -6,11 +6,11 @@ import static org.yu55.yagga.impl.git.command.grep.GitGrepResponseLineFactory.fa
 import java.nio.file.Path;
 import java.util.List;
 
-import org.yu55.yagga.api.annotate.model.AnnotateResponse;
-import org.yu55.yagga.api.grep.model.GrepResponseLine;
+import org.yu55.yagga.common.model.annotate.AnnotateResponse;
+import org.yu55.yagga.common.model.grep.GrepResponseLine;
 import org.yu55.yagga.common.repository.Repository;
-import org.yu55.yagga.common.parameters.AnnotateParameters;
-import org.yu55.yagga.common.parameters.GrepParameters;
+import org.yu55.yagga.common.repository.AnnotateParameters;
+import org.yu55.yagga.common.repository.GrepParameters;
 import org.yu55.yagga.common.command.CommandOutput;
 import org.yu55.yagga.impl.git.command.common.GitCommandExecutorFactory;
 

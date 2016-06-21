@@ -1,6 +1,6 @@
 package org.yu55.yagga.impl.mercurial.command.grep;
 
-import org.yu55.yagga.api.grep.model.GrepResponseLine;
+import org.yu55.yagga.common.model.grep.GrepResponseLine;
 import org.yu55.yagga.common.command.CommandOutput;
 
 import java.util.Collections;

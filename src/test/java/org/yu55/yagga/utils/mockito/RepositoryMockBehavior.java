@@ -6,9 +6,9 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import org.yu55.yagga.api.grep.model.GrepResponseLine;
+import org.yu55.yagga.common.model.grep.GrepResponseLine;
 import org.yu55.yagga.common.repository.Repository;
-import org.yu55.yagga.common.parameters.GrepParameters;
+import org.yu55.yagga.common.repository.GrepParameters;
 
 public class RepositoryMockBehavior extends MockBehavior<Repository> {
 

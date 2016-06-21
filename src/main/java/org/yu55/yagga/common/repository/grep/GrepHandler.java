@@ -1,13 +1,13 @@
-package org.yu55.yagga.common.handler;
+package org.yu55.yagga.common.repository.grep;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.yu55.yagga.api.grep.model.GrepRequest;
-import org.yu55.yagga.api.grep.model.GrepResponse;
-import org.yu55.yagga.common.parameters.GrepParametersFactory;
+import org.yu55.yagga.common.model.grep.GrepRequest;
+import org.yu55.yagga.common.model.grep.GrepResponse;
+import org.yu55.yagga.common.repository.GrepParametersFactory;
 import org.yu55.yagga.common.repository.RepositoriesContainer;
 import org.yu55.yagga.common.repository.Repository;
 

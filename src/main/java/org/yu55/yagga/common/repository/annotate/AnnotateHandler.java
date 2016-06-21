@@ -1,12 +1,12 @@
-package org.yu55.yagga.common.handler;
+package org.yu55.yagga.common.repository.annotate;
 
 import static java.text.MessageFormat.format;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.yu55.yagga.api.annotate.model.AnnotateRequest;
-import org.yu55.yagga.api.annotate.model.AnnotateResponse;
-import org.yu55.yagga.common.parameters.AnnotateParameters;
+import org.yu55.yagga.common.model.annotate.AnnotateRequest;
+import org.yu55.yagga.common.model.annotate.AnnotateResponse;
+import org.yu55.yagga.common.repository.AnnotateParameters;
 import org.yu55.yagga.common.repository.RepositoriesContainer;
 
 @Component

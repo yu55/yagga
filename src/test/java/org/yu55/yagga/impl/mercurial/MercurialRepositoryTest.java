@@ -1,6 +1,5 @@
 package org.yu55.yagga.impl.mercurial;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -9,15 +8,17 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
-import org.yu55.yagga.api.annotate.model.AnnotateResponse;
-import org.yu55.yagga.api.annotate.model.AnnotateResponseLineAssert;
-import org.yu55.yagga.api.grep.model.GrepResponseLine;
-import org.yu55.yagga.common.parameters.AnnotateParameters;
-import org.yu55.yagga.common.parameters.GrepParameters;
 import org.yu55.yagga.common.command.CommandExecutor;
 import org.yu55.yagga.common.command.CommandOutput;
 import org.yu55.yagga.common.command.CommandOutputLine;
+import org.yu55.yagga.common.model.annotate.AnnotateResponse;
+import org.yu55.yagga.common.model.annotate.AnnotateResponseLineAssert;
+import org.yu55.yagga.common.model.grep.GrepResponseLine;
+import org.yu55.yagga.common.model.grep.GrepResponseLineAssert;
+import org.yu55.yagga.common.repository.AnnotateParameters;
+import org.yu55.yagga.common.repository.GrepParameters;
 import org.yu55.yagga.impl.mercurial.command.common.MercurialCommandExecutorFactory;
 
 public class MercurialRepositoryTest {
@@ -92,12 +93,13 @@ public class MercurialRepositoryTest {
 
         // then
         verify(executor).execute();
-        assertThat(grep.size()).isEqualTo(1);
-        GrepResponseLine grepResponseLine = grep.get(0);
-        assertThat(grepResponseLine.getFile()).isEqualTo("src/main/java/org/yu55/yagga/Application.java");
-        assertThat(grepResponseLine.getLineNumber()).isEqualTo(6);
-        assertThat(grepResponseLine.getMatchedTextLine()).isEqualTo("@SpringBootApplication");
-        assertThat(grepResponseLine.getRepository()).isEqualTo("repo");
+        Assertions.assertThat(grep.size()).isEqualTo(1);
+
+        GrepResponseLineAssert.assertThat(grep.get(0))
+                .hasFile("src/main/java/org/yu55/yagga/Application.java")
+                .hasLineNumber(6)
+                .hasMatchedTextLine("@SpringBootApplication")
+                .hasRepository("repo");
     }
 
 }

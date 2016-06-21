@@ -4,19 +4,19 @@ import static java.util.Arrays.asList;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.yu55.yagga.api.annotate.model.AnnotateResponseAssert.assertThat;
+import static org.yu55.yagga.common.model.annotate.AnnotateResponseAssert.assertThat;
 
 import java.util.Arrays;
 
 import org.junit.Test;
-import org.yu55.yagga.api.annotate.model.AnnotateRequest;
-import org.yu55.yagga.api.annotate.model.AnnotateResponse;
-import org.yu55.yagga.api.annotate.model.AnnotateResponseLine;
-import org.yu55.yagga.common.handler.AnnotateHandler;
-import org.yu55.yagga.common.parameters.AnnotateParameters;
+import org.yu55.yagga.common.model.annotate.AnnotateRequest;
+import org.yu55.yagga.common.model.annotate.AnnotateResponse;
+import org.yu55.yagga.common.model.annotate.AnnotateResponseLine;
+import org.yu55.yagga.common.repository.AnnotateParameters;
 import org.yu55.yagga.common.repository.RepositoriesContainer;
-import org.yu55.yagga.common.repository.Repository;
 import org.yu55.yagga.common.repository.RepositoriesFileVisitor;
+import org.yu55.yagga.common.repository.Repository;
+import org.yu55.yagga.common.repository.annotate.AnnotateHandler;
 
 public class AnnotateHandlerTest {
 

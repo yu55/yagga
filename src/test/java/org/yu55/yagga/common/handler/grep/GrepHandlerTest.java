@@ -3,16 +3,16 @@ package org.yu55.yagga.common.handler.grep;
 import static java.util.Arrays.asList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.yu55.yagga.api.grep.model.GrepResponseAssert.assertThat;
+import static org.yu55.yagga.common.model.grep.GrepResponseAssert.assertThat;
 import static org.yu55.yagga.utils.mockito.RepositoryMockBehavior.should;
 
 import org.junit.Test;
-import org.yu55.yagga.api.grep.model.GrepRequest;
-import org.yu55.yagga.api.grep.model.GrepResponse;
-import org.yu55.yagga.api.grep.model.GrepResponseLine;
-import org.yu55.yagga.common.handler.GrepHandler;
-import org.yu55.yagga.common.repository.Repository;
+import org.yu55.yagga.common.model.grep.GrepRequest;
+import org.yu55.yagga.common.model.grep.GrepResponse;
+import org.yu55.yagga.common.model.grep.GrepResponseLine;
 import org.yu55.yagga.common.repository.RepositoriesContainer;
+import org.yu55.yagga.common.repository.Repository;
+import org.yu55.yagga.common.repository.grep.GrepHandler;
 
 public class GrepHandlerTest {
 

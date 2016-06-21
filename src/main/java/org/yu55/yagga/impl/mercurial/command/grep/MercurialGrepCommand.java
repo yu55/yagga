@@ -1,7 +1,7 @@
 package org.yu55.yagga.impl.mercurial.command.grep;
 
 import org.apache.commons.exec.CommandLine;
-import org.yu55.yagga.common.parameters.GrepParameters;
+import org.yu55.yagga.common.repository.GrepParameters;
 import org.yu55.yagga.common.command.CommandLineBuilder;
 import org.yu55.yagga.impl.mercurial.command.common.MercurialCommand;
 

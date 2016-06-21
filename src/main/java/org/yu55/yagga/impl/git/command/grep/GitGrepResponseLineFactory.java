@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.yu55.yagga.api.grep.model.GrepResponseLine;
+import org.yu55.yagga.common.model.grep.GrepResponseLine;
 import org.yu55.yagga.common.command.CommandOutput;
 
 public class GitGrepResponseLineFactory {

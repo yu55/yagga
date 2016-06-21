@@ -1,4 +1,4 @@
-package org.yu55.yagga.api.annotate.model;
+package org.yu55.yagga.common.model.annotate;
 
 import java.util.LinkedList;
 import java.util.List;

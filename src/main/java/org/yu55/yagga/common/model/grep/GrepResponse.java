@@ -1,4 +1,4 @@
-package org.yu55.yagga.api.grep.model;
+package org.yu55.yagga.common.model.grep;
 
 import java.util.LinkedList;
 import java.util.List;

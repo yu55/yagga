@@ -1,4 +1,4 @@
-package org.yu55.yagga.api.annotate.model;
+package org.yu55.yagga.common.model.annotate;
 
 /**
  * This class represents a single line of code displayed on the view page.

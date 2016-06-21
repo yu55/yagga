@@ -1,6 +1,6 @@
-package org.yu55.yagga.common.parameters;
+package org.yu55.yagga.common.repository;
 
-import org.yu55.yagga.api.annotate.model.AnnotateRequest;
+import org.yu55.yagga.common.model.annotate.AnnotateRequest;
 
 public class AnnotateParameters {
     private String file;

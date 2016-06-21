@@ -1,12 +1,12 @@
 package org.yu55.yagga.impl.git.command.annotate;
 
+import static org.yu55.yagga.common.model.annotate.AnnotateResponseLineAssert.assertThat;
 import static org.yu55.yagga.impl.git.command.annotate.GitAnnotateResponseFactory.factorizeAnnotateResponse;
 
 import org.junit.Test;
-import org.yu55.yagga.api.annotate.model.AnnotateResponse;
-import org.yu55.yagga.api.annotate.model.AnnotateResponseLineAssert;
 import org.yu55.yagga.common.command.CommandOutput;
 import org.yu55.yagga.common.command.CommandOutputLine;
+import org.yu55.yagga.common.model.annotate.AnnotateResponse;
 
 public class GitAnnotateResponseFactoryTest {
 
@@ -22,7 +22,7 @@ public class GitAnnotateResponseFactoryTest {
         AnnotateResponse annotateResponse = factorizeAnnotateResponse(annotateCommandOutput);
 
         // then
-        AnnotateResponseLineAssert.assertThat(annotateResponse.getAnnotationResponseLines().get(0))
+        assertThat(annotateResponse.getAnnotationResponseLines().get(0))
                 .hasCommitId("af7545c8")
                 .hasAuthor("Mikołaj")
                 .hasCommitDate("2015-11-21 20:07:59 +0100")
