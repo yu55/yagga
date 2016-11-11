@@ -13,6 +13,13 @@ App.controller('yaggaPreviewCtrl', function ($scope, $location, $http) {
         alert("error: " + status);
     });
 
+    $scope.annotations = 1;
+    $scope.annotationsLabel = ['Hide annotations', 'Show annotations'];
+
+    $scope.switchAnnotations = function() {
+        $scope.annotations = ($scope.annotations + 1) % 2;
+    }
+
 });
 
 App.directive('prettify', ['$compile', '$timeout', function ($compile, $timeout) {
