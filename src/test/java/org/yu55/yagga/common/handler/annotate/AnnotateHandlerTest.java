@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.yu55.yagga.common.model.annotate.AnnotateRequest;
 import org.yu55.yagga.common.model.annotate.AnnotateResponse;
 import org.yu55.yagga.common.model.annotate.AnnotateResponseLine;
-import org.yu55.yagga.common.repository.AnnotateParameters;
+import org.yu55.yagga.common.repository.annotate.AnnotateParameters;
 import org.yu55.yagga.common.repository.RepositoriesContainer;
 import org.yu55.yagga.common.repository.RepositoriesFileVisitor;
 import org.yu55.yagga.common.repository.Repository;

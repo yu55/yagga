@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.apache.commons.exec.CommandLine;
 import org.junit.Test;
-import org.yu55.yagga.common.repository.GrepParameters;
+import org.yu55.yagga.common.repository.grep.GrepParameters;
 
 public class GitGrepCommandTest {
 

@@ -1,4 +1,4 @@
-package org.yu55.yagga.common.repository;
+package org.yu55.yagga.common.repository.annotate;
 
 import org.yu55.yagga.common.model.annotate.AnnotateRequest;
 

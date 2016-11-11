@@ -3,7 +3,7 @@ package org.yu55.yagga.impl.git.command.grep;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import org.apache.commons.exec.CommandLine;
-import org.yu55.yagga.common.repository.GrepParameters;
+import org.yu55.yagga.common.repository.grep.GrepParameters;
 import org.yu55.yagga.common.command.CommandLineBuilder;
 import org.yu55.yagga.impl.git.command.common.GitCommand;
 

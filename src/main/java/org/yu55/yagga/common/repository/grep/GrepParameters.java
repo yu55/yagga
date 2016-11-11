@@ -1,4 +1,4 @@
-package org.yu55.yagga.common.repository;
+package org.yu55.yagga.common.repository.grep;
 
 public class GrepParameters {
 

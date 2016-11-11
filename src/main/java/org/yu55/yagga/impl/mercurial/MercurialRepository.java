@@ -11,8 +11,8 @@ import java.util.List;
 import org.yu55.yagga.common.model.annotate.AnnotateResponse;
 import org.yu55.yagga.common.model.grep.GrepResponseLine;
 import org.yu55.yagga.common.repository.Repository;
-import org.yu55.yagga.common.repository.AnnotateParameters;
-import org.yu55.yagga.common.repository.GrepParameters;
+import org.yu55.yagga.common.repository.annotate.AnnotateParameters;
+import org.yu55.yagga.common.repository.grep.GrepParameters;
 import org.yu55.yagga.common.command.CommandOutput;
 import org.yu55.yagga.impl.mercurial.command.common.MercurialCommandExecutorFactory;
 

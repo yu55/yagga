@@ -2,7 +2,7 @@ package org.yu55.yagga.impl.git.command.annotate;
 
 import org.apache.commons.exec.CommandLine;
 
-import org.yu55.yagga.common.repository.AnnotateParameters;
+import org.yu55.yagga.common.repository.annotate.AnnotateParameters;
 import org.yu55.yagga.impl.git.command.common.GitCommand;
 
 public class GitAnnotateCommand implements GitCommand {

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.yu55.yagga.common.model.annotate.AnnotateRequest;
 import org.yu55.yagga.common.model.annotate.AnnotateResponse;
-import org.yu55.yagga.common.repository.AnnotateParameters;
 import org.yu55.yagga.common.repository.RepositoriesContainer;
 
 @Component

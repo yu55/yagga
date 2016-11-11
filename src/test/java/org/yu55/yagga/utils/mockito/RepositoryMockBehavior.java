@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.yu55.yagga.common.model.grep.GrepResponseLine;
 import org.yu55.yagga.common.repository.Repository;
-import org.yu55.yagga.common.repository.GrepParameters;
+import org.yu55.yagga.common.repository.grep.GrepParameters;
 
 public class RepositoryMockBehavior extends MockBehavior<Repository> {
 

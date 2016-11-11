@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.yu55.yagga.common.model.grep.GrepRequest;
 import org.yu55.yagga.common.model.grep.GrepResponse;
-import org.yu55.yagga.common.repository.GrepParametersFactory;
 import org.yu55.yagga.common.repository.RepositoriesContainer;
 import org.yu55.yagga.common.repository.Repository;
 
