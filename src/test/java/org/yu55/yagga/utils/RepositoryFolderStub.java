@@ -1,7 +1,7 @@
 package org.yu55.yagga.utils;
 
-import static org.yu55.yagga.handler.git.GitRepositoryResolver.GIT_REPOSITORY_DISCRIMINATOR;
-import static org.yu55.yagga.handler.mercurial.MercurialRepositoryResolver.MERCURIAL_REPOSITORY_DISCRIMINATOR;
+import static org.yu55.yagga.impl.git.GitRepositoryResolver.GIT_REPOSITORY_DISCRIMINATOR;
+import static org.yu55.yagga.impl.mercurial.MercurialRepositoryResolver.MERCURIAL_REPOSITORY_DISCRIMINATOR;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;

@@ -1,0 +1,28 @@
+package org.yu55.yagga.common.command;
+
+import org.apache.commons.exec.LogOutputStream;
+
+/**
+ * Simple executor stream handler producing {@link CommandOutput}.
+ */
+public class CommandExecutorStreamHandler extends LogOutputStream {
+
+    private CommandOutput output;
+
+    CommandExecutorStreamHandler(String dirName) {
+        output = new CommandOutput(dirName);
+    }
+
+    public CommandExecutorStreamHandler() {
+        output = new CommandOutput();
+    }
+
+    @Override
+    protected void processLine(String line, int logLevel) {
+        output.addOutputLine(new CommandOutputLine(line));
+    }
+
+    CommandOutput getOutput() {
+        return output;
+    }
+}
